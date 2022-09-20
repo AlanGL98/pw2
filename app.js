@@ -9,6 +9,10 @@ var app = express();
 
 // Cargar ficheros rutas
 var test_routes = require('./routes/test');
+var usuarios_routes = require('./routes/UsuariosRoutes');
+var opiniones_routes = require('./routes/OpinionesRoutes');
+
+var roles_routes = require('./routes/RolesRoutes');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended:false }));
@@ -25,6 +29,9 @@ app.use((req, res, next) => {
 
 // Añadir prefijos o rutas
 app.use('/yopino', test_routes);
+app.use('/yopino', usuarios_routes);
+app.use('/yopino', opiniones_routes);
+app.use('/yopino', roles_routes);
 
 // Exportar modulo (fichero actual)
 module.exports = app;

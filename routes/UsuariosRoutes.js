@@ -1,15 +1,13 @@
 'use strict'
 
 var express = require('express');
-var testController = require('../controllers/test');
+var UsuariosController = require('../controllers/UsuariosController');
 
 var router = express.Router();
 
-// Rutas de prueba
-router.post('/test', testController.datosCurso);
-router.get('/test', testController.test);
-
 // Rutas utiles
+router.get('/usuarios', UsuariosController.getUsuarios);
+router.post('/usuarios', UsuariosController.createUsuarios);
 // router.post('/save', ArticleController.save);
 // router.get('/articles/:last?', ArticleController.getArticles);
 // router.get('/article/:id', ArticleController.getArticle);
