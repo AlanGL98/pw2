@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,10 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
     "faker": "5.5",
     "nodemon": "^2.0.19"
   }
