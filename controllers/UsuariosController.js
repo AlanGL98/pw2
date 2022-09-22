@@ -5,7 +5,7 @@ var faker = require('faker');
 
 class UsuariosService {
     constructor() {
-        this.users = [];
+        this.list = [];
         this.generate();
     }
 
@@ -14,7 +14,7 @@ class UsuariosService {
         for (let index = 0; index < limit; index++) {
             const createdAt = faker.date.past(2);
             const name = faker.name.findName();
-            this.users.push({
+            this.list.push({
                 id: index + 1,
                 uuid: faker.datatype.uuid(),
                 name: name,
@@ -34,7 +34,7 @@ var controller = {
     getUsuarios: (req, res) => {
         return res.status(200).send({
             status: 'success',
-            usuarios: users.users
+            usuarios: users.list
         });
     },
 
@@ -47,7 +47,6 @@ var controller = {
             var validate_name = validator.isEmpty(params.name);
             var validate_username = validator.isEmpty(params.username);
             var validate_email = validator.isEmpty(params.email);
-            // const createdAt = faker.date.past(2);
 
             if(validate_name && validate_username && validate_email){
                 return res.status(200).send({
@@ -57,7 +56,7 @@ var controller = {
             }
             
             const newUser = {
-                id: users.users.length + 1,
+                id: users.list.length + 1,
                 uuid: faker.datatype.uuid(),
                 name: params.name,
                 username: params.username,
@@ -67,25 +66,95 @@ var controller = {
             }
 
             //Guardar el articulo en el arreglo
-            users.users.push(
+            users.list.push(
                 newUser
             );
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                usuario: newUser,
-                // usuarios: users.users
+                usuario: newUser
             });
 
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falta datos por enviar1.'
+                message: 'Falla en proceso de agregado.'
             });
         }
     },
+
+    updateUsuarios: (req, res) => {
+        // Recoger parametros de la url
+        const  { id } = req.params;
+        // Recoger parametros por post
+        var params = req.body;
+
+        // Validar datos
+        try{
+            var validate_name = validator.isEmpty(params.name);
+            var validate_username = validator.isEmpty(params.username);
+            var validate_email = validator.isEmpty(params.email);
+
+            if(validate_name && validate_username && validate_email){
+                return res.status(200).send({
+                    status: 'error',
+                    message: 'Faltan datos de usuario por enviar.'
+                });
+            }
+
+            // Buscar el registro a modificar
+            const index = users.list.findIndex((item) => item.id === id);
+            var bufferUser = users.list[index];
+            users.list[index] = {
+              ...bufferUser,
+              ...changes,
+            };
+
+            // Devolver una respuesta
+            return res.status(200).send({
+                status: 'success',
+                usuario: users.list[index]
+            });
+
+        }
+        catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'Falla en proceso de actualizacion.'
+            });
+        }
+    },
+
+    deleteUsuarios: (req, res) => {
+        // Recoger parametros de la url
+        const  { id } = req.params;
+
+        // Validar datos
+        try{
+
+            // Buscar el registro a eliminar
+            const bufferUser = users.list.filter((user) => user.id !== id);
+
+            // Eliminar el registro
+            const newArray = users.list.filter((user) => user.id !== id);
+            users.list = newArray;
+
+            // Devolver una respuesta
+            return res.status(200).send({
+                status: 'success',
+                usuario: bufferUser
+            });
+
+        }
+        catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'Falla en proceso de actualizacion.'
+            });
+        }
+    }
 
 } // end controller
 
