@@ -16,6 +16,7 @@ var top_players_routes= require('./routes/TopPlayersRoutes');
 var like_comentario_routes= require('./routes/LikeComentarioRoutes');
 var calificacion_routes= require('./routes/CalificacionRoutes');
 var favoritos_routes= require('./routes/FavoritosRoutes');
+var imagenes_routes= require('./routes/ImagenesRoutes');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended:false }));
@@ -40,5 +41,6 @@ app.use('/yopino', top_players_routes);
 app.use('/yopino', like_comentario_routes);
 app.use('/yopino', calificacion_routes);
 app.use('/yopino', favoritos_routes);
+app.use('/yopino', imagenes_routes);
 // Exportar modulo (fichero actual)
 module.exports = app;
