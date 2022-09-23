@@ -11,6 +11,7 @@ var app = express();
 var test_routes = require('./routes/test');
 var usuarios_routes = require('./routes/UsuariosRoutes');
 var opiniones_routes = require('./routes/OpinionesRoutes');
+var comentarios_routes = require('./routes/ComentariosRoutes');
 var roles_routes = require('./routes/RolesRoutes');
 var top_players_routes= require('./routes/TopPlayersRoutes');
 var like_comentario_routes= require('./routes/LikeComentarioRoutes');
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 app.use('/yopino', test_routes);
 app.use('/yopino', usuarios_routes);
 app.use('/yopino', opiniones_routes);
+app.use('/yopino', comentarios_routes);
 app.use('/yopino', roles_routes);
 app.use('/yopino', top_players_routes);
 app.use('/yopino', like_comentario_routes);
