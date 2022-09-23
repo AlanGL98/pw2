@@ -41,10 +41,9 @@ var controller = {
 
         // Validar datos
         try{
-            var validate_name = validator.isEmpty(params.name);
-            var validate_position = validator.isEmpty(params.position);
+            var validate_like = validator.isEmpty(params.like);
 
-            if(validate_name && validate_position){
+            if(validate_like ){
                 return res.status(200).send({
                     status: 'error',
                     message: 'Faltan datos por enviar2.'
