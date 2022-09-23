@@ -38,6 +38,18 @@ var controller = {
         });
     },
 
+    getUsuario: (req, res) => {
+        // Recoger parametros de la url
+        const  { id } = req.params;
+        // Buscar el registro a eliminar
+        const bufferUser = users.list.filter((user) => user.id == id);
+
+        return res.status(200).send({
+            status: 'success',
+            usuario: bufferUser
+        });
+    },
+
     createUsuarios: (req, res) => {
         // Recoger parametros por post
         var params = req.body;

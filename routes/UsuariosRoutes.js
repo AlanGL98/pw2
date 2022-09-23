@@ -7,6 +7,7 @@ var router = express.Router();
 
 // Rutas utiles
 router.get('/usuarios', UsuariosController.getUsuarios);
+router.get('/usuarios/:id', UsuariosController.getUsuario);
 router.post('/usuarios', UsuariosController.createUsuarios);
 router.patch('/usuarios/:id', UsuariosController.updateUsuarios);
 router.delete('/usuarios/:id', UsuariosController.deleteUsuarios);
