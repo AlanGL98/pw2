@@ -14,9 +14,9 @@ var opiniones_routes = require('./routes/OpinionesRoutes');
 var roles_routes = require('./routes/RolesRoutes');
 
 // Middlewares
-// app.use(bodyParser.urlencoded({ extended:false }));
-// app.use(bodyParser.json());
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.json());
+// app.use(express.json());
 
 // CORS
 app.use((req, res, next) => {

@@ -105,11 +105,11 @@ var controller = {
             }
 
             // Buscar el registro a modificar
-            const index = users.list.findIndex((item) => item.id === id);
+            const index = users.list.findIndex((item) => item.id == id);
             var bufferUser = users.list[index];
             users.list[index] = {
               ...bufferUser,
-              ...changes,
+              ...params,
             };
 
             // Devolver una respuesta
@@ -135,10 +135,10 @@ var controller = {
         try{
 
             // Buscar el registro a eliminar
-            const bufferUser = users.list.filter((user) => user.id !== id);
+            const bufferUser = users.list.filter((user) => user.id == id);
 
             // Eliminar el registro
-            const newArray = users.list.filter((user) => user.id !== id);
+            const newArray = users.list.filter((user) => user.id != id);
             users.list = newArray;
 
             // Devolver una respuesta
