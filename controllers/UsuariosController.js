@@ -1,15 +1,77 @@
 'use strict'
-
+const boom = require('@hapi/boom');
+const Model = require('../models/UsuariosModel');
 var validator = require('validator');
 var faker = require('faker');
 
 class UsuariosService {
     constructor() {
-        this.list = [];
-        this.generate();
+        //this.list = [];
+        //this.generate();
     }
 
-    generate() {
+    async createUser(data) {
+        const model = new Model(data);
+        await model.save();
+        return data;
+    }
+    async findOneUser(id) {
+        const user = await Model.findOne({
+            _id: id,
+        });
+        if (user == undefined || user == null)
+            throw boom.notFound('No se encontro el usuario');
+        else if (user.length <= 0)
+            throw boom.notFound('No se encontro ningún registro');
+        return user;
+    }
+
+    async updateUser(id, changes) {
+        let user = await Model.findOne({
+            _id: id,
+        });
+        let userOriginal = {
+            name: user.name,
+            last_name1: user.last_name1,
+            last_name2: user.last_name2,
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            birthdate: user.birthdate,
+            image: user.image,
+            id_rol: user.id_rol
+        };
+        const { name, last_name1,last_name2,username,email,password,birthdate,  image ,id_rol} = changes;
+        user.name = name;
+        user.last_name1 = last_name1;
+        user.last_name2 = last_name2;
+        user.username=username;
+        user.email = email;
+        user.password=password;
+        user.birthdate= birthdate;
+        user.image = image;
+        user.id_rol=id_rol
+        user.save();
+    
+        return {
+            original: userOriginal,
+            actualizado: user,
+        };
+    }
+
+    async deleteUser(id) {
+        let user = await Model.findOne({
+            _id: id,
+        });
+        const { deletedCount } = await Model.deleteOne({
+            _id: id,
+        });
+        if (deletedCount <= 0)
+            throw boom.notFound('El registro seleccionado no existe');
+        return user;
+    }
+
+    /*generate() {
         const limit = 20;
         for (let index = 0; index < limit; index++) {
             const createdAt = faker.date.past(2);
@@ -24,10 +86,10 @@ class UsuariosService {
                 createdAt,
             });
         }
-    }
+    }*/
 }
 
-var users = new UsuariosService();
+/*var users = new UsuariosService();
 
 var controller = {
 
@@ -170,6 +232,7 @@ var controller = {
 
 } // end controller
 
+*/
 
-
-module.exports = controller;
+//module.exports = controller;
+module.exports= UsuariosService;
