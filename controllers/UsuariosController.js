@@ -1,8 +1,8 @@
 'use strict'
-const boom = require('@hapi/boom');
+const boom = require('@hapi/boom');// valida errores http
 const Model = require('../models/UsuariosModel');
-var validator = require('validator');
-var faker = require('faker');
+/*var validator = require('validator');
+var faker = require('faker');*/
 
 class UsuariosService {
     constructor() {
