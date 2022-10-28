@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import HeaderDiv from  './componentes/HeaderDiv';
 import Cargar from "./elementos/Carousel";
 import { Section } from "./elementos/Seccion";
+import Navbar from "./componentes/NavBar";
 //import Card from "./componentes/Card";
 
 
@@ -10,11 +11,14 @@ import { Section } from "./elementos/Seccion";
 const App = () => {
   return ( 
     <>
-      <Helmet>
+
+    
+ 
+      {/* <Helmet>
         <title>YO OPINO</title>
       </Helmet>
       
-      <HeaderDiv titulo="Inicio" />
+      <HeaderDiv titulo="Inicio" /> */}
       
     
       <Cargar>
