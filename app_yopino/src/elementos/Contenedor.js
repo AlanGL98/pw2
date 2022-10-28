@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 const Contenedor = styled.div`
     /*background: #fff;*/
-    width: 90%;
-    max-width: 85rem; /*1110px*/
-    height: 90vh;
-    max-height: 50rem;  /* 800px */
+    width: 95%;
+    max-width: 100rem; /*1110px*/
+    height: 100vh;
+   
     overflow-y: auto;
     box-shadow: 0px 1.25rem 2.5rem rgba(0,0,0,.05);
-    border-radius: 0.625rem; /* 10px */
+
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -21,6 +21,7 @@ const Contenedor = styled.div`
         max-height: none;
     }
     `
+    
 ;
 
 export default Contenedor; 

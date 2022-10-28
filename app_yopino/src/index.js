@@ -6,7 +6,8 @@ import WebFont from 'webfontloader';
 import Contenedor from './elementos/Contenedor';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import InicioSesion from './componentes/vistas/InicioSesion';
-import RegistroUsuarios from './componentes/vistas/RegistroUsuarios';
+import Categorias from './componentes/Categorias';
+import Navbar from "./componentes/NavBar";
 import Fondo from "./elementos/Fondo";
 
 
@@ -20,11 +21,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Navbar/>
       <Contenedor>
         
         <Routes>
           <Route path="/iniciar-sesion" element ={<InicioSesion/>}/>
-          <Route path="/crear-cuenta" element ={<RegistroUsuarios/>}/>
+          <Route path="/categorias" element ={<Categorias/>}/>
+          
           <Route path="/" element ={<App/>}/>
         </Routes>
           
