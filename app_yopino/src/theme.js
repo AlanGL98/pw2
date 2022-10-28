@@ -14,7 +14,8 @@ const theme = {
     grisOscuro: 'rgba(0, 0, 0, 0.3)',
     azul: 'rgb(0, 88, 255, 0.8)',
     colorAzul: 'rgb(0,15,22,47)',
-    colorVerde: 'rgb(0, 102,218,67)',
+    colorVerde: 'rgba(102,218,67, 1)',
+    lightAzul: 'rgb(0, 102,218,67)',
     
     _20: '20%',
     _30: '30%',

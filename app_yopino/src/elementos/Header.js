@@ -14,6 +14,7 @@ const ContenedorHeader = styled.div`
     @media(max-width: 75rem){ /* 950px */
         flex-wrap: wrap;
     }
+    padding: 20px 0;
 `;
 
 const Titulo = styled.h1`
@@ -24,6 +25,7 @@ const Titulo = styled.h1`
     @media(max-width:88rem){ /*950px */
         display: none;
     }
+    color:${theme.colorVerde};
 `;
 
 const ContenedorBotones = styled.div`
@@ -36,6 +38,7 @@ const ContenedorBotones = styled.div`
         padding: 5px 0;
         justify-content: space-around;
     }
+    color:${theme.colorVerde};
 `;
 
 export {Header, ContenedorHeader, Titulo, ContenedorBotones};

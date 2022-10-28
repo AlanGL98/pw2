@@ -3,6 +3,7 @@ import { Header, ContenedorHeader, Titulo, ContenedorBotones} from '../elementos
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
+
 const HeaderDiv = ({titulo = ""}) => {
     return (
         <>
@@ -11,12 +12,14 @@ const HeaderDiv = ({titulo = ""}) => {
                 <ContenedorHeader>
                     <Titulo>{titulo}</Titulo>
                     <ContenedorBotones>
-                        <Link to={'/'} > <Button color="success">Home</Button> </Link>
-                        <Button color="success">Opiniones</Button>
+                        <Link to={'/'} > <Button>Home</Button> </Link>
+                        <Button>Opiniones</Button>
+                        <Button>Categorias</Button>
+                        <Button>Rankin</Button>
                     </ContenedorBotones>
 
                     <ContenedorBotones>
-                        <Link to={"/iniciar-sesion"}> <Button color="success">Login</Button> </Link>
+                        <Link to={"/iniciar-sesion"}> <Button>Login</Button> </Link>
                     </ContenedorBotones>
 
                 </ContenedorHeader>
