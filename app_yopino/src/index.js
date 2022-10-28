@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import WebFont from 'webfontloader';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
+import Contenedor from './elementos/Contenedor';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import InicioSesion from './componentes/vistas/InicioSesion';
+import RegistroUsuarios from './componentes/vistas/RegistroUsuarios';
+import Fondo from "./elementos/Fondo";
+
 
 WebFont.load({
   google: {
@@ -16,14 +19,19 @@ WebFont.load({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-    <Button variant="contained" disableElevation>Astro</Button>
-    <Button variant="outlined" startIcon={<DeleteIcon />}>
-      Delete
-    </Button>
-    <Button variant="contained" endIcon={<SendIcon />}>
-      Send
-    </Button>
+    <BrowserRouter>
+      <Contenedor>
+        
+        <Routes>
+          <Route path="/iniciar-sesion" element ={<InicioSesion/>}/>
+          <Route path="/crear-cuenta" element ={<RegistroUsuarios/>}/>
+          <Route path="/" element ={<App/>}/>
+        </Routes>
+          
+          
+        </Contenedor>
+    </BrowserRouter>
+    <Fondo />
   </React.StrictMode>
 );
 

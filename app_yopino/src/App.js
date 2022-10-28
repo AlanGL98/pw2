@@ -1,8 +1,17 @@
 import React from "react";
+import { Helmet } from "react-helmet";
+import HeaderDiv from  './componentes/HeaderDiv';
 
 const App = () => {
   return ( 
-    <h1>Hello World!</h1>
+    <>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
+
+      <HeaderDiv titulo="Home" />
+
+    </>
    );
 }
  
