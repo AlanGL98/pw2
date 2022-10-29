@@ -5,19 +5,38 @@
     -webkit-column-width: 33%;
     -moz-column-width: 33%;
     column-width: 33%;
-    padding: 0 5px;
+    padding: 0 2px;
+ 
 }
+.category .titles{
+    font-size: 50px;
+    font-family: 'Jura', sans-serif;
+    position: absolute;
+    color: white;
+    text-transform: uppercase;
+    padding: 5px 5px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,  +
+    rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+}
+
 .category .pics{
     -webkit-transition: all 350ms ease;
     transition: all 350ms ease;
     cursor: pointer;
     margin-bottom: 5px;
+    
 }
-.category .pics:hover{
+.category .pics:hover {
     -webkit-transform:scale(.99);transform:scale(.99);
-
+    font-size: 60px;
     filter: brightness(.5);
+      
 }
+
+  
+
+
+
 @media (max-width: 991px){
     .category{
         -webkit-column-count: 2;
