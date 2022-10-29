@@ -13,13 +13,13 @@ class Cards extends Component{
             <div className='contaier-fluid d-flex justify-content-center'>
                 <div className='row'>
                     <div className='col-md-4'>
-                       <Card imgsrc={img1}/>
+                       <Card imgsrc={img1} title='Fortnite'/>
                     </div>
                     <div className='col-md-4'>
-                        <Card imgsrc={img2}/>
+                        <Card imgsrc={img2} title='Valorant'/>
                     </div>
                     <div className='col-md-4'>
-                        <Card imgsrc={img3}/>
+                        <Card imgsrc={img3} title='League of Legends'/>
                     </div>       
                 </div>
             </div>
