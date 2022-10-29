@@ -9,7 +9,9 @@ import InicioSesion from './componentes/vistas/InicioSesion';
 import Categorias from './componentes/Categorias';
 import Navbar from "./componentes/NavBar";
 import Fondo from "./elementos/Fondo";
+import Reviews from "./componentes/vistas/Reviews";
 
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 WebFont.load({
   google: {
@@ -27,6 +29,7 @@ root.render(
         <Routes>
           <Route path="/iniciar-sesion" element ={<InicioSesion/>}/>
           <Route path="/categorias" element ={<Categorias/>}/>
+          <Route path="/all-reviews" element ={<Reviews/>}/>
           
           <Route path="/" element ={<App/>}/>
         </Routes>
