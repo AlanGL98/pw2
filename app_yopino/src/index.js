@@ -10,6 +10,7 @@ import Categorias from './componentes/Categorias';
 import Navbar from "./componentes/NavBar";
 import Fondo from "./elementos/Fondo";
 import Reviews from "./componentes/vistas/Reviews";
+import Post from "./componentes/vistas/Post";
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
@@ -30,6 +31,7 @@ root.render(
           <Route path="/iniciar-sesion" element ={<InicioSesion/>}/>
           <Route path="/categorias" element ={<Categorias/>}/>
           <Route path="/all-reviews" element ={<Reviews/>}/>
+          <Route path="/post" element ={<Post/>}/>
           
           <Route path="/" element ={<App/>}/>
         </Routes>
