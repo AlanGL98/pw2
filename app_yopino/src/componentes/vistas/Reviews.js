@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 const Reviews = () => {
     return ( 
         <>
-
+          <h1>Reviews</h1>
         <Helmet>
              <title>Reviews</title>
         </Helmet>

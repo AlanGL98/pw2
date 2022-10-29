@@ -4,6 +4,7 @@ import HeaderDiv from  './componentes/HeaderDiv';
 import Cargar from "./componentes/CarouselDiv";
 import { Section } from "./elementos/Seccion";
 import Navbar from "./componentes/NavBar";
+import Reviews from "./componentes/vistas/Reviews";
 //import Card from "./componentes/Card";
 
 
@@ -19,12 +20,17 @@ const App = () => {
       </Helmet>
       
       <HeaderDiv titulo="Inicio" /> */}
+
+      <Section>
+        <h1>Los más populares</h1>
+        <Cargar>
+          
+        </Cargar>
+      </Section>
       
-    
-      <Cargar>
-        Slide
-      </Cargar>
-      
+      <Section>
+        <Reviews />
+      </Section>
 
       <Section>
         Categorias   
