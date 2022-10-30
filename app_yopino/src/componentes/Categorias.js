@@ -68,7 +68,7 @@ const Categorias = () => {
 
   return(
     <>
-      <Link to={"/"}><div className="category">
+      <Link to={"/all-reviews"}><div className="category">
         {data.map((item, index)=>{
           return(
             <div className="pics" key={index} >

@@ -11,6 +11,7 @@ import Navbar from "./componentes/NavBar";
 import Fondo from "./elementos/Fondo";
 import Reviews from "./componentes/vistas/Reviews";
 import Post from "./componentes/vistas/Post";
+import NewPost from "./componentes/vistas/NewPost";
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
@@ -32,6 +33,7 @@ root.render(
           <Route path="/categorias" element ={<Categorias/>}/>
           <Route path="/all-reviews" element ={<Reviews/>}/>
           <Route path="/post" element ={<Post/>}/>
+          <Route path="/newpost" element ={<NewPost/>}/>
           
           <Route path="/" element ={<App/>}/>
         </Routes>
