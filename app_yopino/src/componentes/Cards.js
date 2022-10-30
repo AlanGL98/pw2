@@ -1,7 +1,7 @@
 import { cardContentClasses, TableRow } from '@mui/material';
 import React, {Component } from 'react';
 import Card from './Card';
-import './card-style.css';
+import '../css/card-style.css';
 
 import img1 from "../img/Fortnite.jpg";
 import img2 from "../img/Valorant.jpg";

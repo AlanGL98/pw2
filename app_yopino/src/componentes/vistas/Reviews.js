@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "../Cards";
-import '../card-style.css'
 import { Helmet } from "react-helmet";
 
 
