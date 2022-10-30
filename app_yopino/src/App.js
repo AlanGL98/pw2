@@ -1,12 +1,7 @@
 import React from "react";
-import { Helmet } from "react-helmet";
-import HeaderDiv from  './componentes/HeaderDiv';
 import Cargar from "./componentes/CarouselDiv";
 import { Section } from "./elementos/Seccion";
-import Navbar from "./componentes/NavBar";
 import Reviews from "./componentes/vistas/Reviews";
-//import Card from "./componentes/Card";
-import Footer from './componentes/Footer'
 
 
 const App = () => {
@@ -31,7 +26,7 @@ const App = () => {
       <Section>
         <Reviews />
       </Section>
-      
+
 
     </>
    );
