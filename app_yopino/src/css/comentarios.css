@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'poppins';
     
 }
 
@@ -22,23 +23,19 @@ section{
     flex-direction: column;
     align-items: center;
 }
-h1{
-    font-size: 50px;
-    line-height: 60px;
-    text-align: center;
-    margin-bottom: 40px;
-}
+
 .cards{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    color: white;
     
 }
 .card{
     flex: 0 0 calc(33% -20px);
     max-width: calc(33% -20px);
     width: 100%;
-    background: #fff;
+    background: #333333;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
@@ -49,24 +46,161 @@ h1{
     border-color: #348519;
     
 }
-/* .btn{
-    border: none;
-    outline: none;
-    background: #348519;
-    color: #fff;
-    border-radius: 10px;
-    max-width: 10px;
+
+
+.card h1{
+    font-size: 40px;
+    line-height: 60px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.card h3{
+    font-size: 16px;
+    color: #212121;
+    text-align: right;
+}
+.card h4{
+    font-size: 18px;
+    
+    margin-top: 15px;
+}
+.card p{
+    font-size: 12px;
+   
+    color: #212121;
+    text-align: right;
+}
+.card .rating{
+   float: left;
+}
+
+
+
+
+.postInfo{
+                       
+
+   left: 0;
+   right: 0;
+   z-index: 1;
+   display: block;
+   height: inherit;  
+position: relative;
+        
+   
+}
+.postInfo img{
     width: 100%;
-    height: 40px;
-    display: flex;
+    max-height: 600px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+
+.gameinfo{
+    position: absolute;
+    text-align: center;
+    color: white;
+
+    width: 1000px;
+    padding: 30px;
+    border-radius: 10px;
+
+    background-color: rgba(gray, .9);
+    backdrop-filter: blur(10px);
+   
+    
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: .3s;
-    border: 1px solid #348519
+
 }
-.btn:hover{
-    background: transparent;
+
+.gameinfo h1{
+    text-transform: uppercase;
+    font-size: 45px;
+}
+
+.gameinfo p{
+    font-size: 12px;
+    
+}
+
+
+
+
+.new-comments{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #212121;
+    
+}
+.new-comment-card{
+    flex: 0 0 calc(33% -20px);
+    max-width: calc(33% -20px);
+    width: 100%;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: .3s;
+    border: 2px solid transparent;
+}
+.new-comment-card:hover{
+    border-color: #348519;
+    
+}
+
+
+.new-comment-card h1{
+    font-size: 40px;
+    line-height: 60px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.new-comment-card h3{
+    font-size: 16px;
+    color: #212121;
+    text-align: right;
+}
+.new-comment-card h4{
+    font-size: 18px;
+    
+    margin-top: 15px;
+}
+.new-comment-card p{
+    font-size: 12px;
+   
+    color: #212121;
+    text-align: right;
+}
+.new-comment-card .rating{
+   float: left;
+}
+.btn-newcomment{
+    border-radius: 4px;
+  background: #348519;
+  padding: 10px 22px;
+  color: #fff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+ float: right;
+
+
+}
+.btn-newcomment:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
     color: #348519;
-} */
+  }
+
+
