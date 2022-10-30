@@ -3,7 +3,7 @@
 var validator = require('validator');
 var faker = require('faker');
 
-class OpinionesService{
+class TopPlayersService{
     constructor() {
         this.list = [];
         this.generate();
@@ -13,76 +13,66 @@ class OpinionesService{
         const limit = 10;
         for (let index = 0; index < limit; index++) {
             const createdAt = faker.date.past(2);
+            const name = faker.name.findName();
             this.list.push({
                 id: index + 1,
                 uuid: faker.datatype.uuid(),
-                title: faker.name.title(),
-                image: faker.image.imageUrl(),
-                description: faker.lorem.paragraphs(3),
-                calification: faker.datatype.number({'min': 0, 'max': 100}),
+                name:name,
+                position:faker.datatype.number({
+                    'min': 1,
+                    'max': 10
+                }),
+                image: faker.internet.avatar(),
+                url:'localhost:3900/yopino/opiniones/',
                 createdAt
             });
         }
       }
 }
-var opinions = new OpinionesService();
-
+var players = new TopPlayersService();
 var controller = {
 
-    getAll: (req, res) => {
+    getTopPlayers: (req, res) => {
         return res.status(200).send({
             status: 'success',
-            opiniones: opinions.list
+            jugadores: players.list
         });
     },
-
-    get: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-        // Buscar el registro a eliminar
-        const bufferOpinion = opinions.list.filter((user) => user.id == id);
-
-        return res.status(200).send({
-            status: 'success',
-            usuario: bufferOpinion
-        });
-    },
-
-    create: (req, res) => {
+    createTopPlayers: async (req, res) => {
         // Recoger parametros por post
         var params = req.body;
 
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
+            var validate_name = validator.isEmpty(params.name);
+            var validate_position = validator.isEmpty(params.position);
 
-            if(validate_title && validate_description){
+            if(validate_name && validate_position){
                 return res.status(200).send({
                     status: 'error',
-                    message: 'Faltan campos por llenar para la opinion.'
+                    message: 'Faltan datos por enviar2.'
                 });
             }
             
-            const newOpinion = {
-                id: opinions.list.length + 1,
+            const newTopPlayer = {
+                id: players.list.length + 1,
                 uuid: faker.datatype.uuid(),
-                title: params.title,
-                image: faker.internet.avatar(),
-                description: params.description,
-                calification: params.calification,
+                name: params.name,
+                position: params.position,
+                url:'localhost:3900/yopino/opiniones/',
                 createdAt: faker.date.past(2),
+                image: faker.internet.avatar(),
             }
 
             //Guardar el articulo en el arreglo
-            opinions.list.push(
-                newOpinion
+            players.list.push(
+                newTopPlayer
             );
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: newOpinion
+                jugador: newTopPlayer
             });
 
         }
@@ -94,7 +84,7 @@ var controller = {
         }
     },
 
-    update: (req, res) => {
+    updateTopPlayers: (req, res) => {
         // Recoger parametros de la url
         const  { id } = req.params;
         // Recoger parametros por post
@@ -102,28 +92,28 @@ var controller = {
 
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
+            var validate_name = validator.isEmpty(params.name);
+            var validate_position = validator.isEmpty(params.position);
 
-            if(validate_title && validate_description){
+            if(validate_name &&validate_position){
                 return res.status(200).send({
                     status: 'error',
-                    message: 'Faltan datos de usuario por enviar.'
+                    message: 'Faltan datos de jugador por enviar.'
                 });
             }
 
             // Buscar el registro a modificar
-            const index = opinions.list.findIndex((item) => item.id == id);
-            var bufferOpinion = opinions.list[index];
-            opinions.list[index] = {
-              ...bufferOpinion,
+            const index = players.list.findIndex((item) => item.id == id);
+            var bufferUser = players.list[index];
+            players.list[index] = {
+              ...bufferUser,
               ...params,
             };
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: opinions.list[index]
+                jugadores: players.list[index]
             });
 
         }
@@ -135,7 +125,7 @@ var controller = {
         }
     },
 
-    delete: (req, res) => {
+    deleteTopPlayers: (req, res) => {
         // Recoger parametros de la url
         const  { id } = req.params;
 
@@ -143,26 +133,27 @@ var controller = {
         try{
 
             // Buscar el registro a eliminar
-            const bufferOpinion = opinions.list.filter((user) => user.id == id);
+            const bufferPlayer = players.list.filter((player) => player.id == id);
 
             // Eliminar el registro
-            const newArray = opinions.list.filter((user) => user.id != id);
-            opinions.list = newArray;
+            const newArray = players.list.filter((player) => player.id != id);
+            players.list = newArray;
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: bufferOpinion
+                jugadores: bufferPlayer
             });
 
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de actualizacion.'
+                message: 'Falla en proceso de eliminacion.'
             });
         }
     }
+
 
 }
 

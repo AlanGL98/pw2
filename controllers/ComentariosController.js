@@ -3,36 +3,35 @@
 var validator = require('validator');
 var faker = require('faker');
 
-class OpinionesService{
+class ComentariosService{
     constructor() {
         this.list = [];
         this.generate();
     }
 
     generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                title: faker.name.title(),
-                image: faker.image.imageUrl(),
-                description: faker.lorem.paragraphs(3),
-                calification: faker.datatype.number({'min': 0, 'max': 100}),
-                createdAt
-            });
+        const limitOpinions = 10, limitComments = 4;
+        for (let i = 0; i < limitOpinions; i++) {
+            for (let j = 0; j < limitComments; j++){
+                this.list.push({
+                    id: this.list.length + 1,
+                    // comment: 'comentario ' + (this.list.length + 1),
+                    comment: faker.lorem.sentence(5),
+                    idOpinion: i + 1,
+                    idUser: j + 1,
+                });
+            }
         }
       }
 }
-var opinions = new OpinionesService();
+var comments = new ComentariosService();
 
 var controller = {
 
     getAll: (req, res) => {
         return res.status(200).send({
             status: 'success',
-            opiniones: opinions.list
+            opiniones: comments.list
         });
     },
 
@@ -40,11 +39,11 @@ var controller = {
         // Recoger parametros de la url
         const  { id } = req.params;
         // Buscar el registro a eliminar
-        const bufferOpinion = opinions.list.filter((user) => user.id == id);
+        const bufferComment = comments.list.filter((user) => user.idOpinion == id);
 
         return res.status(200).send({
             status: 'success',
-            usuario: bufferOpinion
+            usuario: bufferComment
         });
     },
 
@@ -54,41 +53,38 @@ var controller = {
 
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
+            var validate_comment = validator.isEmpty(params.comment);
 
-            if(validate_title && validate_description){
+            if(validate_comment){
                 return res.status(200).send({
                     status: 'error',
-                    message: 'Faltan campos por llenar para la opinion.'
+                    message: 'Faltan campos por llenar para la comentario.'
                 });
             }
-            
-            const newOpinion = {
-                id: opinions.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                title: params.title,
-                image: faker.internet.avatar(),
-                description: params.description,
-                calification: params.calification,
-                createdAt: faker.date.past(2),
+
+            const newComment = {
+                id: comments.list.length + 1,
+                comment: params.comment,
+                idOpinion: params.idOpinion,
+                idUser: params.idUser,
             }
 
             //Guardar el articulo en el arreglo
-            opinions.list.push(
-                newOpinion
+            comments.list.push(
+                newComment
             );
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: newOpinion
+                opinion: newComment
             });
 
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
+                error: err.message,
                 message: 'Falla en proceso de agregado.'
             });
         }
@@ -102,10 +98,9 @@ var controller = {
 
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
+            var validate_comment = validator.isEmpty(params.comment);
 
-            if(validate_title && validate_description){
+            if(validate_comment){
                 return res.status(200).send({
                     status: 'error',
                     message: 'Faltan datos de usuario por enviar.'
@@ -113,23 +108,24 @@ var controller = {
             }
 
             // Buscar el registro a modificar
-            const index = opinions.list.findIndex((item) => item.id == id);
-            var bufferOpinion = opinions.list[index];
-            opinions.list[index] = {
-              ...bufferOpinion,
+            const index = comments.list.findIndex((item) => item.id == id);
+            var bufferComment = comments.list[index];
+            comments.list[index] = {
+              ...bufferComment,
               ...params,
             };
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: opinions.list[index]
+                opinion: comments.list[index]
             });
 
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
+                error: err.message,
                 message: 'Falla en proceso de actualizacion.'
             });
         }
@@ -143,22 +139,23 @@ var controller = {
         try{
 
             // Buscar el registro a eliminar
-            const bufferOpinion = opinions.list.filter((user) => user.id == id);
+            const bufferComment = comments.list.filter((user) => user.id == id);
 
             // Eliminar el registro
-            const newArray = opinions.list.filter((user) => user.id != id);
-            opinions.list = newArray;
+            const newArray = comments.list.filter((user) => user.id != id);
+            comments.list = newArray;
 
             // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                opinion: bufferOpinion
+                opinion: bufferComment
             });
 
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
+                error: err.message,
                 message: 'Falla en proceso de actualizacion.'
             });
         }

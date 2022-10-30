@@ -11,7 +11,14 @@ var app = express();
 var test_routes = require('./routes/test');
 var usuarios_routes = require('./routes/UsuariosRoutes');
 var opiniones_routes = require('./routes/OpinionesRoutes');
+var comentarios_routes = require('./routes/ComentariosRoutes');
+var secciones_router = require('./routes/SeccionesRouter');
 var roles_routes = require('./routes/RolesRoutes');
+var top_players_routes= require('./routes/TopPlayersRoutes');
+var like_comentario_routes= require('./routes/LikeComentarioRoutes');
+var calificacion_routes= require('./routes/CalificacionRoutes');
+var favoritos_routes= require('./routes/FavoritosRoutes');
+var imagenes_routes= require('./routes/ImagenesRoutes');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended:false }));
@@ -31,7 +38,13 @@ app.use((req, res, next) => {
 app.use('/yopino', test_routes);
 app.use('/yopino', usuarios_routes);
 app.use('/yopino', opiniones_routes);
+app.use('/yopino', comentarios_routes);
+app.use('/yopino', secciones_router);
 app.use('/yopino', roles_routes);
-
+app.use('/yopino', top_players_routes);
+app.use('/yopino', like_comentario_routes);
+app.use('/yopino', calificacion_routes);
+app.use('/yopino', favoritos_routes);
+app.use('/yopino', imagenes_routes);
 // Exportar modulo (fichero actual)
 module.exports = app;
