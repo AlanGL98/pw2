@@ -74,10 +74,10 @@ const Post = () => {
             </section>
 
                 <h1>Opiniones</h1>
-                <div className="cards">
+                <div className="cards1">
                     {
                         comentarios.map((card, i) => (
-                        <div key= {i} className="card">
+                        <div key= {i} className="card1">
                            <Stack  spacing={1}>
                                 <Rating name="size-small" defaultValue={card.rate} size="small" readOnly/>
                                 

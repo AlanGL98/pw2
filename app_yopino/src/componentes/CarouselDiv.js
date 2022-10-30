@@ -58,7 +58,7 @@ function Cargar(args){
                 onExited = {() => setAnimating(false)}
                 key = {item.src}            
             >
-                <img src={item.src} alt={item.altText} width="100%" height="600px" />
+                <img src={item.src} alt={item.altText} width="100%" height="650px" />
                 <CarouselCaption 
                     captionText = {item.caption}
                     captionHeader = {item.caption}

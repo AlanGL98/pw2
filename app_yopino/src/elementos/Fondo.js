@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {ReactComponent as GamePad} from "./../img/gamepad2.svg";
 
 const Svg = styled.svg`
-    height: 50vh;
+    height: 20vh;
     width: 100%;
     position: fixed;
     bottom: 0;

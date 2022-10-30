@@ -24,53 +24,53 @@ section{
     align-items: center;
 }
 
-.cards{
+.cards1{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     color: white;
     
 }
-.card{
+.card1{
     flex: 0 0 calc(33% -20px);
     max-width: calc(33% -20px);
     width: 100%;
-    background: #333333;
+    background: #333333 !important;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
     transition: .3s;
     border: 2px solid transparent;
 }
-.card:hover{
+.card1:hover{
     border-color: #348519;
     
 }
 
 
-.card h1{
+.card1 h1{
     font-size: 40px;
     line-height: 60px;
     text-align: center;
     margin-bottom: 40px;
 }
-.card h3{
+.card1 h3{
     font-size: 16px;
     color: #212121;
     text-align: right;
 }
-.card h4{
+.card1 h4{
     font-size: 18px;
     
     margin-top: 15px;
 }
-.card p{
+.card1 p{
     font-size: 12px;
    
     color: #212121;
     text-align: right;
 }
-.card .rating{
+.card1 .rating{
    float: left;
 }
 
