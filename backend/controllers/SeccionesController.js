@@ -1,106 +1,206 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
-
-class SeccionesService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 3;
-        for (let i = 0; i < limit; i++) {
-            this.list.push({
-                id: this.list.length + 1,
-                // name: 'comentario ' + (this.list.length + 1),
-                name: faker.lorem.sentence(2)
-            });
-        }
-      }
-}
-var sections = new SeccionesService();
+const Model = require('../models/CategoriasModel');
 
 var controller = {
 
-    getAll: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            opiniones: sections.list
+    getAll: (req, res) =>{
+
+        var query = Model.find({});
+
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver roles'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay roles para mostrar'
+                });
+            }
+
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
-    create: (req, res) => {
+    get: (req, res) => {
+
+        // Recoger id de la url
+        var categoriaId = req.params.id;
+
+        // Comprobar que existe
+        if(!categoriaId || categoriaId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe la categoria.'
+            });
+        }
+
+        // Buscar la categoria
+        Model.findById(categoriaId, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe la categoria.'
+                });
+            }
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
+
+    create: (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
 
         // Validar datos
         try{
-            var validate_name = validator.isEmpty(params.name);
-
-            if(validate_name){
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'Faltan campos por llenar para la comentario.'
-                });
-            }
-
-            const newSection = {
-                id: sections.list.length + 1,
-                name: params.name
-            }
-
-            //Guardar el articulo en el arreglo
-            sections.list.push(
-                newSection
-            );
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: newSection
-            });
-
+            var validate_name = !validator.isEmpty(params.name);
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                error: err.message,
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_name){
+            // Crear el objeto a guardar
+            var categoria = new Model();
+
+            // Asignar valores
+            categoria.name = params.name;
+            categoria.order = params.order;
+
+            // Guardar la categoria
+            categoria.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'La categoria no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
     },
 
-    delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+    update: (req, res) => {
+        
+        // Recoger el id de la categoria por la url
+        var categoriaId = req.params.id;
+
+        // Recoger los datos que llegan por put
+        var params = req.body;
 
         // Validar datos
         try{
-
-            // Buscar el registro a eliminar
-            const buffername = sections.list.filter((user) => user.id == id);
-
-            // Eliminar el registro
-            const newArray = sections.list.filter((user) => user.id != id);
-            sections.list = newArray;
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: buffername
-            });
-
+            var validate_name = !validator.isEmpty(params.name);
         }
         catch(err){
-            return res.status(200).send({
+            return res.status(404).send({
                 status: 'error',
-                error: err.message,
-                message: 'Falla en proceso de actualizacion.'
+                message: 'No existe la categoria.'
             });
         }
-    }
+
+        if(validate_name){
+            // Find and update
+            Model.findOneAndUpdate({_id: categoriaId}, params, {new:true}, (err, model) =>{
+                if(err){
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error al actualizar.'
+                    });
+                }
+
+                if(!model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'No existe la categoria.'
+                    });
+                }
+
+                return res.status(200).send({
+                    status: 'succes',
+                    article: model
+                });
+
+            });
+        }
+        else{
+            // Devolver respuesta
+            return res.status(200).send({
+                status: 'error',
+                message: 'No existe la categoria.'
+            });
+        }
+
+    },
+
+    delete: (req, res) => {
+        // Recoger el id de la url
+        var categoriaId = req.params.id;
+
+        // Find and delete
+        Model.findOneAndDelete({_id: categoriaId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado la categoria, posiblemente no existe.'
+                });
+            }
+            
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
 
 }
 
