@@ -3,13 +3,19 @@ import { Helmet } from "react-helmet";
 import {Header, Titulo, ContenedorHeader, ContenedorBotones} from '../../elementos/RankingElements'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
-import Cards from '../Cards'
+import Cards from '../Cards';
+import axios from 'axios';
 
 function Ranking() {
     const [dropdown, setDropdown]=useState(false);
     const abrirCerrarDropdown=()=>{
         setDropdown(!dropdown);
     }
+
+    axios.get('http://localhost:3900/yopino/opiniones')
+    .then((res) =>{
+        console.log(res.data);
+    });
 
     return ( 
         <>
