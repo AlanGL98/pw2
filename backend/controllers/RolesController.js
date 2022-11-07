@@ -14,8 +14,26 @@ class RolesService{
     }
     async createRol(data) {
         const model = new Model(data);
-        await model.save();
-        return data;
+        // await model.save();
+        
+        // Guardar el articulo
+        await model.save((err, data) => {
+            
+            if(err || !data){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'El articulo no se ha guardado.'
+                });
+            }
+            
+            // Devolver una respuesta
+            return res.status(200).send({
+                status: 'success',
+                article: data
+            });
+        })
+
+        // return data;
     }
 
     async findOneRol(id) {
@@ -48,6 +66,58 @@ var controller = {
             status: 'success',
             Rol: roles.roles
         });
+    },
+
+    addRole: (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+
+        // Validar datos
+        try{
+            var validate_title = !validator.isEmpty(params.title);
+            var validate_content= !validator.isEmpty(params.content);
+        }
+        catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'Falta datos por enviar.'
+            });
+        }
+
+        if(validate_title && validate_content){
+            // Crear el objeto a guardar
+            var article = new Article();
+
+            // Asignar valores
+            article.title = params.title;
+            article.content = params.content;
+            article.image = null;
+
+            // Guardar el articulo
+            article.save((err, data) => {
+
+                if(err || !data){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'El articulo no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    article: data
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+    
     }
 
 }
