@@ -6,7 +6,7 @@ const { DBURL } = require('./consts.json');
 //HACEMOS LA CONEXIÓN
 db(DBURL);
 
-var port = 3900;
+var port = 3000;
 
 // Crear servidor y ponerme a escuchar peticiones HTTP
 app.listen(port, () => {

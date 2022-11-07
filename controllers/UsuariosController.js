@@ -89,7 +89,7 @@ class UsuariosService {
     }*/
 }
 
-/*var users = new UsuariosService();
+var users = new UsuariosService();
 
 var controller = {
 
@@ -232,7 +232,7 @@ var controller = {
 
 } // end controller
 
-*/
 
-//module.exports = controller;
-module.exports= UsuariosService;
+
+module.exports = controller;
+//module.exports= UsuariosService;

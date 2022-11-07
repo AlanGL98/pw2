@@ -9,7 +9,7 @@ var UsuarioSchema = Schema({
     last_name1: String,
     last_name2: String,
     username: String,
-    email: String,
+    email: { type:String,unique:true,required:true},
     password: String,
     image: String,
     created_at: { type: Date, default: Date.now },

@@ -40,7 +40,7 @@ class RolesService{
         }
       }*/
 }
-/*var roles = new RolesService();
+var roles = new RolesService();
 var controller = {
 
     getRoles: (req, res) => {
@@ -50,8 +50,8 @@ var controller = {
         });
     }
 
-}*/
+}
 
 
 //module.exports = controller;
-module.exports = RolesService;
+module.exports = controller;
