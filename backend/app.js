@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // Cargar ficheros rutas
-var test_routes = require('./routes/test');
+// var test_routes = require('./routes/test');
 var usuarios_routes = require('./routes/UsuariosRoutes');
 var opiniones_routes = require('./routes/OpinionesRoutes');
 var comentarios_routes = require('./routes/ComentariosRoutes');
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 // Añadir prefijos o rutas
-app.use('/yopino', test_routes);
+// app.use('/yopino', test_routes);
 app.use('/yopino', usuarios_routes);
 app.use('/yopino', opiniones_routes);
 app.use('/yopino', comentarios_routes);

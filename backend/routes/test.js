@@ -6,8 +6,8 @@ var testController = require('../controllers/test');
 var router = express.Router();
 
 // Rutas de prueba
-router.post('/test', testController.datosCurso);
-router.get('/test', testController.test);
+// router.post('/test', testController.datosCurso);
+// router.get('/test', testController.test);
 
 // Rutas utiles
 // router.post('/save', ArticleController.save);
@@ -19,4 +19,4 @@ router.get('/test', testController.test);
 // router.get('/get-image/:image', ArticleController.getImage);
 // router.get('/search/:search', ArticleController.search);
 
-module.exports = router;
+// module.exports = router;

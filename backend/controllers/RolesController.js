@@ -1,127 +1,75 @@
 'use strict'
 
-/*var validator = require('validator');
-var faker = require('faker');*/
-
 const boom = require('@hapi/boom');// valida errores http
 const Model = require('../models/RolesModel');
 
-class RolesService{
-    constructor() {
-        /*this.roles = [];
-        this.design=['Admin', 'Usuario Registrado','Critico']
-        this.generate();*/
-    }
-    async createRol(data) {
-        const model = new Model(data);
-        // await model.save();
-        
-        // Guardar el articulo
-        await model.save((err, data) => {
-            
-            if(err || !data){
-                return res.status(404).send({
-                    status: 'error',
-                    message: 'El articulo no se ha guardado.'
-                });
-            }
-            
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                article: data
-            });
-        })
-
-        // return data;
-    }
-
-    async findOneRol(id) {
-        const rol = await Model.findOne({
-            _id: id,
-        });
-        if (rol == undefined || rol == null)
-            throw boom.notFound('No se encontro el rol de usuario');
-        else if (rol.length <= 0)
-            throw boom.notFound('No se encontro ningún registro');
-        return rol;
-    }
-    /*generate() {
-        
-        for (let index = 0; index < 3; index++) {
-            const createdAt = faker.date.past(2);
-            this.roles.push({
-                id: faker.datatype.uuid(),
-                rol_name:this.design[index],
-                createdAt
-            });
-        }
-      }*/
-}
-var roles = new RolesService();
 var controller = {
 
-    getRoles: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            Rol: roles.roles
+    getAll: (req, res) =>{
+
+        var query = Model.find({});
+
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver roles'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay roles para mostrar'
+                });
+            }
+
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
-    addRole: (req, res) =>{
-        // Recoger parametros por post
-        var params = req.body;
+    get: (req, res) => {
 
-        // Validar datos
-        try{
-            var validate_title = !validator.isEmpty(params.title);
-            var validate_content= !validator.isEmpty(params.content);
-        }
-        catch(err){
-            return res.status(200).send({
+        // Recoger id de la url
+        var rolId = req.params.id;
+
+        // Comprobar que existe
+        if(!rolId || rolId == null){
+            return res.status(404).send({
                 status: 'error',
-                message: 'Falta datos por enviar.'
+                message: 'No existe el rol.'
             });
         }
 
-        if(validate_title && validate_content){
-            // Crear el objeto a guardar
-            var article = new Article();
+        // Buscar el rol
+        Model.findById(rolId, (err, rol) =>{
 
-            // Asignar valores
-            article.title = params.title;
-            article.content = params.content;
-            article.image = null;
-
-            // Guardar el articulo
-            article.save((err, data) => {
-
-                if(err || !data){
-                    return res.status(404).send({
-                        status: 'error',
-                        message: 'El articulo no se ha guardado.'
-                    });
-                }
-
-                // Devolver una respuesta
-                return res.status(200).send({
-                    status: 'success',
-                    article: data
+            if(err || !rol){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe el rol.'
                 });
-            })
+            }
 
-        }
-        else{
+            //Devolverlo en json
             return res.status(200).send({
-                status: 'error',
-                message: 'Faltan datos por enviar.'
+                status: 'success',
+                data: rol
             });
-        }
-    
-    }
+
+        });
+
+    },
 
 }
-
 
 //module.exports = controller;
 module.exports = controller;
