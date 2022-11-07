@@ -135,7 +135,7 @@ var controller = {
         catch(err){
             return res.status(404).send({
                 status: 'error',
-                message: 'No existe la categoria.'
+                message: 'No existe la categoria1.'
             });
         }
 
@@ -152,7 +152,7 @@ var controller = {
                 if(!model){
                     return res.status(404).send({
                         status: 'error',
-                        message: 'No existe la categoria.'
+                        message: 'No existe la categoria2.'
                     });
                 }
 
