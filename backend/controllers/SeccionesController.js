@@ -120,17 +120,21 @@ var controller = {
     
     },
 
-    update: (req, res) => {
+    update: async (req, res) => {
         
         // Recoger el id de la categoria por la url
-        var categoriaId = req.params.id;
-
+        var { categoriaId } = req.params.id;
         // Recoger los datos que llegan por put
-        var params = req.body;
-
+        var { params }= req;
         // Validar datos
         try{
-            var validate_name = !validator.isEmpty(params.name);
+            const id = await Model.findById(categoriaId) //busca si existe el id
+            if(id){
+            var { validate_name } = !validator.isEmpty(params.name);
+            }else{
+                // Regresar un mensaje de error. 
+                res.send({message: "El id no existe"});
+            }
         }
         catch(err){
             return res.status(404).send({
