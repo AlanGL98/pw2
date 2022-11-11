@@ -132,34 +132,6 @@ var controller = {
     
     },
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-
-        // Validar datos
-        try{
-
-            // Buscar el registro a eliminar
-            const bufferFavorito = favoritos.list.filter((favorito) => favorito.id == id);
-
-            // Eliminar el registro
-            const newArray = favoritos.list.filter((favorito) => favorito.id != id);
-            favoritos.list = newArray;
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                Favoritos: bufferFavorito
-            });
-
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falla en proceso de eliminacion.'
-            });
-        }
-    },
-    delete: (req, res) => {
         // Recoger el id de la url
         var favoritoId = req.params.id;
 

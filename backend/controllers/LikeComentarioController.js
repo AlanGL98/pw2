@@ -1,112 +1,129 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
+const Model = require('../models/LikesModel');
 
-class LikeComentarioService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            const name = faker.name.findName();
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                name:name,
-                like:'true',
-                username:'localhost:3900/yopino/usuario',
-                comentario:'localhost:3900/yopino/opiniones/comentario',
-                createdAt
-            });
-        }
-      }
-}
-var likes = new LikeComentarioService();
 var controller = {
 
-    get: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            LikesComentario: likes.list
-        });
-    },
-    create: async (req, res) => {
-        // Recoger parametros por post
-        var params = req.body;
+    getAll: (req, res) =>{
 
-        // Validar datos
-        try{
-            var validate_like = validator.isEmpty(params.like);
+        var query = Model.find({});
 
-            if(validate_like ){
-                return res.status(200).send({
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
                     status: 'error',
-                    message: 'Faltan datos por enviar2.'
+                    message: 'Error al devolver likes'
                 });
             }
-            
-            const newLikeComentario = {
-                id: likes.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                createdAt: faker.date.past(2),
-                name:faker.name.findName(),
-                like:'true',
-                username:'localhost:3900/yopino/usuario',
-                comentario:'localhost:3900/yopino/opiniones/comentario',
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay likes para mostrar'
+                });
             }
 
-            //Guardar el articulo en el arreglo
-            likes.list.push(
-                newLikeComentario
-            );
 
-            // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                LikesComentario: newLikeComentario
+                data: model
             });
 
+        });
+
+    },
+    create: async (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+        const userdb= await User.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const commentdb= await User.findById(body.comment_id);
+        // Validar datos
+        try{
+            if(userdb){
+                if(commentdb){
+                    var validate_liked = !validator.isEmpty(params.liked);
+                    
+                }else{
+                res.send({message: "El comentario no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
+            }
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_liked){
+            // Crear el objeto a guardar
+            var like = new Model();
+
+            // Asignar valores
+            
+            like.liked = params.liked;
+
+
+            // Guardar el like
+            like.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'tu like no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
     },
 
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+        // Recoger el id de la url
+        var likeId = req.params.id;
 
-        // Validar datos
-        try{
+        // Find and delete
+        Model.findOneAndDelete({_id: likeId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
 
-            // Buscar el registro a eliminar
-            const bufferLike = likes.list.filter((like) => like.id == id);
-
-            // Eliminar el registro
-            const newArray = likes.list.filter((like) => like.id != id);
-            likes.list = newArray;
-
-            // Devolver una respuesta
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu like, posiblemente no existe.'
+                });
+            }
+            
             return res.status(200).send({
                 status: 'success',
-                LikesComentario: bufferLike
+                data: model
             });
 
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falla en proceso de eliminacion.'
-            });
-        }
+        });
+
     }
 
 

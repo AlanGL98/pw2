@@ -7,7 +7,7 @@ var LikeComentarioService = require('../controllers/LikeComentarioController');
 var router = express.Router();
 
 // Rutas utiles
-router.get('/like-comentario',LikeComentarioService.get);
+router.get('/like-comentario',LikeComentarioService.getAll);
 router.post('/like-comentario', LikeComentarioService.create);
 router.delete('/like-comentario/:id', LikeComentarioService.delete);
 module.exports = router;
