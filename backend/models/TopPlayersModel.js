@@ -6,9 +6,14 @@ var Opinion = mongoose.model('Opinion');
 
 var TopPlayersSchema= Schema({
     opinion_id:{type:Schema.ObjectId, ref:'Opinion'},
-    name:String,
-    order:Number,
-    image_path:String,
+    name:{
+    type: String, 
+    required: true, // Es requerido. 
+    minlength: 4, // Mínimo de caracteres. 
+    maxlength: 60 // Máximo de caracteres.
+    },
+    order:{type:Number, required:false},
+    image_path:{type:String , required: false},
     created_at: {type:Date , default: Date.now}
 });
 module.exports = mongoose.model('TopPlayers', TopPlayersSchema);
