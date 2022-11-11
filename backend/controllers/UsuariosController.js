@@ -75,7 +75,7 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const roldb= await User.findById(body.id_rol); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const roldb= await Model.findById(body.id_rol); // Esto me sirve para revisar si existe una rol con el id que recibo
         
         // Validar datos
         try{

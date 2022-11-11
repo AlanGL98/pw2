@@ -6,11 +6,11 @@ var Categorias = mongoose.model('Categorias');
 var Usuario = mongoose.model('Usuario'); 
 
 var OpinionSchema= Schema({
-    title:String,
-    sinopsis:String,
-    contenido:String,
-    category_id:{type:Schema.ObjectId, ref:'Categorias'},
-    created_by:{type:Schema.ObjectId, ref:'Usuario'},
+    title:{type:String,required: true},
+    sinopsis:{type:String,required: false},
+    contenido:{type:String,required: true},
+    category_id:{type:Schema.ObjectId, ref:'Categorias',required: true},
+    created_by:{type:Schema.ObjectId, ref:'Usuario',required: true},
     created_at: {type:Date , default: Date.now},
     updated_at: {type:Date , default: Date.now}
 

@@ -1,83 +1,136 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
+const Model = require('../models/FavoritosModel');
 
-class FavoritosService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                active:'true',
-                id_user:'localhost:3900/yopino/usuario',
-                id_opinion:'localhost:3900/yopino/opiniones',
-                createdAt
-            });
-        }
-      }
-}
-var favoritos = new FavoritosService();
 var controller = {
 
-    get: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            Favoritos: favoritos.list
-        });
-    },
-    create: async (req, res) => {
-        // Recoger parametros por post
-        var params = req.body;
+    getAll: (req, res) =>{
 
-        // Validar datos
-        try{
-            var validate_active = validator.isEmpty(params.active);
+        var query = Model.find({});
 
-            if(validate_active ){
-                return res.status(200).send({
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
                     status: 'error',
-                    message: 'Faltan datos por enviar2.'
+                    message: 'Error al devolver favoritos'
                 });
             }
-            
-            const newFavorito = {
-                id: favoritos.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                createdAt: faker.date.past(2),
-                active:'true',
-                id_user:'localhost:3900/yopino/usuario',
-                id_opinion:'localhost:3900/yopino/opiniones',
-                createdAt
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay favoritos para mostrar'
+                });
             }
 
-            //Guardar el articulo en el arreglo
-            favoritos.list.push(
-                newFavorito
-            );
 
-            // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                Favoritos: newFavorito
+                data: model
             });
 
+        });
+
+    },
+
+    get: (req, res) => {
+
+        // Recoger id de la url
+        var userId = req.params.id;
+
+
+        // Comprobar que existe
+        if(!userId || userId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe el favorito.'
+            });
+        }
+
+        // Buscar el usuario
+        Model.findById(userId, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe el favorito.'
+                });
+            }
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
+
+    create: async (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+        const userdb= await User.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const opiniondb= await User.findById(body.opinion_id);
+        // Validar datos
+        try{
+            if(userdb){
+                if(opiniondb){
+                    var validate_active = !validator.isEmpty(params.active);
+                    
+                }else{
+                res.send({message: "La opinion no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
+            }
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
-    },
 
+        if(validate_active){
+            // Crear el objeto a guardar
+            var favorito = new Model();
+
+            // Asignar valores
+            
+            favorito.active = params.active;
+
+
+            // Guardar el favorito
+            favorito.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'tu favorito no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
+    },
     delete: (req, res) => {
         // Recoger parametros de la url
         const  { id } = req.params;
@@ -105,6 +158,34 @@ var controller = {
                 message: 'Falla en proceso de eliminacion.'
             });
         }
+    },
+    delete: (req, res) => {
+        // Recoger el id de la url
+        var favoritoId = req.params.id;
+
+        // Find and delete
+        Model.findOneAndDelete({_id: favoritoId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu favorito, posiblemente no existe.'
+                });
+            }
+            
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
     }
 
 
