@@ -6,11 +6,11 @@ var UsuariosController = require('../controllers/UsuariosController');
 var router = express.Router();
 
 // Rutas utiles
-router.get('/usuarios', UsuariosController.getUsuarios);
-router.get('/usuarios/:id', UsuariosController.getUsuario);
-router.post('/usuarios', UsuariosController.createUsuarios);
-router.patch('/usuarios/:id', UsuariosController.updateUsuarios);
-router.delete('/usuarios/:id', UsuariosController.deleteUsuarios);
+router.get('/usuarios', UsuariosController.getAll);
+router.get('/usuarios/:id', UsuariosController.get);
+router.post('/usuarios', UsuariosController.create);
+router.patch('/usuarios/:id', UsuariosController.update);
+router.delete('/usuarios/:id', UsuariosController.delete);
 // router.post('/save', ArticleController.save);
 // router.get('/articles/:last?', ArticleController.getArticles);
 // router.get('/article/:id', ArticleController.getArticle);
