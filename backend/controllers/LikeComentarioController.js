@@ -38,8 +38,8 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const userdb= await User.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const commentdb= await User.findById(body.comment_id);
+        const userdb= await Model.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const commentdb= await Model.findById(body.comment_id);
         // Validar datos
         try{
             if(userdb){

@@ -1,107 +1,124 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
+const Model = require('../models/ImagenModel');
 
-class ImagenesService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                image:faker.image.imageUrl(),
-                id_opinion:'localhost:3900/yopino/opiniones',
-                createdAt
-            });
-        }
-      }
-}
-var imagenes = new ImagenesService();
 var controller = {
 
-    get: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            Imagenes: imagenes.list
-        });
-    },
-    create: async (req, res) => {
-        // Recoger parametros por post
-        var params = req.body;
+    getAll: (req, res) =>{
 
-        // Validar datos
-        try{
-            var validate_image = validator.isEmpty(params.image);
+        var query = Model.find({});
 
-            if(validate_image ){
-                return res.status(200).send({
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
                     status: 'error',
-                    message: 'Faltan datos por enviar2.'
+                    message: 'Error al devolver la imagen'
                 });
             }
-            
-            const newImagen = {
-                id: imagenes.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                createdAt: faker.date.past(2),
-                image:image.imageUrl(),
-                id_opinion:'localhost:3900/yopino/opiniones',
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay imagen para mostrar'
+                });
             }
 
-            //Guardar el articulo en el arreglo
-            imagenes.list.push(
-                newImagen
-            );
 
-            // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                Imagenes: newImagen
+                data: model
             });
 
+        });
+
+    },
+    create: async (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+        const opiniondb= await Model.findById(body.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        
+        // Validar datos
+        try{
+            if(opiniondb){
+                    var validate_image = !validator.isEmpty(params.image_path);
+            }else{
+                res.send({message: "La opinion no existe."});
+            }
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_image){
+            // Crear el objeto a guardar
+            var imagen = new Model();
+
+            // Asignar valores
+            
+            imagen.image_path = params.image_path;
+
+
+            // Guardar la imagen
+            imagen.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'tu imagen no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
     },
 
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+        // Recoger el id de la url
+        var imagenId = req.params.id;
 
-        // Validar datos
-        try{
+        // Find and delete
+        Model.findOneAndDelete({_id: imagenId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
 
-            // Buscar el registro a eliminar
-            const bufferImagen = imagenes.list.filter((imagen) => imagen.id == id);
-
-            // Eliminar el registro
-            const newArray = imagenes.list.filter((imagen) => imagen.id != id);
-            imagenes.list = newArray;
-
-            // Devolver una respuesta
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu imagen, posiblemente no existe.'
+                });
+            }
+            
             return res.status(200).send({
                 status: 'success',
-                Imagenes: bufferImagen
+                data: model
             });
 
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falla en proceso de eliminacion.'
-            });
-        }
+        });
+
     }
 
 

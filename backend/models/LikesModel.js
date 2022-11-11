@@ -6,9 +6,9 @@ var Usuario = mongoose.model('Usuario');
 var Comentario = mongoose.model('Comentario');
 
 var LikeSchema = Schema({
-    user_id:{type:Schema.ObjectId, ref:'Usuario'},
+    user_id:{type:Usuario.ObjectId, ref:'Usuario'},
     liked:Boolean,
-    comment_id:{type:Schema.ObjectId, ref:'Comentario'}
+    comment_id:{type:Comentario.ObjectId, ref:'Comentario'}
 
 });
 module.exports = mongoose.model('Like', LikeSchema);
