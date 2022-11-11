@@ -7,8 +7,8 @@ var Usuario = mongoose.model('Usuario');
 
 var FavoritoSchema= Schema({
     // Atributos comunes para favoritos
-    user_id:{type:Schema.ObjectId, ref:'Usuario',required: true},
-    opinion_id:{type:Schema.ObjectId, ref:'Opinion',required: true},
+    user_id:{type:Usuario.ObjectId, ref:'Usuario',required: true},
+    opinion_id:{type:Opinion.ObjectId, ref:'Opinion',required: true},
     active: {type:Boolean},
     created_at: {type:Date , default: Date.now}
 });

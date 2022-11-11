@@ -148,7 +148,7 @@ var controller = {
         // Recoger los datos que llegan por put
         var params = req.body;
         // Validar datos
-        const roldb= await User.findById(body.rol_id);
+        const roldb= await Model.findById(body.rol_id);
         try{
             if(roldb){
                 var validate_name = !validator.isEmpty(params.name);

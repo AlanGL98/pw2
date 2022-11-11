@@ -9,8 +9,9 @@ var OpinionSchema= Schema({
     title:{type:String,required: true},
     sinopsis:{type:String,required: false},
     contenido:{type:String,required: true},
-    category_id:{type:Schema.ObjectId, ref:'Categorias',required: true},
-    created_by:{type:Schema.ObjectId, ref:'Usuario',required: true},
+    category_id:{type:Categorias.ObjectId, ref:'Categorias',required: true},
+    image: {type:String,required: false},
+    created_by:{type:Usuario.ObjectId, ref:'Usuario',required: true},
     created_at: {type:Date , default: Date.now},
     updated_at: {type:Date , default: Date.now}
 

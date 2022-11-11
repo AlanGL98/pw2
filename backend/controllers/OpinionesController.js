@@ -1,167 +1,238 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
 
-class OpinionesService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                title: faker.name.title(),
-                image: faker.image.imageUrl(),
-                description: faker.lorem.paragraphs(3),
-                calification: faker.datatype.number({'min': 0, 'max': 100}),
-                createdAt
-            });
-        }
-      }
-}
-var opinions = new OpinionesService();
+const Model = require('../models/OpinionesModel');
 
 var controller = {
 
-    getAll: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            opiniones: opinions.list
+    getAll: (req, res) =>{
+
+        var query = Model.find({});
+
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver las opiniones'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay las opiniones para mostrar'
+                });
+            }
+
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
     get: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-        // Buscar el registro a eliminar
-        const bufferOpinion = opinions.list.filter((user) => user.id == id);
 
-        return res.status(200).send({
-            status: 'success',
-            usuario: bufferOpinion
+        // Recoger id de la url
+        var opinionId = req.params.id;
+
+
+        // Comprobar que existe
+        if(!opinionId || opinionId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe la opinion.'
+            });
+        }
+
+        // Buscar el usuario
+        Model.findById(opinionId, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe la opinion.'
+                });
+            }
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
-    create: (req, res) => {
+    create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-
+        const categorydb= await Model.findById(body.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb= await Model.findById(body.created_by);
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
-
-            if(validate_title && validate_description){
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'Faltan campos por llenar para la opinion.'
-                });
+            if(usuariodb){
+                if(categorydb){
+                    var validate_title = !validator.isEmpty(params.title);
+                    var validate_sinopsis = !validator.isEmpty(params.sinopsis);
+                    var validate_contenido = !validator.isEmpty(params.contenido);
+                    var validate_autor = !validator.isEmpty(params.created_by);
+                    
+                }else{
+                res.send({message: "La categoria no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
             }
+        }
+        catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'Falta datos por enviar.'
+            });
+        }
+
+        if(validate_title&&validate_sinopsis&&validate_contenido&&validate_autor){
+            // Crear el objeto a guardar
+            var opinion = new Model();
+
+            // Asignar valores
             
-            const newOpinion = {
-                id: opinions.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                title: params.title,
-                image: faker.internet.avatar(),
-                description: params.description,
-                calification: params.calification,
-                createdAt: faker.date.past(2),
-            }
+            opinion.title = params.title;
+            opinion.sinopsis = params.sinopsis;
+            opinion.contenido = params.contenido;
+            opinion.autor = params.autor;
+            opinion.image = params.image;
 
-            //Guardar el articulo en el arreglo
-            opinions.list.push(
-                newOpinion
-            );
 
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: newOpinion
-            });
+            // Guardar la opinion
+            opinion.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'tu opinion no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
 
         }
-        catch(err){
+        else{
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de agregado.'
+                message: 'Faltan datos por enviar.'
             });
         }
+
+    
     },
 
-    update: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-        // Recoger parametros por post
+    update: async (req, res) => {
+        
+        // Recoger el id de la categoria por la url
+        var opinionId = req.params.id;
+        // Recoger los datos que llegan por put
         var params = req.body;
-
+        // Validar datos
+        const categorydb= await Model.findById(body.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb= await Model.findById(body.created_by);
         // Validar datos
         try{
-            var validate_title = validator.isEmpty(params.title);
-            var validate_description = validator.isEmpty(params.description);
-
-            if(validate_title && validate_description){
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'Faltan datos de usuario por enviar.'
-                });
+            if(usuariodb){
+                if(categorydb){
+                    var validate_title = !validator.isEmpty(params.title);
+                    var validate_sinopsis = !validator.isEmpty(params.sinopsis);
+                    var validate_contenido = !validator.isEmpty(params.contenido);
+                    var validate_autor = !validator.isEmpty(params.created_by);
+                    
+                }else{
+                res.send({message: "La categoria no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
             }
-
-            // Buscar el registro a modificar
-            const index = opinions.list.findIndex((item) => item.id == id);
-            var bufferOpinion = opinions.list[index];
-            opinions.list[index] = {
-              ...bufferOpinion,
-              ...params,
-            };
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: opinions.list[index]
-            });
-
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de actualizacion.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_title&&validate_sinopsis&&validate_contenido&&validate_autor){
+            // Find and update
+            Model.findOneAndUpdate({_id: opinionId}, params, {new:true}, (err, model) =>{
+                if(err){
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error al actualizar.'
+                    });
+                }
+
+                if(!model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'No existe la opinion.'
+                    });
+                }
+
+                return res.status(200).send({
+                    status: 'success',
+                    article: model
+                });
+
+            });
+        }
+        else{
+            // Devolver respuesta
+            return res.status(200).send({
+                status: 'error',
+                message: 'No existe el usuario.'
+            });
+        }
+
     },
 
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+        // Recoger el id de la url
+        var opinionId = req.params.id;
 
-        // Validar datos
-        try{
+        // Find and delete
+        Model.findOneAndDelete({_id: opinionId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
 
-            // Buscar el registro a eliminar
-            const bufferOpinion = opinions.list.filter((user) => user.id == id);
-
-            // Eliminar el registro
-            const newArray = opinions.list.filter((user) => user.id != id);
-            opinions.list = newArray;
-
-            // Devolver una respuesta
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu opinion, posiblemente no existe.'
+                });
+            }
+            
             return res.status(200).send({
                 status: 'success',
-                opinion: bufferOpinion
+                data: model
             });
 
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falla en proceso de actualizacion.'
-            });
-        }
+        });
+
     }
 
 }
