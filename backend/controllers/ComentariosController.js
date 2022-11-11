@@ -1,164 +1,226 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
-
-class ComentariosService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limitOpinions = 10, limitComments = 4;
-        for (let i = 0; i < limitOpinions; i++) {
-            for (let j = 0; j < limitComments; j++){
-                this.list.push({
-                    id: this.list.length + 1,
-                    // comment: 'comentario ' + (this.list.length + 1),
-                    comment: faker.lorem.sentence(5),
-                    idOpinion: i + 1,
-                    idUser: j + 1,
-                });
-            }
-        }
-      }
-}
-var comments = new ComentariosService();
+const Model = require('../models/ComentariosModel');
 
 var controller = {
 
-    getAll: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            opiniones: comments.list
+    getAll: (req, res) =>{
+
+        var query = Model.find({});
+
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver los comentarios'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay comentarios para mostrar'
+                });
+            }
+
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
     get: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-        // Buscar el registro a eliminar
-        const bufferComment = comments.list.filter((user) => user.idOpinion == id);
 
-        return res.status(200).send({
-            status: 'success',
-            usuario: bufferComment
+        // Recoger id de la url
+        var comentarioId = req.params.id;
+
+
+        // Comprobar que existe
+        if(!comentarioId || comentarioId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe el comentario.'
+            });
+        }
+
+        // Buscar el usuario
+        Model.findById(comentarioId, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe el comentario.'
+                });
+            }
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
         });
+
     },
 
-    create: (req, res) => {
+    create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-
+        const opiniondb= await Model.findById(body.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb= await Model.findById(body.user_id);
         // Validar datos
         try{
-            var validate_comment = validator.isEmpty(params.comment);
-
-            if(validate_comment){
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'Faltan campos por llenar para la comentario.'
-                });
+            if(usuariodb){
+                if(opiniondb){
+                    var validate_comment = !validator.isEmpty(params.comment);
+                    
+                }else{
+                res.send({message: "La opinion no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
             }
-
-            const newComment = {
-                id: comments.list.length + 1,
-                comment: params.comment,
-                idOpinion: params.idOpinion,
-                idUser: params.idUser,
-            }
-
-            //Guardar el articulo en el arreglo
-            comments.list.push(
-                newComment
-            );
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: newComment
-            });
-
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                error: err.message,
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_comment){
+            // Crear el objeto a guardar
+            var comentario = new Model();
+
+            // Asignar valores
+            
+            comentario.comment = params.comment;
+
+
+            // Guardar la comentario
+            comentario.save((err, model) => {
+
+                if(err || !model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'tu comentario no se ha guardado.'
+                    });
+                }
+
+                // Devolver una respuesta
+                return res.status(200).send({
+                    status: 'success',
+                    data: model
+                });
+            })
+
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
     },
 
-    update: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
-        // Recoger parametros por post
+    update: async (req, res) => {
+        
+        // Recoger el id de la categoria por la url
+        var commentId = req.params.id;
+        // Recoger los datos que llegan por put
         var params = req.body;
-
+        // Validar datos
+        const opiniondb= await Model.findById(body.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb= await Model.findById(body.user_id);
         // Validar datos
         try{
-            var validate_comment = validator.isEmpty(params.comment);
-
-            if(validate_comment){
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'Faltan datos de usuario por enviar.'
-                });
+            if(usuariodb){
+                if(opiniondb){
+                    var validate_comment = !validator.isEmpty(params.comment);
+                    
+                }else{
+                res.send({message: "La opinion no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
             }
-
-            // Buscar el registro a modificar
-            const index = comments.list.findIndex((item) => item.id == id);
-            var bufferComment = comments.list[index];
-            comments.list[index] = {
-              ...bufferComment,
-              ...params,
-            };
-
-            // Devolver una respuesta
-            return res.status(200).send({
-                status: 'success',
-                opinion: comments.list[index]
-            });
-
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                error: err.message,
-                message: 'Falla en proceso de actualizacion.'
+                message: 'Falta datos por enviar.'
             });
         }
+
+        if(validate_comment){// Find and update
+            Model.findOneAndUpdate({_id: commentId}, params, {new:true}, (err, model) =>{
+                if(err){
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error al actualizar.'
+                    });
+                }
+
+                if(!model){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'No existe el comentario.'
+                    });
+                }
+
+                return res.status(200).send({
+                    status: 'success',
+                    article: model
+                });
+
+            });
+        }
+        else{
+            // Devolver respuesta
+            return res.status(200).send({
+                status: 'error',
+                message: 'No existe el usuario.'
+            });
+        }
+
     },
 
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+        // Recoger el id de la url
+        var commentarioId = req.params.id;
 
-        // Validar datos
-        try{
+        // Find and delete
+        Model.findOneAndDelete({_id: commentarioId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
 
-            // Buscar el registro a eliminar
-            const bufferComment = comments.list.filter((user) => user.id == id);
-
-            // Eliminar el registro
-            const newArray = comments.list.filter((user) => user.id != id);
-            comments.list = newArray;
-
-            // Devolver una respuesta
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu comentario, posiblemente no existe.'
+                });
+            }
+            
             return res.status(200).send({
                 status: 'success',
-                opinion: bufferComment
+                data: model
             });
 
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                error: err.message,
-                message: 'Falla en proceso de actualizacion.'
-            });
-        }
+        });
+
     }
 
 }
