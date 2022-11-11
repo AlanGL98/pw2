@@ -120,21 +120,15 @@ var controller = {
     
     },
 
-    update: async (req, res) => {
+    update:  (req, res) => {
         
         // Recoger el id de la categoria por la url
-        var { categoriaId } = req.params.id;
+        var categoriaId = req.params.id;
         // Recoger los datos que llegan por put
-        var { params }= req;
+        var params = req.body;
         // Validar datos
         try{
-            const id = await Model.findById(categoriaId) //busca si existe el id
-            if(id){
-            var { validate_name } = !validator.isEmpty(params.name);
-            }else{
-                // Regresar un mensaje de error. 
-                res.send({message: "El id no existe"});
-            }
+            var validate_name = !validator.isEmpty(params.name);
         }
         catch(err){
             return res.status(404).send({
@@ -142,6 +136,7 @@ var controller = {
                 message: 'No existe la categoria1.'
             });
         }
+
 
         if(validate_name){
             // Find and update
