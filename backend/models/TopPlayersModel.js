@@ -1,11 +1,13 @@
 'use strict'
 
 var mongoose = require('mongoose');
-var Schema= mongoose.Schema;
+// var Schema= mongoose.Schema;
+// var Opinion = mongoose.model('Opinion');
+var Schema = mongoose.Schema;
 var Opinion = mongoose.model('Opinion');
 
 var TopPlayersSchema= Schema({
-    opinion_id:{type:Opinion.ObjectId, ref:'Opinion'},
+    opinion_id:{type:mongoose.Schema.Types.ObjectId, ref:Opinion},
     name:{
     type: String, 
     required: true, // Es requerido. 

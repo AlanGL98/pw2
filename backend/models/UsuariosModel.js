@@ -1,7 +1,9 @@
 'use strict'
 
 var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
 var Schema = mongoose.Schema;
+var Roles = mongoose.model('Roles');
 
 var UsuarioSchema = Schema({
     // Atributos comunes para Usuario
@@ -17,7 +19,7 @@ var UsuarioSchema = Schema({
     birthdate: { type: Date, default: Date.now },
     
     // Atributos relacionales
-    id_rol: String,
+    id_rol: {type:mongoose.Schema.Types.ObjectId, ref:Roles},
 });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

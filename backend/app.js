@@ -9,11 +9,11 @@ var app = express();
 
 // Cargar ficheros rutas
 // var test_routes = require('./routes/test');
+var roles_routes = require('./routes/RolesRoutes');
+var secciones_router = require('./routes/SeccionesRouter');
 var usuarios_routes = require('./routes/UsuariosRoutes');
 var opiniones_routes = require('./routes/OpinionesRoutes');
 var comentarios_routes = require('./routes/ComentariosRoutes');
-var secciones_router = require('./routes/SeccionesRouter');
-var roles_routes = require('./routes/RolesRoutes');
 var top_players_routes= require('./routes/TopPlayersRoutes');
 var like_comentario_routes= require('./routes/LikeComentarioRoutes');
 var calificacion_routes= require('./routes/CalificacionRoutes');
