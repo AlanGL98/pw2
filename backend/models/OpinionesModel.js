@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Categorias = mongoose.model('Categorias');
-var Usuario = mongoose.model('Usuario');
+var Usuario = mongoose.model('Usuarios');
 
 var OpinionSchema = Schema({
     title: { type: String, required: true },
@@ -16,4 +16,4 @@ var OpinionSchema = Schema({
     updated_at: { type: Date, default: Date.now }
 
 });
-module.exports = mongoose.model('Opinion', OpinionSchema);
+module.exports = mongoose.model('Opiniones', OpinionSchema);

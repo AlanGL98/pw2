@@ -2,8 +2,8 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Opinion = mongoose.model('Opinion');
-var Usuario = mongoose.model('Usuario');
+var Opinion = mongoose.model('Opiniones');
+var Usuario = mongoose.model('Usuarios');
 
 var FavoritoSchema = Schema({
     // Atributos comunes para favoritos
@@ -12,4 +12,4 @@ var FavoritoSchema = Schema({
     active: { type: Boolean },
     created_at: { type: Date, default: Date.now }
 });
-module.exports = mongoose.model('Favorito', FavoritoSchema);
+module.exports = mongoose.model('Favoritos', FavoritoSchema);

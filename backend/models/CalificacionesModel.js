@@ -13,4 +13,4 @@ var CalificacionSchema = Schema({
     opinion_id: { type: mongoose.Schema.Types.ObjectId, ref: Opinion }
 });
 
-module.exports = mongoose.model('Calificacion', CalificacionSchema);
+module.exports = mongoose.model('Calificaciones', CalificacionSchema);

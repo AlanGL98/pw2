@@ -2,8 +2,8 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Opinion = mongoose.model('Opinion');
-var Usuario = mongoose.model('Usuario');
+var Opinion = mongoose.model('Opiniones');
+var Usuario = mongoose.model('Usuarios');
 
 var ComentarioSchema = Schema({
     // Atributos comunes para Imagen
@@ -16,4 +16,4 @@ var ComentarioSchema = Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: Usuario },
 });
 
-module.exports = mongoose.model('Comentario', ComentarioSchema);
+module.exports = mongoose.model('Comentarios', ComentarioSchema);

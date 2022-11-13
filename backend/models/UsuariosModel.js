@@ -21,4 +21,4 @@ var UsuarioSchema = Schema({
     id_rol: { type: mongoose.Schema.Types.ObjectId, ref: Roles },
 });
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model('Usuarios', UsuarioSchema);
