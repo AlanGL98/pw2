@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/usuarios', UsuariosController.getAll);
 router.get('/usuarios/:id', UsuariosController.get);
 router.post('/usuarios', UsuariosController.create);
-router.patch('/usuarios/:id', UsuariosController.update);
+router.put('/usuarios/:id', UsuariosController.update);
 router.delete('/usuarios/:id', UsuariosController.delete);
 
 module.exports = router;

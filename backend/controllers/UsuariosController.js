@@ -150,18 +150,20 @@ var controller = {
         // Recoger los datos que llegan por put
         var params = req.body;
         // Validar datos
-        const roldb= await Model.findById(body.rol_id);
+        const roldb = await Roles.findById(params.id_rol);
+
         try{
-            if(roldb){
+            if (roldb) {
                 var validate_name = !validator.isEmpty(params.name);
                 var validate_last_name1 = !validator.isEmpty(params.last_name1);
                 var validate_last_name2 = !validator.isEmpty(params.last_name2);
                 var validate_username = !validator.isEmpty(params.username);
                 var validate_email = !validator.isEmpty(params.email);
                 var validate_password = !validator.isEmpty(params.password);
-                }else{
-                    res.send({message: "La opinion no existe."});
-                }
+            }
+            else {
+                res.send({ message: "La opinion no existe." });
+            }
         }
         catch(err){
             return res.status(404).send({
