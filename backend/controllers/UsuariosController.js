@@ -1,8 +1,9 @@
 'use strict'
-const boom = require('@hapi/boom');// valida errores http
+// const boom = require('@hapi/boom');// valida errores http
 const Model = require('../models/UsuariosModel');
-/*var validator = require('validator');
-var faker = require('faker');*/
+const Roles = require('../models/RolesModel');
+var validator = require('validator');
+//var faker = require('faker');
 
 
 var controller = {
@@ -75,19 +76,20 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const roldb= await Model.findById(body.id_rol); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const roldb = await Roles.findById(params.id_rol); // Esto me sirve para revisar si existe una rol con el id que recibo
         
         // Validar datos
         try{
-            if(roldb){
-            var validate_name = !validator.isEmpty(params.name);
-            var validate_last_name1 = !validator.isEmpty(params.last_name1);
-            var validate_last_name2 = !validator.isEmpty(params.last_name2);
-            var validate_username = !validator.isEmpty(params.username);
-            var validate_email = !validator.isEmpty(params.email);
-            var validate_password = !validator.isEmpty(params.password);
-            }else{
-                res.send({message: "El rol no existe."});
+            if (roldb) {
+                var validate_name = !validator.isEmpty(params.name);
+                var validate_last_name1 = !validator.isEmpty(params.last_name1);
+                var validate_last_name2 = !validator.isEmpty(params.last_name2);
+                var validate_username = !validator.isEmpty(params.username);
+                var validate_email = !validator.isEmpty(params.email);
+                var validate_password = !validator.isEmpty(params.password);
+            } 
+            else {
+                res.send({ message: "El rol no existe." });
             }
         }
         catch(err){
@@ -97,7 +99,7 @@ var controller = {
             });
         }
 
-        if(validate_name&&validate_last_name1&&validate_last_name2&&validate_username&&validate_email&&validate_password){
+        if (validate_name && validate_last_name1 && validate_last_name2 && validate_username && validate_email && validate_password) {
             // Crear el objeto a guardar
             var user = new Model();
 
@@ -109,9 +111,9 @@ var controller = {
             user.username = params.username;
             user.email = params.email;
             user.password = params.password;
+            user.image = null;
             user.birthdate = params.birthdate;
-            user.image = params.image;
-
+            user.id_rol = roldb;
 
             // Guardar el user
             user.save((err, model) => {
