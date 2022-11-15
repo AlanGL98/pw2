@@ -3,6 +3,8 @@
 var validator = require('validator');
 
 const Model = require('../models/OpinionesModel');
+const Categorias = require('../models/CategoriasModel');
+const Usuarios = require('../models/UsuariosModel');
 
 var controller = {
 
@@ -74,22 +76,17 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const categorydb= await Model.findById(body.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const usuariodb= await Model.findById(body.created_by);
+        const categorydb = await Categorias.findById(params.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb = await Usuarios.findById(params.created_by);
         // Validar datos
         try{
-            if(usuariodb){
-                if(categorydb){
-                    var validate_title = !validator.isEmpty(params.title);
-                    var validate_sinopsis = !validator.isEmpty(params.sinopsis);
-                    var validate_contenido = !validator.isEmpty(params.contenido);
-                    var validate_autor = !validator.isEmpty(params.created_by);
-                    
-                }else{
-                res.send({message: "La categoria no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
+            if (usuariodb && categorydb) {
+                var validate_title = !validator.isEmpty(params.title);
+                var validate_sinopsis = !validator.isEmpty(params.sinopsis);
+                var validate_contenido = !validator.isEmpty(params.contenido);
+            }
+            else {
+                res.send({ message: "El usuario y/o la categoria no existen." });
             }
         }
         catch(err){
@@ -99,18 +96,17 @@ var controller = {
             });
         }
 
-        if(validate_title&&validate_sinopsis&&validate_contenido&&validate_autor){
+        if (validate_title && validate_sinopsis && validate_contenido) {
             // Crear el objeto a guardar
             var opinion = new Model();
 
             // Asignar valores
-            
             opinion.title = params.title;
             opinion.sinopsis = params.sinopsis;
             opinion.contenido = params.contenido;
-            opinion.autor = params.autor;
-            opinion.image = params.image;
-
+            opinion.category_id = categorydb;
+            opinion.image = null;
+            opinion.created_by = usuariodb;
 
             // Guardar la opinion
             opinion.save((err, model) => {
@@ -147,22 +143,17 @@ var controller = {
         // Recoger los datos que llegan por put
         var params = req.body;
         // Validar datos
-        const categorydb= await Model.findById(body.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const usuariodb= await Model.findById(body.created_by);
+        const categorydb = await Categorias.findById(params.category_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb = await Usuarios.findById(params.created_by);
         // Validar datos
         try{
-            if(usuariodb){
-                if(categorydb){
-                    var validate_title = !validator.isEmpty(params.title);
-                    var validate_sinopsis = !validator.isEmpty(params.sinopsis);
-                    var validate_contenido = !validator.isEmpty(params.contenido);
-                    var validate_autor = !validator.isEmpty(params.created_by);
-                    
-                }else{
-                res.send({message: "La categoria no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
+            if (usuariodb && categorydb) {
+                var validate_title = !validator.isEmpty(params.title);
+                var validate_sinopsis = !validator.isEmpty(params.sinopsis);
+                var validate_contenido = !validator.isEmpty(params.contenido);
+            }
+            else {
+                res.send({ message: "El usuario y/o la categoria no existen." });
             }
         }
         catch(err){
@@ -172,9 +163,9 @@ var controller = {
             });
         }
 
-        if(validate_title&&validate_sinopsis&&validate_contenido&&validate_autor){
+        if (validate_title && validate_sinopsis && validate_contenido) {
             // Find and update
-            Model.findOneAndUpdate({_id: opinionId}, params, {new:true}, (err, model) =>{
+            Model.findOneAndUpdate({ _id: opinionId }, params, {new:true}, (err, model) =>{
                 if(err){
                     return res.status(500).send({
                         status: 'error',

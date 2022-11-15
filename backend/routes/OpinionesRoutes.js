@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/opiniones', OpinionesService.getAll);
 router.get('/opiniones/:id', OpinionesService.get);
 router.post('/opiniones', OpinionesService.create);
-router.patch('/opiniones/:id', OpinionesService.update);
+router.put('/opiniones/:id', OpinionesService.update);
 router.delete('/opiniones/:id', OpinionesService.delete);
 
 module.exports = router;
