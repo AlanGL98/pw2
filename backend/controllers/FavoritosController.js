@@ -2,6 +2,8 @@
 
 var validator = require('validator');
 const Model = require('../models/FavoritosModel');
+const Opiniones = require('../models/OpinionesModel');
+const Usuarios = require('../models/UsuariosModel');
 
 var controller = {
 
@@ -73,35 +75,19 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const userdb= await User.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const opiniondb= await User.findById(body.opinion_id);
+        const userdb= await Usuarios.findById(params.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const opiniondb= await Opiniones.findById(params.opinion_id);
         // Validar datos
         try{
             if(userdb){
                 if(opiniondb){
-                    var validate_active = !validator.isEmpty(params.active);
-                    
-                }else{
-                res.send({message: "La opinion no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
-            }
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falta datos por enviar.'
-            });
-        }
-
-        if(validate_active){
-            // Crear el objeto a guardar
-            var favorito = new Model();
+                    var favorito = new Model();
 
             // Asignar valores
             
             favorito.active = params.active;
+            favorito.user_id=userdb;
+            favorito.opinion_id=opiniondb;
 
 
             // Guardar el favorito
@@ -120,12 +106,17 @@ var controller = {
                     data: model
                 });
             })
-
+                }else{
+                res.send({message: "La opinion no existe."});
+                }
+            }else{
+                res.send({message: "El usuario no existe."});
+            }
         }
-        else{
+        catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Faltan datos por enviar.'
+                message: 'Falta datos por enviar.'
             });
         }
 

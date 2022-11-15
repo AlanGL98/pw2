@@ -13,7 +13,7 @@ var TopPlayersSchema = Schema({
         maxlength: 60 // Máximo de caracteres.
     },
     order: { type: Number, required: false },
-    image_path: { type: String, required: false },
+    image: { type: String, required: false },
     created_at: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model('TopPlayers', TopPlayersSchema);

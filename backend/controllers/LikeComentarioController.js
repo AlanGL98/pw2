@@ -2,6 +2,8 @@
 
 var validator = require('validator');
 const Model = require('../models/LikesModel');
+const Usuarios = require('../models/UsuariosModel');
+const Comentarios = require('../models/ComentariosModel');
 
 var controller = {
 
@@ -38,19 +40,40 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const userdb= await Model.findById(body.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const commentdb= await Model.findById(body.comment_id);
+        const userdb = await Usuarios.findById(params.user_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const commentdb = await Comentarios.findById(params.comment_id);
         // Validar datos
-        try{
-            if(userdb){
-                if(commentdb){
-                    var validate_liked = !validator.isEmpty(params.liked);
-                    
-                }else{
-                res.send({message: "El comentario no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
+        try {
+            if (userdb && commentdb) {
+                var like = new Model();
+
+                // Asignar valores
+
+                like.liked = params.liked;
+                like.user_id = userdb;
+                like.comment_id = commentdb;
+
+
+                // Guardar el like
+                like.save((err, model) => {
+
+                    if (err || !model) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: 'tu like no se ha guardado.'
+                        });
+                    }
+
+                    // Devolver una respuesta
+                    return res.status(200).send({
+                        status: 'success',
+                        data: model
+                    });
+                });
+
+            }
+            else {
+                res.send({ message: "El usuario y/o comentario no existe." });
             }
         }
         catch(err){
@@ -59,41 +82,6 @@ var controller = {
                 message: 'Falta datos por enviar.'
             });
         }
-
-        if(validate_liked){
-            // Crear el objeto a guardar
-            var like = new Model();
-
-            // Asignar valores
-            
-            like.liked = params.liked;
-
-
-            // Guardar el like
-            like.save((err, model) => {
-
-                if(err || !model){
-                    return res.status(404).send({
-                        status: 'error',
-                        message: 'tu like no se ha guardado.'
-                    });
-                }
-
-                // Devolver una respuesta
-                return res.status(200).send({
-                    status: 'success',
-                    data: model
-                });
-            })
-
-        }
-        else{
-            return res.status(200).send({
-                status: 'error',
-                message: 'Faltan datos por enviar.'
-            });
-        }
-
     
     },
 

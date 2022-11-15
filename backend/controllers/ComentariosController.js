@@ -2,6 +2,8 @@
 
 var validator = require('validator');
 const Model = require('../models/ComentariosModel');
+const Opiniones = require('../models/OpinionesModel');
+const Usuarios = require('../models/UsuariosModel');
 
 var controller = {
 
@@ -73,19 +75,15 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const opiniondb= await Model.findById(body.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const usuariodb= await Model.findById(body.user_id);
+        const opiniondb = await Opiniones.findById(params.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb = await Usuarios.findById(params.user_id);
         // Validar datos
         try{
-            if(usuariodb){
-                if(opiniondb){
-                    var validate_comment = !validator.isEmpty(params.comment);
-                    
-                }else{
-                res.send({message: "La opinion no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
+            if (usuariodb && opiniondb) {
+                var validate_comment = !validator.isEmpty(params.comment);
+            }
+            else {
+                res.send({ message: "El usuario y/o la opinion no existen." });
             }
         }
         catch(err){
@@ -100,9 +98,9 @@ var controller = {
             var comentario = new Model();
 
             // Asignar valores
-            
             comentario.comment = params.comment;
-
+            comentario.opinion_id = opiniondb;
+            comentario.user_id = usuariodb;
 
             // Guardar la comentario
             comentario.save((err, model) => {
@@ -139,19 +137,15 @@ var controller = {
         // Recoger los datos que llegan por put
         var params = req.body;
         // Validar datos
-        const opiniondb= await Model.findById(body.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
-        const usuariodb= await Model.findById(body.user_id);
+        const opiniondb = await Opiniones.findById(params.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        const usuariodb = await Usuarios.findById(params.user_id);
         // Validar datos
         try{
-            if(usuariodb){
-                if(opiniondb){
-                    var validate_comment = !validator.isEmpty(params.comment);
-                    
-                }else{
-                res.send({message: "La opinion no existe."});
-                }
-            }else{
-                res.send({message: "El usuario no existe."});
+            if (usuariodb && opiniondb) {
+                var validate_comment = !validator.isEmpty(params.comment);
+            }
+            else {
+                res.send({ message: "El usuario y/o la opinion no existen." });
             }
         }
         catch(err){

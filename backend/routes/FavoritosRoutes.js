@@ -11,4 +11,5 @@ router.get('/favoritos',FavoritosService.getAll);
 router.get('/favoritos/:id', FavoritosService.get);
 router.post('/favoritos', FavoritosService.create);
 router.delete('/favoritos/:id', FavoritosService.delete);
+
 module.exports = router;

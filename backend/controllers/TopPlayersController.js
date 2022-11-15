@@ -2,6 +2,11 @@
 
 var validator = require('validator');
 const Model = require('../models/TopPlayersModel');
+const Opiniones = require('../models/OpinionesModel');
+
+//Dependencias para archivos
+var fs = require('fs');
+var path = require('path');
 
 var controller = {
 
@@ -73,15 +78,16 @@ var controller = {
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;
-        const opiniondb= await User.findById(body.opinion_id); // Esto me sirve para revisar si existe una opinion con el id que recibo
+        const opiniondb = await Opiniones.findById(params.opinion_id); // Esto me sirve para revisar si existe una opinion con el id que recibo
         
         // Validar datos
         try{
-            if(opiniondb){
-            var validate_name = !validator.isEmpty(params.name);
-            var validate_order = !validator.isEmpty(params.order);
-            }else{
-                res.send({message: "La opinion no existe."});
+            if (opiniondb) {
+                var validate_name = !validator.isEmpty(params.name);
+                // var validate_order = !validator.isNumeric(params.order);
+            } 
+            else {
+                res.send({ message: "La opinion no existe." });
             }
         }
         catch(err){
@@ -91,15 +97,15 @@ var controller = {
             });
         }
 
-        if(validate_name&&validate_order){
+        if (validate_name) {
             // Crear el objeto a guardar
             var player = new Model();
 
             // Asignar valores
-            
             player.name = params.name;
             player.order = params.order;
-            player.image_path = params.image_path;
+            player.image = null;
+            player.opinion_id = opiniondb;
 
 
             // Guardar la player
@@ -137,14 +143,14 @@ var controller = {
         // Recoger los datos que llegan por put
         var params = req.body;
         // Validar datos
-        const opiniondb= await Model.findById(body.opinion_id);
+        const opiniondb= await Opiniones.findById(params.opinion_id);
         try{
-            if(opiniondb){
+            if (opiniondb) {
                 var validate_name = !validator.isEmpty(params.name);
-                var validate_order = !validator.isEmpty(params.order);
-                }else{
-                    res.send({message: "La opinion no existe."});
-                }
+            }
+            else {
+                res.send({ message: "La opinion no existe." });
+            }
         }
         catch(err){
             return res.status(404).send({
@@ -154,7 +160,7 @@ var controller = {
         }
 
 
-        if(validate_name&&validate_order){
+        if(validate_name){
             // Find and update
             Model.findOneAndUpdate({_id: playerId}, params, {new:true}, (err, model) =>{
                 if(err){
@@ -215,7 +221,82 @@ var controller = {
 
         });
 
-    }
+    },
+
+    addImage: (req, res) => {
+        // Configurar el modulo connect multiparty router/article.js
+
+        // Recoger el fichero de la peticion
+        var file_name = 'Imagen no subida...';
+
+        if(!req.files){
+            return res.status(404).send({
+                status: 'error',
+                message: file_name
+            });
+        }
+
+        // Conseguir nombre y la extension del archivo
+        // file0: debe ser el nombre de la variable que se manda en postman o insomnia 
+        var file_path = req.files.file0.path; 
+        var file_split = file_path.split('\\');
+
+        // Nombre del archivo
+        var file_name = file_split[2];
+
+        // Extension del fichero
+        var extension_split = file_name.split('\.');
+        var file_ext = extension_split[1];
+
+        // Comprobar la extension, solo imagenes, si es valida, borrar el fichero
+        if(file_ext != 'png' && file_ext != 'jpg' && file_ext != 'jpeg'){
+            // Borrar el archivo valido
+            fs.unlink(file_path, (err) =>{
+                return res.status(200).send({
+                    status: 'error',
+                    message: 'La extension de la imagen no es valida.'
+                });
+            });
+        }
+        else{
+            // Si todo es valido
+            var usuarioId = req.params.id;
+
+            // Buscar el articulo, asignarle el nombre de la imagen y actualizarlo.
+            Model.findOneAndUpdate({_id: usuarioId}, {image: file_name}, {new: true}, (err, usuarioUpdated) => {
+
+                if(err || !usuarioUpdated){
+                    return res.status(200).send({
+                        status: 'error',
+                        message: 'Error al guardar la imagen del usuario.'
+                    });
+                }
+
+                return res.status(200).send({
+                    status: 'success',
+                    article: usuarioUpdated
+                });
+            });
+        }
+
+    },
+
+    getImage: (req, res) => {
+        var file = req.params.image;
+        var path_file = './upload/top_players/' + file;
+
+        fs.exists(path_file, (exists) => {
+            if(exists){
+                return res.sendFile(path.resolve(path_file));
+            }
+            else{
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'La imagen no existe.'
+                });
+            }
+        });
+    },
 
 }
 
