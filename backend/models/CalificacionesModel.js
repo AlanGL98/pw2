@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Opinion = mongoose.model('Opinion');
+var Opinion = mongoose.model('Opiniones');
 
 var CalificacionSchema = Schema({
     // Atributos comunes para Calificacion

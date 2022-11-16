@@ -6,7 +6,7 @@ var Opinion = mongoose.model('Opiniones');
 
 var ImagenSchema = Schema({
     // Atributos comunes para Imagen
-    image_path: String,
+    image: String,
     created_at: { type: Date, default: Date.now },
 
     // Atributos relacionales

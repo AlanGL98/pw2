@@ -1,118 +1,147 @@
 'use strict'
 
 var validator = require('validator');
-var faker = require('faker');
+const Model = require('../models/CalificacionesModel');
+const Opiniones = require('../models/OpinionesModel');
 
-class CalificacionService{
-    constructor() {
-        this.list = [];
-        this.generate();
-    }
-
-    generate() {
-        const limit = 10;
-        for (let index = 0; index < limit; index++) {
-            const createdAt = faker.date.past(2);
-            const name = faker.name.findName();
-            this.list.push({
-                id: index + 1,
-                uuid: faker.datatype.uuid(),
-                calificacion:faker.datatype.number({
-                    'min': 1,
-                    'max': 100
-                })+'%',
-                username:'localhost:3900/yopino/usuario',
-                opinion:'localhost:3900/yopino/opiniones/',
-                createdAt
-            });
-        }
-      }
-}
-var calificacion = new CalificacionService();
 var controller = {
 
-    get: (req, res) => {
-        return res.status(200).send({
-            status: 'success',
-            Calificacion: calificacion.list
-        });
-    },
-    create: async (req, res) => {
-        // Recoger parametros por post
-        var params = req.body;
+    getAll: (req, res) =>{
 
-        // Validar datos
-        try{
-            var validate_calificacion = validator.isEmpty(params.calificacion);
+        var query = Model.find({});
 
-            if(validate_calificacion ){
-                return res.status(200).send({
+        // Find
+        query.find({}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
                     status: 'error',
-                    message: 'Faltan datos por enviar2.'
+                    message: 'Error al devolver los comentarios'
                 });
             }
-            
-            const newCalificacionComentario = {
-                id: calificacion.list.length + 1,
-                uuid: faker.datatype.uuid(),
-                createdAt: faker.date.past(2),
-                calificacion:faker.datatype.number({
-                    'min': 1,
-                    'max': 100
-                })+'%',
-                username:'localhost:3900/yopino/usuario',
-                opinion:'localhost:3900/yopino/opiniones/',
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay comentarios para mostrar'
+                });
             }
 
-            //Guardar el articulo en el arreglo
-            calificacion.list.push(
-                newCalificacionComentario
-            );
 
-            // Devolver una respuesta
             return res.status(200).send({
                 status: 'success',
-                Calificacion: newCalificacionComentario
+                data: model
             });
 
+        });
+
+    },
+
+    get: (req, res) => {
+
+        // Recoger id de la url
+        var comentarioId = req.params.id;
+
+
+        // Comprobar que existe
+        if(!comentarioId || comentarioId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe el comentario.'
+            });
+        }
+
+        // Buscar el usuario
+        Model.findById(comentarioId, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe el comentario.'
+                });
+            }
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
+
+    create: async (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+        const opiniondb = await Opiniones.findById(params.opinion_id); // Esto me sirve para revisar si existe una rol con el id que recibo
+        // Validar datos
+        try{
+            if(opiniondb){
+                // Crear el objeto a guardar
+                var calificacion = new Model();
+    
+                // Asignar valores
+                calificacion.valoraciones = params.valoraciones;
+                calificacion.promedio = params.promedio;
+                calificacion.estrellas = params.estrellas;
+                calificacion.opinion_id = opiniondb;
+    
+                // Guardar la calificacion
+                calificacion.save((err, model) => {
+    
+                    if(err || !model){
+                        return res.status(404).send({
+                            status: 'error',
+                            message: 'tu calificacion no se ha guardado.'
+                        });
+                    }
+    
+                    // Devolver una respuesta
+                    return res.status(200).send({
+                        status: 'success',
+                        data: model
+                    });
+                });
+            }
         }
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falla en proceso de agregado.'
+                message: 'Falta datos por enviar.'
             });
         }
+    
     },
 
     delete: (req, res) => {
-        // Recoger parametros de la url
-        const  { id } = req.params;
+        // Recoger el id de la url
+        var commentarioId = req.params.id;
 
-        // Validar datos
-        try{
+        // Find and delete
+        Model.findOneAndDelete({_id: commentarioId}, (err, model) => {
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al borrar.'
+                });
+            }
 
-            // Buscar el registro a eliminar
-            const bufferCalif = calificacion.list.filter((calif) => calif.id == id);
-
-            // Eliminar el registro
-            const newArray = calificacion.list.filter((calif) => calif.id != id);
-            calificacion.list = newArray;
-
-            // Devolver una respuesta
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se ha borrado tu comentario, posiblemente no existe.'
+                });
+            }
+            
             return res.status(200).send({
                 status: 'success',
-                Calificacion: bufferCalif
+                data: model
             });
 
-        }
-        catch(err){
-            return res.status(200).send({
-                status: 'error',
-                message: 'Falla en proceso de eliminacion.'
-            });
-        }
+        });
+
     }
-
 
 }
 
