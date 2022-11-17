@@ -80,6 +80,7 @@ var controller = {
         // Validar datos
         try{
             var validate_name = !validator.isEmpty(params.name);
+            var validate_numeric=validator.isNumeric(params.order.toString());
         }
         catch(err){
             return res.status(200).send({
@@ -88,7 +89,7 @@ var controller = {
             });
         }
 
-        if(validate_name){
+        if(validate_name&&validate_numeric){
             // Crear el objeto a guardar
             var categoria = new Model();
 
@@ -134,6 +135,7 @@ var controller = {
         // Validar datos
         try{
             var validate_name = !validator.isEmpty(params.name);
+            var validate_numeric=validator.isNumeric(params.order.toString());
         }
         catch(err){
             return res.status(404).send({
@@ -143,7 +145,7 @@ var controller = {
         }
 
 
-        if(validate_name){
+        if(validate_name&&validate_numeric){
             // Find and update
             Model.findOneAndUpdate({_id: categoriaId}, params, {new:true}, (err, model) =>{
                 if(err){

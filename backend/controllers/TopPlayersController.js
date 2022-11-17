@@ -84,7 +84,8 @@ var controller = {
         try{
             if (opiniondb) {
                 var validate_name = !validator.isEmpty(params.name);
-                // var validate_order = !validator.isNumeric(params.order);
+                var validate_order = !validator.isEmpty(params.order.toString());
+                var validate_numeric=validator.isNumeric(params.order.toString());
             } 
             else {
                 res.send({ message: "La opinion no existe." });
@@ -93,11 +94,11 @@ var controller = {
         catch(err){
             return res.status(200).send({
                 status: 'error',
-                message: 'Falta datos por enviar.'
+                message: 'Falta datos por enviar1.'
             });
         }
 
-        if (validate_name) {
+        if (validate_name&&validate_order && validate_numeric) {
             // Crear el objeto a guardar
             var player = new Model();
 
@@ -129,7 +130,7 @@ var controller = {
         else{
             return res.status(200).send({
                 status: 'error',
-                message: 'Faltan datos por enviar.'
+                message: 'Faltan datos por enviar2.'
             });
         }
 
@@ -147,6 +148,8 @@ var controller = {
         try{
             if (opiniondb) {
                 var validate_name = !validator.isEmpty(params.name);
+                var validate_order = !validator.isEmpty(params.order.toString());
+                var validate_numeric=validator.isNumeric(params.order.toString());
             }
             else {
                 res.send({ message: "La opinion no existe." });
@@ -160,7 +163,7 @@ var controller = {
         }
 
 
-        if(validate_name){
+        if(validate_name &&validate_order&&validate_numeric){
             // Find and update
             Model.findOneAndUpdate({_id: playerId}, params, {new:true}, (err, model) =>{
                 if(err){
