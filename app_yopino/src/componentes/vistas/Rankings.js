@@ -9,12 +9,8 @@ import Test from "../Test";
 
 class Ranking extends Component{
 
-    constructor(){
-        super();
-        this.state = {
-            dropdown: false
-        }
-        // this.setState({ dropdown: false });
+    state = {
+        dropdown: false
     }
 
     abrirCerrarDropdown = () => {
@@ -22,11 +18,6 @@ class Ranking extends Component{
     }
 
     render() {
-        // const [dropdown, setDropdown] = useState(false);
-        // const abrirCerrarDropdown = () => {
-        //     setDropdown(!dropdown);
-        // }
-
         return (
             <>
                 <Helmet>

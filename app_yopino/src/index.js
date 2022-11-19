@@ -25,7 +25,8 @@ WebFont.load({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
+  <>
     <BrowserRouter>
       
       <Contenedor>
@@ -47,7 +48,7 @@ root.render(
     </BrowserRouter>
     
     <Fondo />
-  </React.StrictMode>
+  </>
 );
 
 // No tocar esta parte

@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import axios from 'axios';
 import Global from "../Global";
 
-class Test extends Component{
+class Test extends Component {
     url = Global.url;
     state = {
         status: null,
@@ -24,11 +24,6 @@ class Test extends Component{
                 status: 'success'
             });
         });
-        // const res = GetAll();
-        // this.setState({
-        //     usuarios: res.data,
-        //     status: 'success'
-        // });
     }
 
     render() {
@@ -45,7 +40,7 @@ class Test extends Component{
                 <>
                     {
                         this.state.usuarios.map((user) => {
-                            return(<p key={user.id}>{user.name + ' - ' + user.email}</p>)
+                            return(<p key={user._id}>{user.name + ' - ' + user.email}</p>)
                         })
                     }
                 </>
