@@ -1,6 +1,7 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import * as Components from '../../elementos/logsign';
 import { Link } from 'react-router-dom';
+import {GetAll} from '../../servicios/Usuarios';
 // import {Helmet} from 'react-helmet';
 // import HeaderDiv from '../HeaderDiv';
 
@@ -22,6 +23,18 @@ import { Link } from 'react-router-dom';
 
 function InicioSesion() {
     const [signIn, toggle] = React.useState(true);
+
+    
+ //Aqui guardaremos todos los usuarios
+    const [usuarios, setUsuarios]= useState([]);
+
+    async function fetchData(){
+        const data= await GetAll();
+        setUsuarios(data);
+    }
+    fetchData();
+    console.log(usuarios);
+
      return(
          <Components.Container>
              <Components.SignUpContainer signinIn={signIn}>

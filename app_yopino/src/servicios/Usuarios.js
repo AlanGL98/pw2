@@ -3,8 +3,9 @@ import { axiosBase as axios } from "./Config";
 const GetAll = async () => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get("/usuarios")
-        console.log("Todos los Usuarios", response);
+        const response = await axios.get("/usuarios");
+        const data = await response.data;
+        return data;
     } catch (err) {
         console.error(err);
         return err;
@@ -15,7 +16,7 @@ const GetOne = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
         const response = await axios.get(`/usuarios/${id}`)
-        if (response.status == 'succes') {
+        if (response.status === 'succes') {
             return response.data;
         } 
         else {
@@ -33,8 +34,8 @@ const Create = async (id) => {
         const response = await axios.post("/usuarios/:id", {
             id
         })
-        if (response.status == 'succes') {
-            return response.data;
+        if (response.status === 'succes') {
+            await response.then((response) => {return response.data});
         } 
         else {
             return {}
@@ -51,7 +52,7 @@ const Update = async (id) => {
         const response = await axios.put("/usuarios/:id", {
             id
         })
-        if (response.status == 'succes') {
+        if (response.status === 'succes') {
             return response.data;
         } 
         else {
@@ -68,7 +69,7 @@ const Delete = async (id) => {
         const response = await axios.delete("/usuarios/:id", {
             id
         })
-        if (response.status == 'succes') {
+        if (response.status === 'succes') {
             return response.data;
         } 
         else {
@@ -83,7 +84,7 @@ const GetImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
         const response = await axios.get(`/usuarios/get-image/${image}`)
-        if (response.status == 'success') {
+        if (response.status === 'success') {
             return response.data;
         } 
         else {
@@ -100,7 +101,7 @@ const AddImage = async (image) => {
         const response = await axios.post("/usuarios/add-image/:id", {
             image
         })
-        if (response.status == 'succes') {
+        if (response.status === 'succes') {
             return response.data;
         } 
         else {
@@ -111,4 +112,4 @@ const AddImage = async (image) => {
         return err;
     }
 }
-export {GetAll, GetOne, Delete, Update,GetImage,AddImage};
+export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage};
