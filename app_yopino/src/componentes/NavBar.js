@@ -17,10 +17,11 @@ const Navbar = () => {
         </NavLink>
         <Bars />
         <NavMenu>
-          <NavLink to='/' activeStyle> Inicio</NavLink>
-          <NavLink to='/categorias' activeStyle> Categorias </NavLink>
-          <NavLink to='/rankings' activeStyle> Rankings </NavLink>
-          <NavLink to='/all-reviews' activeStyle> Reviews </NavLink>
+          {/* activeStyle */}
+          <NavLink to='/'> Inicio</NavLink> 
+          <NavLink to='/categorias'> Categorias </NavLink>
+          <NavLink to='/rankings'> Rankings </NavLink>
+          <NavLink to='/all-reviews'> Reviews </NavLink>
 
         </NavMenu>
         <NavBtn>

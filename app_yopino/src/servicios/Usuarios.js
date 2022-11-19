@@ -5,6 +5,7 @@ const GetAll = async () => {
         //Respuesta de un await con la ruta del api
         const response = await axios.get("/usuarios");
         const data = await response.data;
+        // console.log(data);
         return data;
     } catch (err) {
         console.error(err);

@@ -7,6 +7,7 @@ const Contenedor = styled.div`
     height: 100vh;
    
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0px 1.25rem 2.5rem rgba(0,0,0,.05);
 
     margin: auto;
