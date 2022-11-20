@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component,useState} from "react";
 import * as Components from '../../elementos/logsign';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +12,17 @@ class InicioSesion extends Component{
     }
 
     render(){
+        const [user, setUser] = useState({  // Inicializo estas variables de estado con valores vacíos 
+            name: "",
+            last_name1: "",
+            last_name2: "",
+            username: "",
+            email: "",
+            password: "",
+            password: "",
+            id_rol:"",
+            image: ""
+        });
         return(
             <Components.Container>
                 <Components.SignUpContainer signinIn={this.state.signIn}>
