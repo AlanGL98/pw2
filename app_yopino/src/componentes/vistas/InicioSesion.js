@@ -12,27 +12,32 @@ class InicioSesion extends Component{
     }
 
     render(){
-        const [user, setUser] = useState({  // Inicializo estas variables de estado con valores vacíos 
+        const [user, setUser] = this.useState({  // Inicializo estas variables de estado con valores vacíos 
             name: "",
             last_name1: "",
             last_name2: "",
             username: "",
             email: "",
             password: "",
-            password: "",
-            id_rol:"",
+            birthdate: "",
+            id_rol:"63685f0eebc852362f53c40f",
             image: ""
         });
+
+
         return(
             <Components.Container>
                 <Components.SignUpContainer signinIn={this.state.signIn}>
                     <Components.Form>
                         <Components.Title>Crear cuenta</Components.Title>
                         <Components.Input type='text' placeholder='Nombre' />
-                        <Components.Input type='text' placeholder='Apellidos' />
+                        <Components.Input type='text' placeholder='Apellido paterno' />
+                        <Components.Input type='text' placeholder='Apellido materno' />
                         <Components.Input type='text' placeholder='Nombre de usuario' />
                         <Components.Input type='email' placeholder='Email' />
-                        <Components.Input type='password' placeholder='Password' />
+                        <Components.Input type='date' placeholder='Fecha de nacimiento' />
+                        <Components.Input type='password' placeholder='Contraseña' />
+                        <Components.Input type='password' placeholder='Confirmar contraseña' />
                         <Link to={"/"}><Components.Button>Registrarse</Components.Button></Link>
                        
                     </Components.Form>
