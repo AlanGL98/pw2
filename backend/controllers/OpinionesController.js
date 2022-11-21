@@ -76,6 +76,41 @@ var controller = {
         });
 
     },
+    getSeccion: (req, res) => {
+
+        // Recoger id de la url
+        var categoriaId = req.params.id;
+
+
+        // Comprobar que existe
+        if(!categoriaId || categoriaId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe la seccion.'
+            });
+        }
+
+        // Buscar el usuario
+        const data = Model.find({'category_id': {$in: categoriaId} , sort:{created_at: -1}}); // Busca posts basándonos en el id de una categoría
+        Model.find({'category_id': {$in: categoriaId}}, (err, model) =>{
+
+            if(err || !model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No existe la opinion.'
+                });
+            }else{
+
+            //Devolverlo en json
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+        }
+
+        });
+
+    },
 
     create: async (req, res) =>{
         // Recoger parametros por post

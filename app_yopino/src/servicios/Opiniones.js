@@ -3,8 +3,8 @@ import { axiosBase as axios } from "./Config";
 const GetAll = async () => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get("/usuarios");
-        const data = await response.data;
+        const response = await axios.get("/secciones");
+        const data = await response.data.data;
         // console.log(data);
         return data;
     } catch (err) {
@@ -16,7 +16,7 @@ const GetAll = async () => {
 const GetOne = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/usuarios/${id}`)
+        const response = await axios.get(`/secciones/${id}`)
         if (response.status === 'succes') {
             return response.data;
         } 
@@ -29,21 +29,15 @@ const GetOne = async (id) => {
     }
 }
 
-const Register = async (user) => {
+const Create = async (seccion) => {
 
     try{
         let data = new FormData();
-        data.set('name', user.name);
-        data.set('last_name1', user.last_name1);
-        data.set('last_name2', user.last_name2);
-        data.set('username', user.username);
-        data.set('email', user.email);
-        data.set('password', user.password);
-        data.set('birthdate', "1998-06-12");
-        data.set('id_rol', '63685f0eebc852362f53c40f');
+        data.set('name', seccion.name);
+        data.set('order', seccion.order);
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/usuarios", {user});
+        const response = await axios.post("/secciones", {seccion});
         console.log("My response: ", response); //trae objeto creado
         return response;
     }catch(err){
@@ -55,7 +49,7 @@ const Register = async (user) => {
 const Update = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.put("/usuarios/:id", {
+        const response = await axios.put("/secciones/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -72,7 +66,7 @@ const Update = async (id) => {
 const Delete = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.delete("/usuarios/:id", {
+        const response = await axios.delete("/secciones/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -89,7 +83,7 @@ const Delete = async (id) => {
 const GetImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/usuarios/get-image/${image}`)
+        const response = await axios.get(`/secciones/get-image/${image}`)
         if (response.status === 'success') {
             return response.data;
         } 
@@ -104,7 +98,7 @@ const GetImage = async (image) => {
 const AddImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/usuarios/add-image/:id", {
+        const response = await axios.post("/secciones/add-image/:id", {
             image
         })
         if (response.status === 'succes') {
@@ -118,14 +112,15 @@ const AddImage = async (image) => {
         return err;
     }
 }
-const Login = async (data) => {
-    try {
+const GetByCategory= async (id) => {
+    try{
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/usuarios/login", data);
-        console.log("obtuve: ", response);
-    } catch (err) {
+        const response = await axios.get("/opiniones/seccion/:id", id)
+        console.log(response);
+    }catch(err){
         console.error(err);
         return err;
     }
 }
-export {GetAll, GetOne, Delete, Register, Update,GetImage,AddImage,Login};
+
+export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage,GetByCategory};
