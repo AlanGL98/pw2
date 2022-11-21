@@ -29,20 +29,12 @@ function InicioSesion() {
         email: "",
         password: "",
         birthdate: new Date(),
-        id_rol:"63685f0eebc852362f53c40f"
+        id_rol:'63685f0eebc852362f53c40f'
     });
     const [us,setUs]=useState({  
         email: "",
         password: ""
     });
-    // Esto se agrega porque al utilizar un valor como user.name, este no puede cambiar. Hay que utilizar el onChange para poder cambiar el valor de mi variable name
-    const handleOnChangeInput = (event) => { 
-        const {name, value} = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
-        setUser({
-            ...user, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
-            [name]: value
-        }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
-    } 
     // Este event es un parámetro que se puede recibir en todas las funciones que sean desencadenadas por un evento de React.
     const handleOnSubmitRegister= async (event)=>{
         event.preventDefault();
@@ -60,7 +52,15 @@ function InicioSesion() {
 
         }
       }
-     
+    
+      // Esto se agrega porque al utilizar un valor como user.name, este no puede cambiar. Hay que utilizar el onChange para poder cambiar el valor de mi variable name
+    const handleOnChangeInput = (event) => { 
+        const {name, value} = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
+        setUser({
+            ...user, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
+            [name]: value
+        }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
+    } 
       const handleOnSubmitLogin= async (event)=>{
         event.preventDefault();
         console.log("jala");
