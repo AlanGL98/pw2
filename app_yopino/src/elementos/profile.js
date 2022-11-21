@@ -10,6 +10,9 @@ width: 100%;
 height:100%;
 max-width: 100%;
 min-height: 100%;
+
+margin-top: 20px;
+    margin-bottom: 20px;
 `;
 
 export const SignUpContainer = styled.div`
@@ -54,12 +57,15 @@ text-align: center;
 
 export const Title = styled.h1`
 font-weight: bold;
-margin: 0;
+margin-top: 40px;
+margin-bottom: 30px;
+
 `;
 
 export const Input = styled.input`
 background-color: #eee;
 border: none;
+border-radius: 8px;
 padding: 12px 15px;
 margin: 8px 0;
 width: 100%;
@@ -68,6 +74,7 @@ width: 100%;
 export const Image = styled.input`
 background-color: #eee;
 border: none;
+border-radius: 8px;
 padding: 12px 15px;
 margin: 8px 0;
 width: 100%;
