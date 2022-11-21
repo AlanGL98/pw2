@@ -5,10 +5,18 @@ import {
   Bars,
   NavMenu,
   NavBtn,
-  NavBtnLink
+  NavBtnLink,
+  OpcionSeleccionada,
+  Opciones,
+  Opcion
 } from '../elementos/NavbarElements';
 
+import { IUsuario,ICerrarSesion } from '../elementos/iconos/Iconos';
+
+
 const Navbar = () => {
+
+  
   return (
     <>
       <Nav>
@@ -26,6 +34,8 @@ const Navbar = () => {
         </NavMenu>
         <NavBtn>
           <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
+              <Opcion to="perfil-usuario"><IUsuario />Mi perfil</Opcion>
+              <Opcion><ICerrarSesion/>Cerrar sesion</Opcion>
         </NavBtn>
       </Nav>
     </>
