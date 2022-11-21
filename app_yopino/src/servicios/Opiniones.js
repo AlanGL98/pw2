@@ -3,7 +3,7 @@ import { axiosBase as axios } from "./Config";
 const GetAll = async () => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get("/secciones");
+        const response = await axios.get("/opiniones");
         const data = await response.data.data;
         // console.log(data);
         return data;
@@ -16,7 +16,7 @@ const GetAll = async () => {
 const GetOne = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/secciones/${id}`)
+        const response = await axios.get(`/opiniones/${id}`)
         if (response.status === 'succes') {
             return response.data;
         } 
@@ -29,15 +29,18 @@ const GetOne = async (id) => {
     }
 }
 
-const Create = async (seccion) => {
+const Create = async (opinion) => {
 
     try{
         let data = new FormData();
-        data.set('name', seccion.name);
-        data.set('order', seccion.order);
+        data.set('title', opinion.title);
+        data.set('sinopsis', opinion.sinopsis);
+        data.set('contenido', opinion.contenido);
+        data.set('category_id', opinion.category_id);
+        data.set('created_by', opinion.created_by);
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/secciones", {seccion});
+        const response = await axios.post("/opiniones", {opinion});
         console.log("My response: ", response); //trae objeto creado
         return response;
     }catch(err){
@@ -49,7 +52,7 @@ const Create = async (seccion) => {
 const Update = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.put("/secciones/:id", {
+        const response = await axios.put("/opiniones/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -66,7 +69,7 @@ const Update = async (id) => {
 const Delete = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.delete("/secciones/:id", {
+        const response = await axios.delete("/opiniones/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -83,7 +86,7 @@ const Delete = async (id) => {
 const GetImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/secciones/get-image/${image}`)
+        const response = await axios.get(`/opiniones/get-image/${image}`)
         if (response.status === 'success') {
             return response.data;
         } 
@@ -98,7 +101,7 @@ const GetImage = async (image) => {
 const AddImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/secciones/add-image/:id", {
+        const response = await axios.post("/opiniones/add-image/:id", {
             image
         })
         if (response.status === 'succes') {
