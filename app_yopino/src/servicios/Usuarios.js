@@ -46,9 +46,9 @@ const Register = async (user) => {
         data.set('id_rol', '63685f0eebc852362f53c40f');
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/usuarios", {user});
-        console.log("My response: ", response); //trae objeto creado
-        return response;
+        const response = await axios.post("/usuarios", user);
+        // console.log("My response: ", response); //trae objeto creado
+        return response.data;
     }catch(err){
         console.error(err);
         return err;

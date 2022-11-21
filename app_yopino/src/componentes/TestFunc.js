@@ -12,7 +12,7 @@ function TestFunc() {
                 <p>Cargando</p>
             :
                 users.map((user) => {
-                    return(<p>{user.name} - {user.email}</p>)
+                    return(<p key={user._id}>{user.name} - {user.email}</p>)
                 })
             }
         </>

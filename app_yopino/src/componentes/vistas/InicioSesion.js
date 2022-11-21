@@ -1,7 +1,8 @@
 import React ,{useState}from 'react';
 import * as Components from '../../elementos/logsign';
 // import { Link } from 'react-router-dom';
-import {Register,Login} from '../../servicios/Usuarios'
+import {Register,Login} from '../../servicios/Usuarios';
+import { Navigate } from "react-router-dom";
 // import {Helmet} from 'react-helmet';
 // import HeaderDiv from '../HeaderDiv';
 // const InicioSesion = () => {
@@ -36,17 +37,21 @@ function InicioSesion() {
         password: ""
     });
     // Este event es un parámetro que se puede recibir en todas las funciones que sean desencadenadas por un evento de React.
+    const [createUser, setCreateUser] = useState(false);
+
     const handleOnSubmitRegister = async (event) => {
         event.preventDefault();
-        console.log("jala");
+        // console.log("jala");
         try {
             const id_rol = '63685f0eebc852362f53c40f';
             user.id_rol = id_rol;
 
             const obj = await Register(user);
 
-            console.log("my object0:", obj.data);
-            console.log("my object0:", user.id_rol);
+            setCreateUser(obj);
+
+            // console.log("my object0:", obj.data);
+            // console.log("my object0:", user.id_rol);
 
         } catch (err) {
 
@@ -88,6 +93,9 @@ function InicioSesion() {
     return (
         <Components.Container>
             <Components.SignUpContainer signinIn={signIn}>
+                {createUser && (
+                    <Navigate to="/" replace={true}/>
+                )}
                 <Components.Form onSubmit={handleOnSubmitRegister}>
                     <Components.Title>Crear cuenta</Components.Title>
                     <Components.Input type='text' name="name" value={user.name} onChange={handleOnChangeInput} placeholder='Nombre' />
