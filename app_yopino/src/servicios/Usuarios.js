@@ -1,16 +1,19 @@
+import {useState, useEffect} from "react";
 import { axiosBase as axios } from "./Config";
 
-const GetAll = async () => {
-    try {
-        //Respuesta de un await con la ruta del api
-        const response = await axios.get("/usuarios");
-        const data = await response.data;
-        // console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
-        return err;
-    }
+const GetAll = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+
+        axios.get('/usuarios')
+        .then((res) => {
+            setUsers(res.data.data);
+        });
+
+    }, []);
+
+    return [users];
 }
 
 const GetOne = async (id) => {

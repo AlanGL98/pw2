@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -10,33 +10,29 @@ import * as Components from '../../elementos/logsign';
 
 import '../../css/comentarios.css';
 
-class NewPost extends Component{
+const NewPost = () => {
+  return (
+    <Components.Form>
+      <Components.Title>Crea una publicación </Components.Title>
+      <Components.Input type='text' placeholder='Titulo' />
+      <Components.Input type='text' placeholder='Sinopsis' />
+      <Components.Input type='text' placeholder='Categoria' />
 
-  render() {
-    return (
-      <Components.Form>
-        <Components.Title>Crea una publicación </Components.Title>
-        <Components.Input type='text' placeholder='Titulo' />
-        <Components.Input type='text' placeholder='Sinopsis' />
-        <Components.Input type='text' placeholder='Categoria' />
-
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Button color="success" variant="outlined" component="label">
-            Cargar imagen
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-          <IconButton color="success" aria-label="upload picture" component="label">
-            <input hidden accept="image/*" type="file" />
-            <PhotoCamera />
-          </IconButton>
-          <Button color="success" variant="contained" size="medium">
-            Publicar
-          </Button>
-        </Stack>
-      </Components.Form>
-    )
-  }
-
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <Button color="success" variant="outlined" component="label">
+          Cargar imagen
+          <input hidden accept="image/*" multiple type="file" />
+        </Button>
+        <IconButton color="success" aria-label="upload picture" component="label">
+          <input hidden accept="image/*" type="file" />
+          <PhotoCamera />
+        </IconButton>
+        <Button color="success" variant="contained" size="medium">
+          Publicar
+        </Button>
+      </Stack>
+    </Components.Form>
+  )
 }
-
+ 
 export default NewPost;

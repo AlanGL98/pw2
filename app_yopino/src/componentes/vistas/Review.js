@@ -1,15 +1,11 @@
-import React, {Component} from "react";
+import React from "react";
 
-class Review extends Component {
-
-
-    render(){
-        return ( 
-            <>
+const Review = () => {
+    return (
+        <>
             <h1>Hola</h1>
-            </>
-         );
-    }
+        </>
+    );
 }
-
+ 
 export default Review;

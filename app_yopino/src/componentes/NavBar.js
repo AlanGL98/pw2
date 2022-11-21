@@ -6,8 +6,8 @@ import {
   NavMenu,
   NavBtn,
   NavBtnLink,
-  OpcionSeleccionada,
-  Opciones,
+  // OpcionSeleccionada,
+  // Opciones,
   Opcion
 } from '../elementos/NavbarElements';
 

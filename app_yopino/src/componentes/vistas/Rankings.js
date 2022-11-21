@@ -4,8 +4,7 @@ import {Header, Titulo, ContenedorHeader, ContenedorBotones} from '../../element
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import Cards from '../Cards';
-import Test from "../Test";
-// import axios from 'axios';
+import TestFunc from "../TestFunc";
 
 class Ranking extends Component{
 
@@ -65,7 +64,9 @@ class Ranking extends Component{
                 
                 <Cards />
 
-                <Test />
+                {/* <Test /> */}
+
+                <TestFunc />
             </>
         )
     }
