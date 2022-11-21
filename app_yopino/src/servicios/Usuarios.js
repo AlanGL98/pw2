@@ -34,7 +34,7 @@ const GetOne = async (id) => {
 
 const Register = async (user) => {
 
-    try{
+    // try{
         let data = new FormData();
         data.set('name', user.name);
         data.set('last_name1', user.last_name1);
@@ -49,10 +49,10 @@ const Register = async (user) => {
         const response = await axios.post("/usuarios", user);
         // console.log("My response: ", response); //trae objeto creado
         return response.data;
-    }catch(err){
-        console.error(err);
-        return err;
-    }
+    // }catch(err){
+    //     console.error(err);
+    //     return err;
+    // }
 }
 
 const Update = async (id) => {

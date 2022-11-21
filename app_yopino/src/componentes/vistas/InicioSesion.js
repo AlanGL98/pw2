@@ -50,11 +50,13 @@ function InicioSesion() {
 
             setCreateUser(obj);
 
-            // console.log("my object0:", obj.data);
+            if(obj){
+                console.log("my object0:", obj);
+            }
             // console.log("my object0:", user.id_rol);
 
         } catch (err) {
-
+            console.log('error');
         }
     }
 
