@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   Nav,
   NavLink,
@@ -6,15 +6,20 @@ import {
   NavMenu,
   NavBtn,
   NavBtnLink,
-  OpcionSeleccionada,
-  Opciones,
-  Opcion
+  NavLinkPerfil
 } from '../elementos/NavbarElements';
 
-import { IUsuario,ICerrarSesion } from '../elementos/iconos/Iconos';
-
+import { IUsuario,ICerrarSesion, IFavorite, IEdit } from '../elementos/iconos/Iconos';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Dropdown, DropdownItem,DropdownMenu,DropdownToggle} from 'reactstrap';
 
 const Navbar = () => {
+
+  const [dropdown,setDropdown] = useState (false);
+
+  const abrirCerrarDropdown = () => {
+    setDropdown(!dropdown);
+  }
 
   
   return (
@@ -34,12 +39,24 @@ const Navbar = () => {
         </NavMenu>
         <NavBtn>
           <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
-              <Opcion to="perfil-usuario"><IUsuario />Mi perfil</Opcion>
-              <Opcion><ICerrarSesion/>Cerrar sesion</Opcion>
+              <Dropdown isOpen={dropdown} toggle={abrirCerrarDropdown}>
+                <DropdownToggle className="btn-dark">
+                  Mi perfil
+                </DropdownToggle>
+
+                <DropdownMenu>
+                  <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />Nombre de usuario</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to='/editar-perfil'><IEdit />Editar perfil</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><ICerrarSesion />Cerrar Sesion</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+               
         </NavBtn>
       </Nav>
     </>
   );
 };
+
 
 export default Navbar;

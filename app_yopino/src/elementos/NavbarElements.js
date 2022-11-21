@@ -99,49 +99,11 @@ export const NavBtnLink = styled(Link)`
   }
 `;
 
-export const OpcionSeleccionada = styled.div`
-    width: 100%;
-    //text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    //justify-content: space-between;
-    svg {
-        width: 1.25rem; /* 20px */
-        height: auto;
-        margin-right: 10px;
-        //margin-left: 1.25rem; /* 20px */
-    }
+export const NavLinkPerfil = styled(Link)`
+  color: black;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  height: 100%;
 `;
 
-export const Opciones = styled.div`
-    background: white;
-    color: white;
-    position: absolute;
-    font-size: 0.9rem;
-    top: 38px;
-    left: 0;
-    width: 100%;
-    border-radius: 0.625rem; /* 10px */
-    max-height: 18.75rem; /* 300px */
-    overflow-y: auto;
-`;
-
-export const Opcion = styled(Link)`
-    text-decoration: none;
-    color: #fff;
-    padding: 10px; /* 20px */
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    svg {
-        width: 1.25rem;
-        height: auto;
-        //margin-right: 1.25rem; /* 20px */
-    }
-    &:hover {
-      transition: all 0.2s ease-in-out;
-      color: #74e34f;
-    }
-`;
