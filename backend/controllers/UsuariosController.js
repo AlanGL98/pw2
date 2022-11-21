@@ -144,7 +144,40 @@ var controller = {
 
     
     },
+    login: async (req, res) =>{
+        // Recoger parametros por post
+        var params = req.body;
+        // Validar datos
+        try{
+                var validate_email = !validator.isEmpty(params.email);
+                var validate_password = !validator.isEmpty(params.password);
+           
+        }
+        catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'Falta datos por enviar.'
+            });
+        }
 
+        if (validate_email && validate_password) {
+            const data = await Model.find({email: params.email, password: params.password}); // Encuentra el primer registro que coincide con la condición. 
+            
+            if(data){
+                res.send(data);
+            }else{
+                res.send({message: "incorrect user or password."})
+            }
+        }
+        else{
+            return res.status(200).send({
+                status: 'error',
+                message: 'Faltan datos por enviar.'
+            });
+        }
+
+    
+    },
     update: async (req, res) => {
         
         // Recoger el id de la categoria por la url

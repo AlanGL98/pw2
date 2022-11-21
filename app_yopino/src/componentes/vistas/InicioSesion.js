@@ -1,7 +1,7 @@
 import React ,{useState}from 'react';
 import * as Components from '../../elementos/logsign';
 import { Link } from 'react-router-dom';
-import {Register} from '../../servicios/Usuarios'
+import {Register,Login} from '../../servicios/Usuarios'
 // import {Helmet} from 'react-helmet';
 // import HeaderDiv from '../HeaderDiv';
 // const InicioSesion = () => {
@@ -31,6 +31,10 @@ function InicioSesion() {
         birthdate: new Date(),
         id_rol:"63685f0eebc852362f53c40f"
     });
+    const [us,setUs]=useState({  
+        email: "",
+        password: ""
+    });
     // Esto se agrega porque al utilizar un valor como user.name, este no puede cambiar. Hay que utilizar el onChange para poder cambiar el valor de mi variable name
     const handleOnChangeInput = (event) => { 
         const {name, value} = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
@@ -56,7 +60,30 @@ function InicioSesion() {
 
         }
       }
+     
+      const handleOnSubmitLogin= async (event)=>{
+        event.preventDefault();
+        console.log("jala");
+        try{
+            
+            
+            const obj = await Login(us);
+        
+            console.log("my object0:", obj.data);
+            console.log("my object0:", us.id_rol);
+          
+        }catch(err){
+
+        }
+      }
       
+      const handleOnChangeInputLogin = (event) => { 
+        const {name, value} = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
+        setUs({
+            ...us, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
+            [name]: value
+        }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
+    } 
 return(
     <Components.Container>
         <Components.SignUpContainer signinIn={signIn}>
@@ -76,12 +103,12 @@ return(
         </Components.SignUpContainer>
 
         <Components.SignInContainer signinIn={signIn}>
-             <Components.Form>
+             <Components.Form onSubmit={handleOnSubmitLogin}>
                  <Components.Title>Iniciar Sesion</Components.Title>
-                 <Components.Input type='text' placeholder='Usuario' />
-                 <Components.Input type='password' placeholder='Password' />
+                 <Components.Input type='email' name="email" value={us.email} onChange={handleOnChangeInputLogin} placeholder='Email' />
+                 <Components.Input type='password' name="password" value={us.password} onChange={handleOnChangeInputLogin} placeholder='Password' />
                
-                 <Link to={"/"}><Components.Button>Iniciar Sesion</Components.Button></Link>
+                <Components.Button type='submit'>Iniciar Sesion</Components.Button>
              </Components.Form>
         </Components.SignInContainer>
 

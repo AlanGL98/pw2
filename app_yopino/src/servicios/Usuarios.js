@@ -121,8 +121,8 @@ const AddImage = async (image) => {
 const Login = async (data) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/usuarios", {data});
-        console.log("obtuve: ", data);
+        const response = await axios.post("/usuarios/login", data);
+        console.log("obtuve: ", response);
     } catch (err) {
         console.error(err);
         return err;
