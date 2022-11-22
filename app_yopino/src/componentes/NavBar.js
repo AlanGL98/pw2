@@ -16,6 +16,8 @@ import { IUsuario,ICerrarSesion } from '../elementos/iconos/Iconos';
 
 const Navbar = () => {
 
+  const initialUser = localStorage.getItem('user');
+  console.log(initialUser);
   
   return (
     <>

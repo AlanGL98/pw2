@@ -126,6 +126,8 @@ const Login = async (data) => {
         //Respuesta de un await con la ruta del api
         const response = await axios.post("/usuarios/login", data);
         console.log("obtuve: ", response);
+        
+        localStorage.setItem('user', JSON.stringify(response.data))
     } catch (err) {
         console.error(err);
         return err;

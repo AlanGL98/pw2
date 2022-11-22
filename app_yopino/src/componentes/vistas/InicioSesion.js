@@ -78,6 +78,7 @@ function InicioSesion() {
 
             console.log("my object0:", obj.data);
             console.log("my object0:", us.id_rol);
+            
 
         } catch (err) {
 
