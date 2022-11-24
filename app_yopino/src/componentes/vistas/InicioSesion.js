@@ -3,6 +3,8 @@ import * as Components from '../../elementos/logsign';
 // import { Link } from 'react-router-dom';
 import {Register,Login} from '../../servicios/Usuarios';
 import { Navigate } from "react-router-dom";
+
+import { useNavigate } from 'react-router';
 import Cookie from 'cookie-universal';
 // import {Helmet} from 'react-helmet';
 // import HeaderDiv from '../HeaderDiv';
@@ -22,6 +24,7 @@ import Cookie from 'cookie-universal';
 // }
 
 function InicioSesion() {
+    let navigate = useNavigate();
     const [signIn, toggle] = React.useState(true);
     const [user, setUser] = useState({  // Inicializo estas variables de estado con valores vacíos 
         name: "",
@@ -81,7 +84,8 @@ function InicioSesion() {
                 cookies.set('user', obj.data.email);
                 cookies.set('user_id', obj.data._id )
                 const cookieTemp = cookies.get('user');
-                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', obj.data._id);
+                const cookieiD=cookies.get('user_id');
+                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', cookieiD);
 
                 console.log("my object0:", obj.data._id);
                 console.log("my object0:", us.id_rol);
@@ -89,6 +93,9 @@ function InicioSesion() {
                 console.log('error');
             }
             
+            if(user != null){
+                navigate('/');
+            }
 
         } catch (err) {
 
