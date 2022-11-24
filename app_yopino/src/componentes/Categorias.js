@@ -68,17 +68,19 @@ const Categorias = () => {
 
   return(
     <>
-      <Link to={"/all-reviews"}><div className="category">
-        {data.map((item, index)=>{
-          return(
-            <div className="pics" key={index} >
-              <div className="titles">{item.title}</div>
-               
-              <img src={item.imgSrc} style={{width: '100%'}} />
-            </div>
-          )
-        })}
-    </div></Link>
+      <Link to={"/all-reviews"}>
+        <div className="category">
+          {data.map((item, index) => {
+            return (
+              <div className="pics" key={index} >
+                <div className="titles">{item.title}</div>
+
+                <img src={item.imgSrc} style={{ width: '100%' }} />
+              </div>
+            )
+          })}
+        </div>
+      </Link>
     </>
   )
 }
