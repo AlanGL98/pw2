@@ -4,6 +4,12 @@ import * as Components from '../../elementos/logsign';
 import {Register,Login} from '../../servicios/Usuarios';
 import { Navigate } from "react-router-dom";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 import { useNavigate } from 'react-router';
 import Cookie from 'cookie-universal';
 // import {Helmet} from 'react-helmet';
@@ -34,6 +40,7 @@ function InicioSesion() {
         email: "",
         password: "",
         birthdate: new Date(),
+        rol:"",
         id_rol: '63685f0eebc852362f53c40f'
     });
     const [us, setUs] = useState({
@@ -126,6 +133,14 @@ function InicioSesion() {
                     <Components.Input type='password' name="password" value={user.password} onChange={handleOnChangeInput} placeholder='Contraseña' />
                     <Components.Input type='password' placeholder='Confirmar contraseña' />
                     <Components.Input type='date' name="birthdate" value={user.birthdate} onChange={handleOnChangeInput} placeholder='Fecha de nacimiento' />
+                    
+                    <br></br>
+                    <Components.Paragraph>Selecciona tu rol</Components.Paragraph>
+                    <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group">
+                    <FormControlLabel value="usuario" control={<Radio />} label="Usuario" />
+                    <FormControlLabel value="critico" control={<Radio />} label="Critico" />
+                     </RadioGroup>
+                    
                     <Components.Button type='submit'>Registrarse</Components.Button>
 
                 </Components.Form>

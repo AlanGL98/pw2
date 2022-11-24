@@ -12,12 +12,9 @@
 
 .formulario {
     position: relative;
-    min-height: 1100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    min-height: 1250px;
     background: #fff;
-    border-radius: 8px;
-    padding: 50px;
+    padding: 90px 50px;
     box-shadow: rgba(0,0,0,16) 0px 1px 4px;
 }
 

@@ -46,4 +46,9 @@ const ContenedorBotones = styled.div`
     align-items: center;
 `;
 
+const Dropdown = styled.div`
+
+margin: 10px;
+`;
+
 export {Header, Titulo, ContenedorHeader, ContenedorBotones};

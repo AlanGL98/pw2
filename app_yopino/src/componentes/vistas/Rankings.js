@@ -6,17 +6,51 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import Cards from '../Cards';
 import TestFunc from "../TestFunc";
 
-class Ranking extends Component{
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { InputLabel } from "@mui/material";
 
-    state = {
-        dropdown: false
-    }
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-    abrirCerrarDropdown = () => {
-        this.setState({dropdown: !this.state.dropdown});
-    }
 
-    render() {
+
+
+
+
+  export default function Ranking () {
+    const [ordenar, setOrdenar] = React.useState('');
+
+    const handleChange = (event) => {
+        setOrdenar(event.target.value);
+    };
+
+    const Categorias = [
+        { title: 'Arcade'},
+        { title: 'Accion'},
+        { title: 'Aventura'},
+        { title: 'Terror'},
+        { title: 'Musicales'},
+        { title: 'Deportes'},
+        { title: 'Juegos de mesa'},
+        { title: 'Estrategias'},
+        { title: 'Simulacion'}
+    
+    ];
+    
+    const Ordenar = [
+        { title: 'Más recientes'},
+        { title: 'Más antiguas'},
+        { title: 'Más populares'},
+        { title: 'Menos populares'}
+    
+    ];
+    
+ 
+
+   
         return (
             <>
                 <Helmet>
@@ -26,38 +60,38 @@ class Ranking extends Component{
                     <ContenedorHeader>
                         <Titulo>Rankings</Titulo>
                         <ContenedorBotones>
-                            <Dropdown isOpen={this.state.dropdown} toggle={this.abrirCerrarDropdown} size="lg">
-                                <DropdownToggle caret className="btn-dark">
-                                    Categorias
-                                </DropdownToggle>
 
-                                <DropdownMenu>
-                                    <DropdownItem>Arcade</DropdownItem>
-                                    <DropdownItem>Accion</DropdownItem>
-                                    <DropdownItem>Aventura</DropdownItem>
-                                    <DropdownItem>Terror</DropdownItem>
-                                    <DropdownItem>Musicales</DropdownItem>
-                                    <DropdownItem>Deportes</DropdownItem>
-                                    <DropdownItem>Juegos de mesa</DropdownItem>
-                                    <DropdownItem>Estrategia</DropdownItem>
-                                    <DropdownItem>Simulacion</DropdownItem>
-                                </DropdownMenu>
+                        <Autocomplete
+                                multiple
+                                limitTags={1}
+                                id="size-small-multiple-limit-tags"
+                                options={Categorias}
+                                getOptionLabel={(option) => option.title}
+                                defaultValue={[Categorias[1]]}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Categorias" placeholder="Categoria" />
+                                )}
+                                sx={{ width: '300px' }}
+                        />
 
-                                </Dropdown>
+                        <Box sx={{ minWidth: 200 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Ordenamiento</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={ordenar}
+                                label="Ordenamiento"
+                                onChange={handleChange}
+                                >
+                                <MenuItem value={1}>Más recientes</MenuItem>
+                                <MenuItem value={2}>Más antiguas</MenuItem>
+                                <MenuItem value={3}>Más populares</MenuItem>
+                                <MenuItem value={4}>Menos populares</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
 
-
-                                <Dropdown isOpen={this.state.dropdown} toggle={this.abrirCerrarDropdown} size="lg">
-                                <DropdownToggle caret className="btn-dark">
-                                    Ordenar
-                                </DropdownToggle>
-
-                                <DropdownMenu>
-                                    <DropdownItem>Mas recientes</DropdownItem>
-                                    <DropdownItem>Mas populares</DropdownItem>
-                                    <DropdownItem>Menos populares</DropdownItem>
-                                </DropdownMenu>
-
-                                </Dropdown>
                         </ContenedorBotones>
                     </ContenedorHeader>
                 </Header>
@@ -69,10 +103,9 @@ class Ranking extends Component{
                 <TestFunc />
             </>
         )
-    }
+
 }
 
-export default Ranking;
 
 // function Ranking() {
 //     const [dropdown, setDropdown]=useState(false);

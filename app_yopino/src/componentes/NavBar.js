@@ -14,6 +14,7 @@ import Cookie from 'cookie-universal';
 import { IUsuario,ICerrarSesion, IFavorite, IEdit, ICategory, IPost } from '../elementos/iconos/Iconos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown, DropdownItem,DropdownMenu,DropdownToggle} from 'reactstrap';
+import { Divider } from '@mui/material';
 
 const Navbar = () => {
 
@@ -51,10 +52,15 @@ const Navbar = () => {
 
                 <DropdownMenu>
                   <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />Nombre de usuario</NavLinkPerfil></DropdownItem>
+                  <Divider/>
                   <DropdownItem><NavLinkPerfil to='/newpost'><IPost />Crear post</NavLinkPerfil></DropdownItem>
+                  <Divider/>
                   <DropdownItem><NavLinkPerfil to='/editar-perfil'><IEdit />Editar perfil</NavLinkPerfil></DropdownItem>
+                  <Divider/>
                   <DropdownItem><NavLinkPerfil to='/admin-categorias'><ICategory />Revisar categorias</NavLinkPerfil></DropdownItem>
+                  <Divider/>
                   <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
+                  <Divider/>
                   <DropdownItem><ICerrarSesion />Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
               </Dropdown>

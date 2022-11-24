@@ -6,7 +6,12 @@ import * as Components from '../../elementos/logsign';
 import { Link } from 'react-router-dom';
 
 import '../../css/comentarios.css';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 // import { height } from "@mui/system";
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const Post = () => {
     const [comentarios] = useState(
@@ -85,6 +90,8 @@ const Post = () => {
 
 
                                     <p>{card.date}</p>
+
+                                    <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="success" />
 
                                 </div>
 
