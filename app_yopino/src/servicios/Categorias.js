@@ -1,16 +1,31 @@
 import { axiosBase as axios } from "./Config";
+import {useState, useEffect} from "react";
+// const GetAll = async () => {
+//     try {
+//         //Respuesta de un await con la ruta del api
+//         const response = await axios.get("/secciones");
+//         const data = await response.data.data;
+//         // console.log(data);
+//         return data;
+//     } catch (err) {
+//         console.error(err);
+//         return err;
+//     }
+// }
 
-const GetAll = async () => {
-    try {
-        //Respuesta de un await con la ruta del api
-        const response = await axios.get("/secciones");
-        const data = await response.data.data;
-        // console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
-        return err;
-    }
+const GetAll = () => {
+    const [categorias, setCategorias] = useState([]);
+
+    useEffect(() => {
+
+        axios.get('/secciones')
+        .then((res) => {
+            setCategorias(res.data.data);
+        });
+
+    }, []);
+
+    return [categorias];
 }
 
 const GetOne = async (id) => {
