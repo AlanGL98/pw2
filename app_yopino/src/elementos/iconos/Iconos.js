@@ -5,6 +5,10 @@ import { ReactComponent as cerrarSesion } from "../../img/log-out.svg";
 import { ReactComponent as favorite } from "../../img/favorites.svg";
 import { ReactComponent as edit } from "../../img/edit.svg";
 import { ReactComponent as save } from "../../img/save.svg";
+import { ReactComponent as category } from "../../img/category.svg";
+import { ReactComponent as newpost } from "../../img/newpost.svg";
+import { ReactComponent as borrar } from "../../img/delete.svg";
+
 
 const IUsuario = styled(usuario)`
    // width: 17px;
@@ -65,4 +69,40 @@ const ISave = styled(save)`
                     theme.blanco};
     }
 `;
-export {IUsuario, ICerrarSesion, IFavorite, IEdit, ISave};
+
+const ICategory = styled(category)`
+   // width: 17px;
+    margin-right: 5px;
+    height: auto;
+    color: ${(props) => props.primario ? theme.colorPrimario : theme.colorVerde};
+    path {
+        fill: ${(props) => props.primario 
+                    ? theme.colorPrimario : 
+                    theme.colorVerde};
+    }
+`;
+
+const IDelete = styled(borrar)`
+   // width: 17px;
+    margin-right: 5px;
+    height: auto;
+    color: ${(props) => props.primario ? theme.colorPrimario : theme.colorVerde};
+    path {
+        fill: ${(props) => props.primario 
+                    ? theme.colorPrimario : 
+                    theme.colorVerde};
+    }
+`;
+
+const IPost = styled(newpost)`
+   // width: 17px;
+    margin-right: 5px;
+    height: auto;
+    color: ${(props) => props.primario ? theme.colorPrimario : theme.colorVerde};
+    path {
+        fill: ${(props) => props.primario 
+                    ? theme.colorPrimario : 
+                    theme.colorVerde};
+    }
+`;
+export {IUsuario, ICerrarSesion, IFavorite, IEdit, ISave, ICategory, IDelete, IPost};

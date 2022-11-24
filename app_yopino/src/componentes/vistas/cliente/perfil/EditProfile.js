@@ -89,6 +89,17 @@ const EditarPerfil = () => {
                     <Form className="formulario">
                     <h1>Editar perfil</h1>
                         <div>
+                            <label htmlFor="foto">Cargar foto</label>
+                            <Field 
+                                type="file" 
+                                id="fotoperfil" 
+                                name="fotoperfil" 
+                            />
+                            <ErrorMessage name="nombre" component={() => (
+                                <div className="error">{errors.nombre}</div>
+                            )}/>
+                        </div>
+                        <div>
                             <label htmlFor="nombre">Nombre</label>
                             <Field 
                                 type="text" 
