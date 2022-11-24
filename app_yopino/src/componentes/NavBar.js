@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   Nav,
   NavLink,
@@ -6,21 +6,25 @@ import {
   NavMenu,
   NavBtn,
   NavBtnLink,
-  // OpcionSeleccionada,
-  // Opciones,
-  Opcion
+  NavLinkPerfil
 } from '../elementos/NavbarElements';
 
-import { IUsuario,ICerrarSesion } from '../elementos/iconos/Iconos';
 import Cookie from 'cookie-universal';
+
+import { IUsuario,ICerrarSesion, IFavorite, IEdit, ICategory, IPost } from '../elementos/iconos/Iconos';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Dropdown, DropdownItem,DropdownMenu,DropdownToggle} from 'reactstrap';
 
 const Navbar = () => {
 
-  //const initialUser = localStorage.getItem('user');
-  //console.log(initialUser);
+  const [dropdown,setDropdown] = useState (false);
 
   const cookies = Cookie();
   const user_id = cookies.get('user_id');
+
+  const abrirCerrarDropdown = () => {
+    setDropdown(!dropdown);
+  }
   
   return (
     <>
@@ -38,19 +42,28 @@ const Navbar = () => {
 
         </NavMenu>
         <NavBtn>
-          {
-            user_id === undefined ? 
-              <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
-            :
-            <>
-              <Opcion to="perfil-usuario"><IUsuario />Mi perfil</Opcion>
-              <Opcion><ICerrarSesion/>Cerrar sesion</Opcion>
-            </>
-          }
+
+          <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
+              <Dropdown isOpen={dropdown} toggle={abrirCerrarDropdown}>
+                <DropdownToggle className="btn-dark">
+                  Mi perfil
+                </DropdownToggle>
+
+                <DropdownMenu>
+                  <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />Nombre de usuario</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to='/newpost'><IPost />Crear post</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to='/editar-perfil'><IEdit />Editar perfil</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to='/admin-categorias'><ICategory />Revisar categorias</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><ICerrarSesion />Cerrar Sesion</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
         </NavBtn>
       </Nav>
     </>
   );
 };
+
 
 export default Navbar;

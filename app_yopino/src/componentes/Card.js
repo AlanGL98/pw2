@@ -15,7 +15,7 @@ const Card = props => {
           aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p>
-        <a href="#" className="btn btn-outline-success">Go Anywhere</a>
+        <a href='/post' className="btn btn-outline-success">Ver mas...</a>
       </div>
     </div>
   )

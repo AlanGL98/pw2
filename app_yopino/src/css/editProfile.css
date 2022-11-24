@@ -1,0 +1,84 @@
+.contenedor{
+    background-color: rgb(192, 51, 51);
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height:100%;
+    max-width: 100%;
+    min-height: 100%;
+}
+
+.formulario {
+    position: relative;
+    min-height: 1100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 50px;
+    box-shadow: rgba(0,0,0,16) 0px 1px 4px;
+}
+
+.formulario >div{
+    margin-bottom: 20px;
+}
+
+.formulario label {
+    display: block;
+    margin-bottom: 5px;
+    color: #434742;
+}
+
+.formulario input{
+    background-color: #eee;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    width: 100%;
+}
+
+.formulario input:focus{
+    outline: none;
+    border: 2px solid rgb(67, 157, 40); 
+}
+
+.formulario .error{
+    color: #e92b2d;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.formulario button[type="submit"] {
+    border-radius: 20px;
+    border: 1px solid #348519;
+    background-color: #348519;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin: 40px auto;
+    display: flex;
+}
+
+.formulario button:active{
+    transform: scale(0.95);
+}
+.formulario button:focus{
+    outline: none;
+}
+
+.exito{
+    text-align: center;
+	font-size: 14px;
+	padding-top: 20px;
+	color: #02a802;
+}
+
+h1{
+    text-align: center;
+}
