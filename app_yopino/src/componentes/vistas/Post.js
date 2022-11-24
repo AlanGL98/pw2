@@ -10,8 +10,23 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 // import { height } from "@mui/system";
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
+import { styled } from '@mui/material/styles';
+
+import CardMedia from '@mui/material/CardMedia';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
 
 const Post = () => {
     const [comentarios] = useState(
@@ -56,6 +71,35 @@ const Post = () => {
         ]
     );
 
+    const [TopPlayers] = useState(
+        [
+            {
+                user: 'Player 1',
+                img: require ('../../img/perfilDefault.png'),
+            },
+            {
+                user: 'Player 1',
+                img: require ('../../img/perfilDefault.png'),
+
+            },
+            {
+                user: 'Player 1',
+                img: require ('../../img/perfilDefault.png'),
+
+            },
+            {
+                user: 'Player 1',
+                img: require ('../../img/perfilDefault.png')
+            },
+            {
+                user: 'Player 1',
+                img: require ('../../img/perfilDefault.png')
+            },
+           
+
+        ]
+    );
+
     return (
         <div>
             <section>
@@ -75,31 +119,53 @@ const Post = () => {
                         </div>
                         <img src={IMG} alt="..."/>
                     </section>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid xs={8}>
+                        <h1>Opiniones</h1>
+                        <div className="cards1">
+                            {
+                                comentarios.map((card, i) => (
+                                    <div key={i} className="card1">
+                                        <Stack spacing={1}>
+                                            <Rating name="size-small" defaultValue={card.rate} size="small" readOnly />
 
-                    <h1>Opiniones</h1>
-                    <div className="cards1">
-                        {
-                            comentarios.map((card, i) => (
-                                <div key={i} className="card1">
-                                    <Stack spacing={1}>
-                                        <Rating name="size-small" defaultValue={card.rate} size="small" readOnly />
-
-                                    </Stack>
-                                    <h4>{card.content}</h4>
-                                    <h3>{card.user}</h3>
+                                        </Stack>
+                                        <h4>{card.content}</h4>
+                                        <h3>{card.user}</h3>
 
 
-                                    <p>{card.date}</p>
+                                        <p>{card.date}</p>
 
-                                    <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="success" />
+                                        <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="success" />
 
-                                </div>
+                                    </div>
 
-                            ))
-                        }
+                                ))
+                            }
 
-                    </div>
+                        </div>
+                    </Grid>
 
+                    <Grid xs={4}>
+                    <h2>Top Players</h2>
+                    <div className="TPcards">
+                            {
+                                TopPlayers.map((card, i) => (
+                                    <div key={i} className="TPcard">
+                                        <CardMedia className="TPIMG" component="img"  sx={{ width: 100 }}  image={card.img}/>
+                                        <h2>{card.user}</h2>
+                                    </div>
+
+                                ))
+                            }
+
+                        </div>
+                    </Grid>
+                </Grid>
+            </Box>
+
+                   
                     <h1>Da tu opinion</h1>
                     <div className="new-comments">
                         {
