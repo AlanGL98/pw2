@@ -16,8 +16,8 @@ import Cookie from 'cookie-universal';
 
 const Navbar = () => {
 
-  const initialUser = localStorage.getItem('user');
-  console.log(initialUser);
+  //const initialUser = localStorage.getItem('user');
+  //console.log(initialUser);
 
   const cookies = Cookie();
   const user_id = cookies.get('user_id');
