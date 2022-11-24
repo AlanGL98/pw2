@@ -81,7 +81,8 @@ function InicioSesion() {
                 cookies.set('user', obj.data.email);
                 cookies.set('user_id', obj.data._id )
                 const cookieTemp = cookies.get('user');
-                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', obj.data._id);
+                const cookieiD=cookies.get('user_id');
+                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', cookieiD);
 
                 console.log("my object0:", obj.data._id);
                 console.log("my object0:", us.id_rol);
