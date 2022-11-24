@@ -3,6 +3,7 @@ import * as Components from '../../elementos/logsign';
 // import { Link } from 'react-router-dom';
 import {Register,Login} from '../../servicios/Usuarios';
 import { Navigate } from "react-router-dom";
+import Cookie from 'cookie-universal';
 // import {Helmet} from 'react-helmet';
 // import HeaderDiv from '../HeaderDiv';
 // const InicioSesion = () => {
@@ -73,11 +74,20 @@ function InicioSesion() {
         console.log("jala");
         try {
 
-
+            
             const obj = await Login(us);
+            if(obj.data._id){
+                const cookies = Cookie();
+                cookies.set('user', obj.data.email);
+                cookies.set('user_id', obj.data._id )
+                const cookieTemp = cookies.get('user');
+                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', obj.data._id);
 
-            console.log("my object0:", obj.data);
-            console.log("my object0:", us.id_rol);
+                console.log("my object0:", obj.data._id);
+                console.log("my object0:", us.id_rol);
+            }else{
+                console.log('error');
+            }
             
 
         } catch (err) {

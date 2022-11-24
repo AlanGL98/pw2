@@ -151,7 +151,7 @@ var controller = {
         try{
                 var validate_email = !validator.isEmpty(params.email);
                 var validate_password = !validator.isEmpty(params.password);
-           
+        
         }
         catch(err){
             return res.status(200).send({
@@ -161,10 +161,10 @@ var controller = {
         }
 
         if (validate_email && validate_password) {
-            const data = await Model.find({email: params.email, password: params.password}); // Encuentra el primer registro que coincide con la condición. 
+            const data = await Model.findOne({email: params.email, password: params.password}); // Encuentra el primer registro que coincide con la condición. 
             
             if(data){
-                res.send(data);
+                res.send({data:data});
             }else{
                 res.send({message: "incorrect user or password."})
             }

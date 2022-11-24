@@ -12,12 +12,15 @@ import {
 } from '../elementos/NavbarElements';
 
 import { IUsuario,ICerrarSesion } from '../elementos/iconos/Iconos';
-
+import Cookie from 'cookie-universal';
 
 const Navbar = () => {
 
   const initialUser = localStorage.getItem('user');
   console.log(initialUser);
+
+  const cookies = Cookie();
+  const user_id = cookies.get('user_id');
   
   return (
     <>
@@ -36,8 +39,12 @@ const Navbar = () => {
         </NavMenu>
         <NavBtn>
           <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
-              <Opcion to="perfil-usuario"><IUsuario />Mi perfil</Opcion>
-              <Opcion><ICerrarSesion/>Cerrar sesion</Opcion>
+          { user_id ?
+          <Opcion to="perfil-usuario"><IUsuario />Mi perfil</Opcion>
+          : "" }
+          { user_id ?
+          <Opcion><ICerrarSesion/>Cerrar sesion</Opcion>
+          : "" }
         </NavBtn>
       </Nav>
     </>
