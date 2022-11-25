@@ -72,7 +72,7 @@ const Navbar = () => {
                     : ""
                   }
                   <Divider/>
-                  <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to ={`/favoritos/usuario/${user_id}`}><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
                   <Divider/>
                   <DropdownItem href="/" onClick={logout}><ICerrarSesion />Cerrar Sesion</DropdownItem>
                 </DropdownMenu>

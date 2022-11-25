@@ -22,6 +22,9 @@ import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';
 
 import '../../../css/comentarios.css';
+import Cookie from 'cookie-universal';
+import { GetAll } from "../../../servicios/Favoritos";
+import Global from '../../../Global';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -30,7 +33,13 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   export default function Favoritos () {
     const [ordenar, setOrdenar] = React.useState('');
+    
+    const cookies = Cookie();
+    const user_id = cookies.get('user_id');
 
+    
+    const [favoritos] = GetAll();
+    
     const handleChange = (event) => {
         setOrdenar(event.target.value);
     };
@@ -78,20 +87,20 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
                 </Header>
                 <div className="cards1">
                             {
-                                comentarios.map((card, i) => (
+                                favoritos.map((card, i) => (
                                     <div key={i} className="card1">
                                         
-                                        <h2>{card.title} <Checkbox {...label} icon={<FavoriteBorder color="success"/>} checkedIcon={<Favorite />} color="success" checked='true'/></h2>
+                                        <h2>{card.opinion_name} <Checkbox {...label} icon={<FavoriteBorder color="success"/>} checkedIcon={<Favorite />} color="success" checked={card.active}/></h2>
                                         <Stack spacing={1}>
                                             <Rating name="size-small" defaultValue={card.rate} size="small" readOnly align="right"/>
                                         </Stack>
                                         <br></br>
 
-                                        <CardMedia className="RANKINGIMG" component="img"  align="left" sx={{ width: 400 }}  image={card.img}/>
-                                        <h4>{card.content}</h4>
+                                        <CardMedia className="RANKINGIMG" component="img"  align="left" sx={{ width: 400 }}  image={Global.url + 'opiniones/get-image/' + card.image}/>
+                                        <h4>{card.opinion_sinopsis}</h4>
                                         
                                         <br></br><br></br>
-                                        <a href='/post' className="btn-newcomment">Ver mas...</a>
+                                        <a href={`/post/${card.opinion_id}`} className="btn-newcomment">Ver mas...</a>
                     
                                     </div>
 
@@ -100,7 +109,6 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
                 </div>
 
-                <TestFunc />
             </>
         )
 

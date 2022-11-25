@@ -9,30 +9,22 @@ var controller = {
 
     getAll: (req, res) =>{
 
-        var query = Model.find({});
+        // Recoger id de la url
+        var userId = req.params.id;
 
-        // Find
-        query.find({}).sort('-_id').exec((err, model) =>{
-            
-            if(err){
-                return res.status(500).send({
-                    status: 'error',
-                    message: 'Error al devolver favoritos'
-                });
-            }
+        // Buscar el usuario
+        Model.find({user_id:userId}, (err, model) =>{
 
-            if(!model){
+            if(err || !model){
                 return res.status(404).send({
                     status: 'error',
-                    message: 'No hay favoritos para mostrar'
+                    message: 'No existen favoritos.'
                 });
             }
 
-
-            return res.status(200).send({
-                status: 'success',
-                data: model
-            });
+            //Devolverlo en json
+            return res.send( model
+            );
 
         });
 

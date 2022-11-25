@@ -48,7 +48,7 @@ root.render(
           <Route path="/editar-perfil" element ={<EditProfile/>}/>
           <Route path="/admin-categorias" element ={<AdminCategorias/>}/>
           <Route path="/new-categoria" element ={<NewCategoria/>}/>
-          <Route path="/favoritos" element ={<Favoritos/>}/>
+          <Route path="/favoritos/usuario/:id" element ={<Favoritos/>}/>
           
           <Route path="/" element ={<App/>}/>
         </Routes>
