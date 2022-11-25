@@ -1,18 +1,19 @@
 import { axiosBase as axios } from "./Config";
 
-const GetAll = async () => {
-    try {
-        //Respuesta de un await con la ruta del api
-        const response = await axios.get("/opiniones");
-        const data = await response.data.data;
-        // console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
-        return err;
-    }
-}
+const GetAll = () => {
+    const [opiniones, setOpiniones] = useState([]);
 
+    useEffect(() => {
+
+        axios.get('/opiniones')
+        .then((res) => {
+            setOpiniones(res.data.data);
+        });
+
+    }, []);
+
+    return [opiniones];
+}
 const GetOne = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
