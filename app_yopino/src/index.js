@@ -16,6 +16,8 @@ import Ranking from './componentes/vistas/Rankings';
 import Profile from './componentes/vistas/cliente/perfil/Profile';
 import EditProfile from './componentes/vistas/cliente/perfil/EditProfile';
 import AdminCategorias from './componentes/vistas/admin/Categories';
+import NewCategoria from './componentes/vistas/admin/NewCategory';
+import Favoritos from './componentes/vistas/cliente/Favoritos';
 
 import Footer from './componentes/Footer';
 
@@ -45,6 +47,8 @@ root.render(
           <Route path="/perfil-usuario" element ={<Profile/>}/>
           <Route path="/editar-perfil" element ={<EditProfile/>}/>
           <Route path="/admin-categorias" element ={<AdminCategorias/>}/>
+          <Route path="/new-categoria" element ={<NewCategoria/>}/>
+          <Route path="/favoritos" element ={<Favoritos/>}/>
           
           <Route path="/" element ={<App/>}/>
         </Routes>
