@@ -139,19 +139,18 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
                                         
                                         
-                                        <h2>{card.title}</h2>
+                                        <h2>{card.title} <Checkbox {...label} icon={<FavoriteBorder color="success"/>} checkedIcon={<Favorite />} color="success"/></h2>
                                         <Stack spacing={1}>
                                             <Rating name="size-small" defaultValue={card.rate} size="small" readOnly align="right"/>
                                         </Stack>
+                                        <br></br>
 
                                         <CardMedia className="RANKINGIMG" component="img"  align="left" sx={{ width: 400 }}  image={card.img}/>
                                         <h4>{card.content}</h4>
-
-                                        <div className="alinear">
-                                        <Checkbox {...label} icon={<FavoriteBorder color="success"/>} checkedIcon={<Favorite />} color="success"/>
                                         
-                                        <a href='/post' className="btn btn-outline-success">Ver mas...</a>
-                                        </div>
+                                        <br></br><br></br>
+                                        <a href='/post' className="btn-newcomment">Ver mas...</a>
+                    
                                     </div>
 
                                 ))

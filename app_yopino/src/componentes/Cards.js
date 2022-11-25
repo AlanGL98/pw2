@@ -19,7 +19,10 @@ const Cards = () => {
                 </div>
                 <div className='col-md-4'>
                     <Card imgsrc={img3} title='League of Legends'/>
-                </div>       
+                </div>      
+                <div className='col-md-4'>
+                    <Card imgsrc={img3} title='League of Legends'/>
+                </div>   
             </div>
         </div>
     );
