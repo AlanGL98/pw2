@@ -22,6 +22,7 @@ const Navbar = () => {
 
   const cookies = Cookie();
   const user_id = cookies.get('user_id');
+  const rol_id = cookies.get('user_rol');
 
   const abrirCerrarDropdown = () => {
     setDropdown(!dropdown);
@@ -43,9 +44,10 @@ const Navbar = () => {
 
         </NavMenu>
         <NavBtn>
-
+          {user_id == undefined ?
           <NavBtnLink to='/iniciar-sesion'>Ingresar</NavBtnLink>
-              <Dropdown isOpen={dropdown} toggle={abrirCerrarDropdown}>
+          :
+          <Dropdown isOpen={dropdown} toggle={abrirCerrarDropdown}>
                 <DropdownToggle className="btn-dark">
                   Mi perfil
                 </DropdownToggle>
@@ -53,17 +55,28 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />Nombre de usuario</NavLinkPerfil></DropdownItem>
                   <Divider/>
+                  {
+                    rol_id === '63685e73ebc852362f53c40d' || rol_id === '63685c15ebc852362f53c40c'?  
                   <DropdownItem><NavLinkPerfil to='/newpost'><IPost />Crear post</NavLinkPerfil></DropdownItem>
+                  : ""
+                  }
                   <Divider/>
                   <DropdownItem><NavLinkPerfil to='/editar-perfil'><IEdit />Editar perfil</NavLinkPerfil></DropdownItem>
                   <Divider/>
-                  <DropdownItem><NavLinkPerfil to='/admin-categorias'><ICategory />Revisar categorias</NavLinkPerfil></DropdownItem>
+                  {
+                    rol_id === '63685c15ebc852362f53c40c' ?                   
+                    <DropdownItem><NavLinkPerfil to='/admin-categorias'><ICategory />Revisar categorias</NavLinkPerfil></DropdownItem>
+                    : ""
+                  }
                   <Divider/>
                   <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
                   <Divider/>
                   <DropdownItem><ICerrarSesion />Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
+          
+          }
+              
 
         </NavBtn>
       </Nav>
