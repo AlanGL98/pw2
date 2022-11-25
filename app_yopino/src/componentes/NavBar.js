@@ -27,6 +27,9 @@ const Navbar = () => {
   const abrirCerrarDropdown = () => {
     setDropdown(!dropdown);
   }
+  function logout(){
+    cookies.removeAll();
+  }
   
   return (
     <>
@@ -71,7 +74,7 @@ const Navbar = () => {
                   <Divider/>
                   <DropdownItem><NavLinkPerfil><IFavorite/>Favoritos</NavLinkPerfil></DropdownItem>
                   <Divider/>
-                  <DropdownItem><ICerrarSesion />Cerrar Sesion</DropdownItem>
+                  <DropdownItem href="/" onClick={logout}><ICerrarSesion />Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
           
