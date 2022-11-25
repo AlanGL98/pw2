@@ -2,42 +2,32 @@ import { axiosBase as axios } from "./Config";
 import {useState, useEffect} from "react";
 
 const GetAll = () => {
-    const [opiniones, setOpiniones] = useState([]);
+    const [players, setPlayers] = useState([]);
 
     useEffect(() => {
 
-        axios.get('/opiniones')
+        axios.get('/top-players')
         .then((res) => {
-            setOpiniones(res.data.data);
+            setPlayers(res.data.data);
         });
 
     }, []);
 
-    return [opiniones];
+    return [players];
 }
 const GetOne =  (id) => {
-    const [opinion, setOpinion] = useState({});
+    const [player, setPlayer] = useState({});
 
     useEffect(() => {
 
-        axios.get(`/opiniones/${id}`)
+        axios.get(`/top-players/${id}`)
         .then((res) => {
-            setOpinion(res.data.data);
+            setPlayer(res.data.data);
         });
 
     }, []);
-    useEffect(() => {
-        if(opinion.category_id===undefined)
-            return;
 
-        axios.get(`/secciones/${opinion.category_id}`)
-        .then((res) => {
-            setOpinion({...opinion,name_cat:res.data.data.name});
-        });
-
-    }, [opinion]);
-
-    return opinion;
+    return player;
 }
 
 const Create = async (opinion) => {
@@ -63,7 +53,7 @@ const Create = async (opinion) => {
 const Update = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.put("/opiniones/:id", {
+        const response = await axios.put("/top-players/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -80,7 +70,7 @@ const Update = async (id) => {
 const Delete = async (id) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.delete("/opiniones/:id", {
+        const response = await axios.delete("/top-players/:id", {
             id
         })
         if (response.status === 'succes') {
@@ -97,7 +87,7 @@ const Delete = async (id) => {
 const GetImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/opiniones/get-image/${image}`)
+        const response = await axios.get(`/top-players/get-image/${image}`)
         if (response.status === 'success') {
             return response.data;
         } 
@@ -112,7 +102,7 @@ const GetImage = async (image) => {
 const AddImage = async (image) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/opiniones/add-image/:id", {
+        const response = await axios.post("/top-players/add-image/:id", {
             image
         })
         if (response.status === 'succes') {

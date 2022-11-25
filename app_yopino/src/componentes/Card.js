@@ -7,6 +7,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 
 const Card = props => {
+console.log('obtengo',props._id, props.title);
   return (
     <div className="card text-center shadow">
       <div className="overflow">
@@ -15,12 +16,9 @@ const Card = props => {
       <div className="card-body text-dark">
         <h4 className="card-title">{props.title} <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="success" /></h4>
         <p className="card-text text-secondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          {props.opinion_sinopsis}
         </p>
-        <a href='/post' className="btn btn-outline-success">Ver mas...</a>
+        <a href={`/post/${props._id}`} className="btn btn-outline-success">Ver mas...</a>
       </div>
     </div>
   )

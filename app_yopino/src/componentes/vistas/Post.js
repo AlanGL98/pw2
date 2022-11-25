@@ -17,6 +17,11 @@ import { styled } from '@mui/material/styles';
 
 import CardMedia from '@mui/material/CardMedia';
 import Cookie from 'cookie-universal';
+import { useParams } from "react-router-dom";
+import { GetOne } from '../../servicios/Opiniones';
+import { GetOneCat } from '../../servicios/Categorias';
+import { GetAll } from '../../servicios/TopPlayers';
+import Global from '../../Global';
 
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -31,6 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const Post = () => {
+    //Datos de usuario
     const cookies = Cookie();
     const user_id = cookies.get('user_id');
     const rol_id = cookies.get('user_rol');
@@ -38,6 +44,19 @@ const Post = () => {
     const now = Date.now();
     const dateNow= new Date(now);
     const hoy = dateNow.toDateString();
+
+    //info de opinion
+    const {id} = useParams();
+    const opinion = GetOne(id);
+    //const id_cat = opinion.category_id;
+    
+    //console.log('id categoria',opinion.category_id);
+    //const categoria = GetOneCat( id_cat);
+
+
+
+
+
 
     const [comentarios] = useState(
         [
@@ -119,21 +138,19 @@ const Post = () => {
 
 
                         <div className="gameinfo">
-                            <h1>Nombre del juego</h1>
-                            <p>Categoria</p>
-                            <h6>'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.'</h6>
+                            <h1>{opinion.title}</h1>
+                            <p>{opinion.name_cat}</p>
+                            <h6>{opinion.sinopsis}</h6>
                             <Stack className="center" spacing={1} >
                                 <Rating name="half-rating-read" defaultValue={4.5} precision={0.5} size="large" readOnly />
 
                             </Stack>
                         </div>
-                        <img src={IMG} alt="..."/>
+                        <img src={Global.url + 'opiniones/get-image/' + opinion.image} alt="..."/>
                     </section>
 
                     <section className="postInfo">
-                    <p>Lorem ipsum dolor sit amet. In sapiente dicta rem adipisci quaerat hic debitis odio nam vitae autem ab animi doloribus in voluptatem vero et sint dolor? Eum provident molestiae vel necessitatibus possimus sit magni veniam 33 libero natus. Et natus rerum in illum illo nam repudiandae vero aut eaque quam. Ex eius cumque eos corrupti animi et rerum enim est internos voluptas. Non repellendus corporis qui voluptas deserunt ut libero quisquam est nihil voluptatem. </p>
-                    <p>Ea molestiae itaque At tempora eius id voluptate possimus non impedit esse et quibusdam quos ut cumque inventore. Eum delectus nisi qui nihil ipsum ut voluptas excepturi non magni quis et mollitia dolorem quo nihil alias in itaque dolorum! Qui nihil nihil 33 voluptatem libero hic internos voluptates. Vel dolorum aliquam est voluptates omnis ad velit perferendis. Quo asperiores inventore quo officiis esse ut voluptas autem et tempore voluptatibus aut rerum earum. Et eveniet recusandae sit corrupti beatae eum libero fugit in quia accusantium. Et deserunt amet a quibusdam repudiandae et odit optio ut debitis debitis et tempore animi qui voluptatem quia eos sint odit. </p>
-                    <p>Est modi architecto et iusto consequatur aut animi nisi et amet dolorem vel enim dolores ab voluptas illo. 33 perspiciatis expedita ut corrupti aperiam 33 harum labore ut voluptas suscipit cum rerum minima qui voluptatem voluptatibus 33 natus consequatur? Sit sint ratione At delectus iusto hic omnis maxime. Ut libero sapiente ut omnis voluptas aut dicta doloribus aut porro dolor. Hic corporis magnam et maxime repudiandae et dolorem praesentium in cupiditate dignissimos est velit suscipit non magnam vero. </p>
+                    <p>{opinion.contenido}</p>
                     </section>
 
             <Box sx={{ flexGrow: 1 }}>

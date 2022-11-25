@@ -28,20 +28,19 @@ const GetAll = () => {
     return [categorias];
 }
 
-const GetOne = async (id) => {
-    try {
-        //Respuesta de un await con la ruta del api
-        const response = await axios.get(`/secciones/${id}`)
-        if (response.status === 'succes') {
-            return response.data;
-        } 
-        else {
-            return {}
+const GetOneCat =  (id) => {
+    const [categoria, setCategoria] = useState({});
+
+    useEffect(() => {
+        if(id!=undefined){
+        axios.get(`/secciones/${id}`)
+        .then((res) => {
+            setCategoria(res.data.data);
+        });
         }
-    } catch (err) {
-        console.error(err);
-        return err;
-    }
+    }, []);
+    console.log('obtuve;',categoria);
+    return categoria;
 }
 
 const Create = async (seccion) => {
@@ -128,4 +127,4 @@ const AddImage = async (image) => {
     }
 }
 
-export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage};
+export {GetAll, GetOneCat, Delete, Create, Update,GetImage,AddImage};

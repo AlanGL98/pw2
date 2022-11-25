@@ -41,7 +41,7 @@ root.render(
           <Route path="/iniciar-sesion" element ={<InicioSesion/>}/>
           <Route path="/categorias" element ={<Categorias/>}/>
           <Route path="/all-reviews" element ={<Reviews/>}/>
-          <Route path="/post" element ={<Post/>}/>
+          <Route path="/post/:id" element ={<Post/>}/>
           <Route path="/newpost" element ={<NewPost/>}/>
           <Route path="/rankings" element ={<Ranking/>}/>
           <Route path="/perfil-usuario" element ={<Profile/>}/>

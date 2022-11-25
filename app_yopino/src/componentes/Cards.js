@@ -12,16 +12,22 @@ import Global from '../Global';
 const Cards = () => {
     
     const [opiniones] = GetAll();
-
+    console.log('opiniones:', opiniones);
     return(
         <div className='contaier-fluid d-flex justify-content-center'>
             
             <div className='row'>
                 {
-                opiniones.map((item) => {
-                <div className='col-md-4' key={item._id}>
-                    <Card imgsrc={Global.url + 'opiniones/get-image/' + item.image} title={item.name}/>
-                </div>
+                    opiniones.map((item) => {
+                        return(
+                        <div className='col-md-4' key={item._id}>
+                            <Card 
+                                opinion_sinopsis= {item.sinopsis}
+                                imgsrc={Global.url + 'opiniones/get-image/' + item.image} 
+                                title={item.title}
+                                _id = {item._id} />
+                        </div>
+                        )
                     })
                 }
                 <div className='col-md-4'>
