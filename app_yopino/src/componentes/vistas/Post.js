@@ -16,6 +16,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 
 import CardMedia from '@mui/material/CardMedia';
+import Cookie from 'cookie-universal';
+
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -29,6 +31,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const Post = () => {
+    const cookies = Cookie();
+    const user_id = cookies.get('user_id');
+    const rol_id = cookies.get('user_rol');
     const [comentarios] = useState(
         [
             {
@@ -171,26 +176,30 @@ const Post = () => {
                     </Grid>
                 </Grid>
             </Box>
+            {
+                rol_id === '63685e73ebc852362f53c40d' || rol_id === '63685c15ebc852362f53c40c' || rol_id ==='63685f0eebc852362f53c40f'?  
+                    <>
+                        <h1>Da tu opinion</h1>
+                        <div className="new-comments">
+                            {
 
-                   
-                    <h1>Da tu opinion</h1>
-                    <div className="new-comments">
-                        {
+                                <div className="new-comment-card">
+                                    <Stack spacing={1}>
+                                        <Rating name="size-medium" defaultValue={1} />
 
-                            <div className="new-comment-card">
-                                <Stack spacing={1}>
-                                    <Rating name="size-medium" defaultValue={1} />
+                                    </Stack>
+                                    <Components.Input type='text' placeholder='Da tu opinion' />
+                                    <h3>Usuario</h3>
+                                    <p>fecha</p>
+                                    <Link to={"/post"}><button className="btn-newcomment" type="submit">Publicar</button></Link>
 
-                                </Stack>
-                                <Components.Input type='text' placeholder='Da tu opinion' />
-                                <h3>Usuario</h3>
-                                <p>fecha</p>
-                                <Link to={"/post"}><button className="btn-newcomment" type="submit">Publicar</button></Link>
+                                </div>
+                            }
 
-                            </div>
-                        }
-
-                    </div>
+                        </div>
+                    </>
+                    : ""
+                }
                 </div>
             </section>
         </div>
