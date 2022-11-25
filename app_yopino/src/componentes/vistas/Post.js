@@ -119,6 +119,13 @@ const Post = () => {
                         </div>
                         <img src={IMG} alt="..."/>
                     </section>
+
+                    <section className="postInfo">
+                    <p>Lorem ipsum dolor sit amet. In sapiente dicta rem adipisci quaerat hic debitis odio nam vitae autem ab animi doloribus in voluptatem vero et sint dolor? Eum provident molestiae vel necessitatibus possimus sit magni veniam 33 libero natus. Et natus rerum in illum illo nam repudiandae vero aut eaque quam. Ex eius cumque eos corrupti animi et rerum enim est internos voluptas. Non repellendus corporis qui voluptas deserunt ut libero quisquam est nihil voluptatem. </p>
+                    <p>Ea molestiae itaque At tempora eius id voluptate possimus non impedit esse et quibusdam quos ut cumque inventore. Eum delectus nisi qui nihil ipsum ut voluptas excepturi non magni quis et mollitia dolorem quo nihil alias in itaque dolorum! Qui nihil nihil 33 voluptatem libero hic internos voluptates. Vel dolorum aliquam est voluptates omnis ad velit perferendis. Quo asperiores inventore quo officiis esse ut voluptas autem et tempore voluptatibus aut rerum earum. Et eveniet recusandae sit corrupti beatae eum libero fugit in quia accusantium. Et deserunt amet a quibusdam repudiandae et odit optio ut debitis debitis et tempore animi qui voluptatem quia eos sint odit. </p>
+                    <p>Est modi architecto et iusto consequatur aut animi nisi et amet dolorem vel enim dolores ab voluptas illo. 33 perspiciatis expedita ut corrupti aperiam 33 harum labore ut voluptas suscipit cum rerum minima qui voluptatem voluptatibus 33 natus consequatur? Sit sint ratione At delectus iusto hic omnis maxime. Ut libero sapiente ut omnis voluptas aut dicta doloribus aut porro dolor. Hic corporis magnam et maxime repudiandae et dolorem praesentium in cupiditate dignissimos est velit suscipit non magnam vero. </p>
+                    </section>
+
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid xs={8}>
