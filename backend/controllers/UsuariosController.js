@@ -183,7 +183,7 @@ var controller = {
         // Recoger el id de la categoria por la url
         var userId = req.params.id;
         // Recoger los datos que llegan por put
-        var params = req.body;
+        var params = req;
         // Validar datos
         const roldb = await Roles.findById(params.id_rol);
 

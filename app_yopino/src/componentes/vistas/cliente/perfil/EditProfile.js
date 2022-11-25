@@ -6,72 +6,120 @@ import { Helmet } from "react-helmet";
 import {Link} from 'react-router-dom';
 import {ISave } from '../../../../elementos/iconos/Iconos';
 import editProfile from '../../../../css/editProfile.css'
+import Cookie from 'cookie-universal';
+import { format } from 'date-fns'
+import { Update } from "../../../../servicios/Usuarios";
 
 const EditarPerfil = () => {
+    
+    const cookies = Cookie();
+    const id = cookies.get('user_id');
+    const dtUser=cookies.get('user');
     const [formularioEnviado, cambiarFormularioEnviado] = useState (false);
+    const [user, setUser] = useState({
+        name: dtUser.name,
+        last_name1: dtUser.last_name1,
+        last_name2: dtUser.last_name2,
+        username: dtUser.username,
+        email: dtUser.email,
+        password: dtUser.password,
+        birthdate: dtUser.birthdate,
+        id_rol: '63685f0eebc852362f53c40f'
+      });
+
+    const [pass, setPass] = useState({confirmPassword: ""});
+    const onChangePassword = (event) =>{
+        setPass({
+            ...pass,
+            confirmPassword : event.target.value
+        });
+      }
+
+      const onSubmitEdit= async (event)=>{
+        if(user.password == pass.confirmPassword){
+          event.preventDefault();
+          console.log("Contraseñas correctas")
+          console.log("info pa mandar", user)
+          const resp = await Update(id, user);
+          console.log("info pa recibir",resp);
+  
+        }else{
+          console.log("Contraseñas no correctas")
+  
+          event.preventDefault();
+      }
+    }
+    // Esto se agrega porque al utilizar un valor como user.name, este no puede cambiar. Hay que utilizar el onChange para poder cambiar el valor de mi variable name
+    const handleOnChangeInput = (event) => {
+        const { name, value } = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
+        setUser({
+            ...user, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
+            [name]: value
+        }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
+    }
     return (
         <>
             <Formik
                 initialValues={{
-                    nombre: '',
-                    apellido1: '',
-                    apellido2: '',
+                    name: '',
+                    last_name1: '',
+                    last_name2: '',
                     username: '',
-                    correo: '',
-                    datebirth: '',
-                    password1:'',
-                    password2:''
+                    email: '',
+                    birthdate: '',
+                    password:'',
+                    confirmPassword:''
                 }}
                 validate={(valores) => {
                     let errores = {};
                     
                     //validacion nombre
-                    if(!valores.nombre){
-                        errores.nombre = 'Porfavor ingresa un nombre'
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)){
-                        errores.nombre = 'El nombre solo puede contener letras y espacios'
+                    if(!valores.className){
+                        errores.className = 'Porfavor ingresa un nombre'
+                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)){
+                        errores.name = 'El nombre solo puede contener letras y espacios'
                     }
 
                     //validacion apellido1
-                    if(!valores.apellido1){
-                        errores.apellido1 = 'Porfavor ingresa un apellido'
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.apellido1)){
-                        errores.apellido1 = 'El nombre solo puede contener letras'
+                    if(!valores.last_name1){
+                        errores.last_name1 = 'Porfavor ingresa un apellido'
+                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.last_name1)){
+                        errores.last_name1 = 'El apellido solo puede contener letras'
                     }
-                    //validacion apellido2
-                    if(!valores.apellido2){
-                        errores.apellido2 = 'Porfavor ingresa un apellido'
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.apellido2)){
-                        errores.apellido2 = 'El nombre solo puede contener letras'
+                    //validacion last_name2
+                    if(!valores.last_name2){
+                        errores.last_name2 = 'Porfavor ingresa un apellido'
+                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.last_name2)){
+                        errores.last_name2 = 'El apellido solo puede contener letras'
                     }
 
                     //validacion usuario
-                    if(!valores.user){
-                        errores.user = 'Porfavor ingresa un nombre de usuario'
-                    }else if(!/^[a-zA-Z0-9_.+-]{1,40}$/.test(valores.user)){
-                        errores.user = 'El nombre de usuario solo puede contener letras, numeros, puntos, guiones y guion bajo'
+                    if(!valores.username){
+                        errores.username = 'Porfavor ingresa un nombre de usuario'
+                    }else if(!/^[a-zA-Z0-9_.+-]{1,40}$/.test(valores.username)){
+                        errores.username = 'El nombre de usuario solo puede contener letras, numeros, puntos, guiones y guion bajo'
                     }
 
                     //validacion correo
-                    if(!valores.correo){
-                        errores.correo = 'Porfavor ingresa un correo electronico'
-                    }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.correo)){
-                        errores.correo = 'El correo solo puede contener letras, numeros, puntos, guiones y guion bajo'
+                    if(!valores.email){
+                        errores.email = 'Porfavor ingresa un correo electronico'
+                    }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
+                        errores.email = 'El correo solo puede contener letras, numeros, puntos, guiones y guion bajo'
                     }
 
                     //validacion contraseña 1
-                    if(!valores.password1){
-                        errores.password1 = 'Porfavor ingresa una contraseña'
-                    }else if(!/^.{8,12}$/.test(valores.password1)){
-                        errores.password1 = 'La contraseña debe tener de 8 a 12 digitos'
+                    if(!valores.password){
+                        errores.password = 'Porfavor ingresa una contraseña'
+                    }else if(!/^.{8,12}$/.test(valores.password)){
+                        errores.password = 'La contraseña debe tener de 8 a 12 digitos'
                     }
 
                     //validacion contraseña 2
-                    if(!valores.password2){
-                        errores.password2 = 'Porfavor ingresa una contraseña'
-                    }else if((valores.password2).length>0){
-                        if(valores.password1 !== valores.password2){
-                            errores.password2 = 'Las contraseñas no son iguales'
+                    if(!valores.confirmPassword){
+                        errores.confirmPassword = 'Porfavor ingresa una contraseña'
+                    }else if((valores.confirmPassword).length>0){
+                        if(valores.password1 !== valores.confirmPassword){
+                            errores.confirmPassword = 'Las contraseñas no son iguales'
                         }
                         
                     }
@@ -86,112 +134,128 @@ const EditarPerfil = () => {
                 }}
             >
                 {( {errors} ) => (
-                    <Form className="formulario">
+                    <Form className="formulario" onSubmit={onSubmitEdit}>
                     <h1>Editar perfil</h1>
                         <div>
-                            <label htmlFor="foto">Cargar foto</label>
+                            <label htmlFor="foto" >Cargar foto</label>
                             <Field 
                                 type="file" 
                                 id="fotoperfil" 
                                 name="fotoperfil" 
                             />
-                            <ErrorMessage name="nombre" component={() => (
-                                <div className="error">{errors.nombre}</div>
+                            <ErrorMessage name="name" component={() => (
+                                <div className="error">{errors.name}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="nombre">Nombre</label>
+                            <label htmlFor="name" >Nombre</label>
                             <Field 
                                 type="text" 
-                                id="nombre" 
-                                name="nombre" 
+                                id="name" 
+                                name="name" 
                                 placeholder="Melanie Janeth" 
+                                value={dtUser.name}
+                                onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="nombre" component={() => (
-                                <div className="error">{errors.nombre}</div>
+                            <ErrorMessage name="name" component={() => (
+                                <div className="error">{errors.name}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="apellido1">Apellido paterno</label>
+                            <label htmlFor="last_name1" >Apellido paterno</label>
                             <Field 
                                 type="text" 
-                                id="apellido1" 
-                                name="apellido1" 
+                                id="last_name1" 
+                                name="last_name1" 
                                 placeholder="Loredo" 
+                                value={dtUser.last_name1}
+                                onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="apellido1" component={() => (
-                                <div className="error">{errors.apellido1}</div>
+                            <ErrorMessage name="last_name1" component={() => (
+                                <div className="error">{errors.last_name1}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="apellido2">Apellido materno</label>
+                            <label htmlFor="last_name2" >Apellido materno</label>
                             <Field 
                                 type="text" 
-                                id="apellido2" 
-                                name="apellido2" 
-                                placeholder="Salinas" 
+                                id="last_name2" 
+                                name="last_name2" 
+                                placeholder="Salinas"
+                                value={dtUser.last_name2} 
+                                onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="apellido2" component={() => (
-                                <div className="error">{errors.apellido2}</div>
+                            <ErrorMessage name="last_name2" component={() => (
+                                <div className="error">{errors.last_name2}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="user">Nombre de usuario</label>
+                            <label htmlFor="username">Nombre de usuario</label>
                             <Field 
                                 type="text" 
-                                id="user" 
-                                name="user" 
+                                id="username" 
+                                name="username" 
                                 placeholder="webitoloredo" 
+                                value={dtUser.username}
+                                onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="user" component={() => (
-                                <div className="error">{errors.user}</div>
+                            <ErrorMessage name="username" component={() => (
+                                <div className="error">{errors.username}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="correo">Correo</label>
+                            <label htmlFor="email">Correo</label>
                             <Field 
                             type="email" 
-                            id="correo" 
-                            name="correo" 
-                            placeholder="correo@correo.com" 
+                            id="email" 
+                            name="email" 
+                            placeholder="correo@correo.com"
+                            value={dtUser.email} 
+                            onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="correo" component={() => (
-                                <div className="error">{errors.correo}</div>
+                            <ErrorMessage name="email" component={() => (
+                                <div className="error">{errors.email}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="date">Fecha de nacimiento</label>
+                            <label htmlFor="birthdate" >Fecha de nacimiento</label>
                             <Field 
                                 type="date" 
-                                id="datebirth" 
-                                name="datebirth"  
+                                id="birthdate" 
+                                name="birthdate"  
+                                value={dtUser.birthdate}
+                                onChange={handleOnChangeInput}
                             />
-                            <ErrorMessage name="datebirth" component={() => (
-                                <div className="error">{errors.datebirth}</div>
+                            <ErrorMessage name="birthdate" component={() => (
+                                <div className="error">{errors.birthdate}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="password">Contraseña</label>
+                            <label htmlFor="password" >Contraseña</label>
                             <Field 
                             type="password" 
-                            id="password1" 
-                            name="password1" 
                             placeholder="*********" 
+                            value={dtUser.password}
+                            onChange={handleOnChangeInput}
+                            id="password" 
+                            name="password" 
                             />
-                            <ErrorMessage name="password1" component={() => (
-                                <div className="error">{errors.password1}</div>
+                            <ErrorMessage name="password" component={() => (
+                                <div className="error">{errors.password}</div>
                             )}/>
                         </div>
                         <div>
-                            <label htmlFor="password">Confirmar contraseña</label>
+                            <label htmlFor="confirmPassword">Confirmar contraseña</label>
                             <Field 
                             type="password" 
-                            id="password2" 
-                            name="password2" 
                             placeholder="*********" 
+                            value={pass.confirmPassword}
+                            onChange={onChangePassword}
+                            name= "confirmPassword"
+                            id= "confirmPassword"
                             />
-                            <ErrorMessage name="password2" component={() => (
-                                <div className="error">{errors.password2}</div>
+                            <ErrorMessage name="confirmPassword" component={() => (
+                                <div className="error">{errors.confirmPassword}</div>
                             )}/>
                         </div>
                         

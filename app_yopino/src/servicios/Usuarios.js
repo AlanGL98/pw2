@@ -55,12 +55,10 @@ const Register = async (user) => {
     // }
 }
 
-const Update = async (id) => {
+const Update = async (id, user) => {
     try {
         //Respuesta de un await con la ruta del api
-        const response = await axios.put("/usuarios/:id", {
-            id
-        })
+        const response = await axios.put("/usuarios/:id", id,user)
         if (response.status === 'succes') {
             return response.data;
         } 
