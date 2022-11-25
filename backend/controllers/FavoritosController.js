@@ -23,8 +23,10 @@ var controller = {
             }
 
             //Devolverlo en json
-            return res.send( model
-            );
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
 
         });
 
