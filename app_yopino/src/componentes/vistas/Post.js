@@ -34,6 +34,11 @@ const Post = () => {
     const cookies = Cookie();
     const user_id = cookies.get('user_id');
     const rol_id = cookies.get('user_rol');
+    const user = cookies.get('user')
+    const now = Date.now();
+    const dateNow= new Date(now);
+    const hoy = dateNow.toDateString();
+
     const [comentarios] = useState(
         [
             {
@@ -189,8 +194,8 @@ const Post = () => {
 
                                     </Stack>
                                     <Components.Input type='text' placeholder='Da tu opinion' />
-                                    <h3>Usuario</h3>
-                                    <p>fecha</p>
+                                    <h3>Usuario: {user.username}</h3>
+                                    <p>{hoy}</p>
                                     <Link to={"/post"}><button className="btn-newcomment" type="submit">Publicar</button></Link>
 
                                 </div>

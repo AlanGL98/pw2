@@ -5,6 +5,9 @@ body{
 .card{
     width: 25rem !important;
     background: white !important;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    
 }
 
 .card:hover{
@@ -19,6 +22,7 @@ body{
 .card-text{
     font-size: 1rem;
     padding: 0.4rem 1.9rem;
+    text-align: justify;
 }
 
 .container-fluid .row{

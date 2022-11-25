@@ -88,13 +88,13 @@ function InicioSesion() {
             const obj = await Login(us);
             if(obj.data._id){
                 const cookies = Cookie();
-                cookies.set('user', obj.data.email);
+                cookies.set('user', obj.data);
                 cookies.set('user_id', obj.data._id );
                 cookies.set('user_rol', obj.data.id_rol );
 
                 const cookieTemp = cookies.get('user');
                 const cookieiD=cookies.get('user_id');
-                console.log("Mi cookie: ", cookieTemp, 'Mi id: ', cookieiD);
+                console.log("Mi cookie: ", cookieTemp.name, 'Mi id: ', cookieiD);
 
                 console.log("my object0:", obj.data._id);
                 console.log("my rolid:", obj.data.id_rol);

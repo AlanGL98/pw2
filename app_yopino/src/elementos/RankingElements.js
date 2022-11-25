@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import theme from "../theme";
+
 
 const Header = styled.div`
     width: 100%;
@@ -6,7 +8,9 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
- 
+
+    background:#fff;
+
     @media(max-width: 60rem){ /* 950px */
         justify-content: start;
     }

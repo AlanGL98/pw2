@@ -1,4 +1,5 @@
 import { axiosBase as axios } from "./Config";
+import {useState, useEffect} from "react";
 
 const GetAll = () => {
     const [opiniones, setOpiniones] = useState([]);
