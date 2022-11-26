@@ -10,6 +10,7 @@ var mp_upload = multipart({ uploadDir: './upload/opiniones' });
 
 // Rutas utiles
 router.get('/opiniones', OpinionesService.getAll);
+router.get('/opiniones/populares/', OpinionesService.getRandom);
 router.get('/opiniones/:id', OpinionesService.get);
 router.get('/opiniones/seccion/:id', OpinionesService.getSeccion);
 router.post('/opiniones', OpinionesService.create);

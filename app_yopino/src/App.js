@@ -7,8 +7,6 @@ import Reviews from "./componentes/vistas/Reviews";
 const App = () => {
   return ( 
     <>
-
-    
  
       {/* <Helmet>
         <title>YO OPINO</title>

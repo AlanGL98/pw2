@@ -88,7 +88,10 @@ var controller = {
         var query = Model.find({ });
 
         // Find
-        query.find({opinion_id: opinionId}).sort('-_id').exec((err, model) =>{
+        query
+        .find({opinion_id: opinionId})
+        .populate('user_id', {username: 1}) //Obtiene los atributos del usuario
+        .sort('-_id').exec((err, model) =>{
             
             if(err){
                 return res.status(500).send({

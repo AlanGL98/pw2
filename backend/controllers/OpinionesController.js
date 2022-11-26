@@ -43,6 +43,42 @@ var controller = {
 
     },
 
+    getRandom: (req, res) =>{
+
+        var query = Model.find({});
+
+        var last = req.params.last;
+        if(last || last != undefined){
+            query.limit(5);
+        }
+
+        // Find
+        query.find({}).sort('+_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver las opiniones'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay las opiniones para mostrar'
+                });
+            }
+
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
+
     get: (req, res) => {
 
         // Recoger id de la url

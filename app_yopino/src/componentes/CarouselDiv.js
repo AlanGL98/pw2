@@ -8,6 +8,8 @@ import {
 } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { GetPopulares } from "../servicios/Opiniones";
+import Global from '../Global';
 
 const items = [
     {
@@ -23,16 +25,30 @@ const items = [
         key: 2,
     },
     {
+        src: require ('../img/Minecraft.jpg'),
+        altText: 'Minecraft',
+        caption: 'Juego chido',
+        key: 3,
+    },
+    {
+        src: require ('../img/Minecraft.jpg'),
+        altText: 'Minecraft',
+        caption: 'Juego chido',
+        key: 4,
+    },
+    {
         src:  require ('../img/LOL.jpg'),
         altText: 'League of Legends',
         caption: 'Juego feo',
-        key: 3,
+        key: 5,
     }
 ];
 
 function Cargar(args){
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
+
+    const [populares] = GetPopulares();
 
     const next = () => {
         if(animating) return;
@@ -51,17 +67,19 @@ function Cargar(args){
         setActiveIndex(newIndex);
     };
 
-    const slides = items.map ((item) => {
+    const slides = populares.map ((item) => {
         return (
             <CarouselItem
                 onExiting = {() => setAnimating(true)}
                 onExited = {() => setAnimating(false)}
-                key = {item.src}            
+                key = {item._id}            
             >
-                <img src={item.src} alt={item.altText} width="100%" height="650px" />
+                <img 
+                src={Global.url + 'opiniones/get-image/' + item.image} 
+                alt="..." width="100%" height="650px" />
                 <CarouselCaption 
-                    captionText = {item.caption}
-                    captionHeader = {item.caption}
+                    captionText = {item.sinopsis}
+                    captionHeader = {item.title}
                 />
             </CarouselItem>
         );

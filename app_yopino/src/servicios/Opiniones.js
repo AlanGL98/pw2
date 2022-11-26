@@ -15,6 +15,22 @@ const GetAll = () => {
 
     return [opiniones];
 }
+
+const GetPopulares = () => {
+    const [opiniones, setOpiniones] = useState([]);
+
+    useEffect(() => {
+
+        axios.get('/opiniones/populares/')
+        .then((res) => {
+            setOpiniones(res.data.data);
+        });
+
+    }, []);
+
+    return [opiniones];
+}
+
 const GetOne =  (id) => {
     const [opinion, setOpinion] = useState({});
 
@@ -138,4 +154,4 @@ const GetByCategory= async (id) => {
     }
 }
 
-export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage,GetByCategory};
+export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage,GetByCategory, GetPopulares};
