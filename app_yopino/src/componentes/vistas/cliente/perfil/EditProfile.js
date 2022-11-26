@@ -74,8 +74,8 @@ const EditarPerfil = () => {
                     let errores = {};
                     
                     //validacion nombre
-                    if(!valores.className){
-                        errores.className = 'Porfavor ingresa un nombre'
+                    if(!valores.name){
+                        errores.name = 'Porfavor ingresa un nombre'
                     }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)){
                         errores.name = 'El nombre solo puede contener letras y espacios'
                     }
