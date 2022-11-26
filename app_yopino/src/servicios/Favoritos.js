@@ -13,16 +13,6 @@ const GetAll = (user_id) => {
 
        
     }, []);
-    useEffect(() => {
-        if(favoritos.opinion_id===undefined)
-            return;
-
-            axios.get(`/opiniones/${favoritos.opinion_id}`)
-            .then((res) => {
-                setFavoritos({...favoritos,opinion_name:res.data.data.title,opinion_sinopsis:res.data.data.sinopsis,image:res.data.data.image});
-            });
-
-    }, [favoritos]);
 
     return [favoritos];
 }

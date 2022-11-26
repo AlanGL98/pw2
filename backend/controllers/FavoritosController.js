@@ -13,7 +13,10 @@ var controller = {
         var userId = req.params.id;
 
         // Buscar el usuario
-        Model.find({user_id:userId}, (err, model) =>{
+        Model
+        .find({user_id:userId})
+        .populate('opinion_id')
+        .sort('-_id').exec((err, model) =>{
 
             if(err || !model){
                 return res.status(404).send({
