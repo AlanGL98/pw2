@@ -28,8 +28,17 @@
     color: #434742;
 }
 
-.formulario input{
+.formulario input,select{
     background-color: #eee;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    width: 100%;
+}
+
+.formulario textarea{
+    background-color: #eee;
+    height: 300px;
     border: none;
     border-radius: 8px;
     padding: 12px 15px;

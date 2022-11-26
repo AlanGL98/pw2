@@ -45,8 +45,9 @@ const NewPost = () => {
         {({values, errors, touched, handleSubmit, handleChange, handleBlur}) => (
          
             <Components.Form onSubmit={handleSubmit}>
-              <Components.Title>Crear categoría</Components.Title>
+              <Components.Title>Editar categoría</Components.Title>
               <br></br>
+
 
               <Avatar
                   alt="Remy Sharp"
@@ -59,6 +60,7 @@ const NewPost = () => {
                   <input hidden accept="image/*" multiple type="file" />
                 </Button>
                 <br></br>
+
               <Components.Input 
                   type='text' 
                   id='nombre' 
@@ -72,12 +74,9 @@ const NewPost = () => {
               <br></br>
               <Stack direction="row" alignItems="center" spacing={2}>
                
-                
-
                 <br></br><br></br>
-                <a href='/admin-categorias' className="btn-newcomment spacing-down" float="right">Confirmar</a>
+                <a href='/admin-categorias' className="btn-newcomment" float="right">Confirmar</a>
                 {formularioEnviado &&  <p className="exito">Formulario enviado con exito!</p>}
-                <br></br>
               </Stack>   
               
             </Components.Form>
