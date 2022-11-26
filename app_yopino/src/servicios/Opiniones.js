@@ -26,13 +26,14 @@ const GetOne =  (id) => {
         });
 
     }, []);
+
     useEffect(() => {
         if(opinion.category_id===undefined)
             return;
 
         axios.get(`/secciones/${opinion.category_id}`)
         .then((res) => {
-            setOpinion({...opinion,name_cat:res.data.data.name});
+            setOpinion({...opinion, name_cat: res.data.data.name});
         });
 
     }, [opinion]);

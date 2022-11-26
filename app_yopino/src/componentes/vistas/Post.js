@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import IMG from '../../img/Fortnite.jpg';
 import * as Components from '../../elementos/logsign';
 import { Link } from 'react-router-dom';
+import Moment from 'moment';
 
 import '../../css/comentarios.css';
 import Checkbox from '@mui/material/Checkbox';
@@ -20,8 +21,10 @@ import Cookie from 'cookie-universal';
 import { useParams } from "react-router-dom";
 import { GetOne } from '../../servicios/Opiniones';
 import { GetOneCat } from '../../servicios/Categorias';
-import { GetAll } from '../../servicios/TopPlayers';
+// import { GetAll } from '../../servicios/TopPlayers';
+import { GetUsuariosByComentario } from '../../servicios/Usuarios';
 import Global from '../../Global';
+import { GetComentariosByOpinion } from "../../servicios/Comentarios";
 
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -48,58 +51,21 @@ const Post = () => {
     //info de opinion
     const {id} = useParams();
     const opinion = GetOne(id);
-    //const id_cat = opinion.category_id;
+    const [comentarios, setComentarios] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
+
+    useEffect(() => {
+        GetComentariosByOpinion(id, setComentarios);
+    }, []);
+
+    useEffect(() => {
+        console.log(comentarios);
+    }, [comentarios]);
+
+    // useEffect(() => {
+    //     GetUsuariosByComentario(setUsuarios);
+    // }, []);
     
-    //console.log('id categoria',opinion.category_id);
-    //const categoria = GetOneCat( id_cat);
-
-
-
-
-
-
-    const [comentarios] = useState(
-        [
-            {
-                user: 'Nombre de usuario 1',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 4,
-            },
-            {
-                user: 'Nombre de usuario 2',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 3,
-            },
-            {
-                user: 'Nombre de usuario 3',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 4,
-            },
-            {
-                user: 'Nombre de usuario 4',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 5,
-            },
-            {
-                user: 'Nombre de usuario 5',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 4,
-            },
-            {
-                user: 'Nombre de usuario 6',
-                content: 'Lorem ipsum dolor sit amet consectetur adipiscing elit morbi hac, suspendisse purus ac nec egestas condimentum felis sed eros, vivamus cras arcu quam scelerisque eget mauris non. Dictumst libero class quam aptent tellus eu, pulvinar neque per dui condimentum, sapien tempor hendrerit metus cubilia.',
-                date: '29/10/22',
-                rate: 1,
-            },
-
-        ]
-    );
-
     const [TopPlayers] = useState(
         [
             {
@@ -162,19 +128,18 @@ const Post = () => {
                                 comentarios.map((card, i) => (
                                     <div key={i} className="card1">
                                         <Stack spacing={1}>
-                                            <Rating name="size-small" defaultValue={card.rate} size="small" readOnly />
+                                            <Rating name="size-small" defaultValue={5} size="small" readOnly />
 
                                         </Stack>
-                                        <h4>{card.content}</h4>
-                                        <h3>{card.user}</h3>
+                                        <h4>{card.comment}</h4>
+                                        <h3>{card.user_id}</h3>
 
 
-                                        <p>{card.date}</p>
+                                        <p>{Moment(card.created_at).format('DD-MM-YYYY hh:mm')}</p>
 
                                         <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="success" />
 
                                     </div>
-
                                 ))
                             }
 

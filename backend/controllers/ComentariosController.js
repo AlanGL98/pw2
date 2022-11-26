@@ -72,6 +72,47 @@ var controller = {
 
     },
 
+    getByOpinion: (req, res) => {
+
+        // Recoger id de la url
+        var opinionId = req.params.id;
+
+        // Comprobar que existe
+        if(!opinionId || opinionId == null){
+            return res.status(404).send({
+                status: 'error',
+                message: 'No existe el comentario.'
+            });
+        }
+
+        var query = Model.find({ });
+
+        // Find
+        query.find({opinion_id: opinionId}).sort('-_id').exec((err, model) =>{
+            
+            if(err){
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al devolver los comentarios'
+                });
+            }
+
+            if(!model){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No hay comentarios para mostrar'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'success',
+                data: model
+            });
+
+        });
+
+    },
+
     create: async (req, res) =>{
         // Recoger parametros por post
         var params = req.body;

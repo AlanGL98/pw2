@@ -32,6 +32,15 @@ const GetOne = async (id) => {
     }
 }
 
+const GetUsuariosByComentario = (setUsuarios) => {
+
+    axios.get(`/usuarios`)
+    .then((res) => {
+        setUsuarios(res.data.data);
+    });
+
+}
+
 const Register = async (user) => {
 
     // try{
@@ -130,4 +139,4 @@ const Login = async (data) => {
         return err;
     }
 }
-export {GetAll, GetOne, Delete, Register, Update,GetImage,AddImage,Login};
+export {GetAll, GetOne, Delete, Register, Update,GetImage,AddImage,Login, GetUsuariosByComentario};
