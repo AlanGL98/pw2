@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import IMG from '../../img/Fortnite.jpg';
 import * as Components from '../../elementos/logsign';
-import { Link } from 'react-router-dom';
 import Moment from 'moment';
 
 import '../../css/comentarios.css';
@@ -12,31 +10,16 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 // import { height } from "@mui/system";
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-import { styled } from '@mui/material/styles';
 
 import CardMedia from '@mui/material/CardMedia';
 import Cookie from 'cookie-universal';
 import { useParams } from "react-router-dom";
 import { GetOne } from '../../servicios/Opiniones';
-import { GetOneCat } from '../../servicios/Categorias';
-// import { GetAll } from '../../servicios/TopPlayers';
-import { GetUsuariosByComentario } from '../../servicios/Usuarios';
 import Global from '../../Global';
 import { GetComentariosByOpinion,RegisterCom } from "../../servicios/Comentarios";
 
-
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
-
 
 const Post = () => {
     //Datos de usuario
@@ -52,7 +35,6 @@ const Post = () => {
     const {id} = useParams();
     const opinion = GetOne(id);
     const [comentarios, setComentarios] = useState([]);
-    const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
         GetComentariosByOpinion(id, setComentarios);
@@ -66,6 +48,7 @@ const Post = () => {
     //     GetUsuariosByComentario(setUsuarios);
     // }, []);
     const [createComment, setCreateComment] = useState(false);
+    console.log(createComment);
     const [comment, setComment] = useState({  // Inicializo estas variables de estado con valores vacíos 
         comment: "",
         user_id: user_id,

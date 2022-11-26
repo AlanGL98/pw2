@@ -1,5 +1,4 @@
 import { axiosBase as axios } from "./Config";
-import {useState, useEffect} from "react";
 
 import Cookie from 'cookie-universal';
 

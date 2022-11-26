@@ -2,13 +2,10 @@ import React ,{useState}from 'react';
 import * as Components from '../../elementos/logsign';
 // import { Link } from 'react-router-dom';
 import {Register,Login} from '../../servicios/Usuarios';
-import { Navigate } from "react-router-dom";
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 
 import { useNavigate } from 'react-router';
 import Cookie from 'cookie-universal';
@@ -48,7 +45,7 @@ function InicioSesion() {
         password: ""
     });
     // Este event es un parámetro que se puede recibir en todas las funciones que sean desencadenadas por un evento de React.
-    const [createUser, setCreateUser] = useState(false);
+    // const [createUser, setCreateUser] = useState(false);
 
     const handleOnSubmitRegister = async (event) => {
         event.preventDefault();
@@ -59,7 +56,7 @@ function InicioSesion() {
 
             const obj = await Register(user);
 
-            setCreateUser(obj);
+            // setCreateUser(obj);
 
             if(obj){
                 console.log("my object0:", obj);
