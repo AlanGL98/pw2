@@ -122,9 +122,9 @@ function InicioSesion() {
     return (
         <Components.Container>
             <Components.SignUpContainer signinIn={signIn}>
-                {createUser && (
+                {/* {createUser && (
                     <Navigate to="/" replace={true}/>
-                )}
+                )} */}
                 <Components.Form onSubmit={handleOnSubmitRegister}>
                     <Components.Title>Crear cuenta</Components.Title>
                     <Components.Input type='text' name="name" value={user.name} onChange={handleOnChangeInput} placeholder='Nombre' />

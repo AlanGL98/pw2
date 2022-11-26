@@ -24,7 +24,7 @@ import { GetOneCat } from '../../servicios/Categorias';
 // import { GetAll } from '../../servicios/TopPlayers';
 import { GetUsuariosByComentario } from '../../servicios/Usuarios';
 import Global from '../../Global';
-import { GetComentariosByOpinion } from "../../servicios/Comentarios";
+import { GetComentariosByOpinion,RegisterCom } from "../../servicios/Comentarios";
 
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -65,7 +65,37 @@ const Post = () => {
     // useEffect(() => {
     //     GetUsuariosByComentario(setUsuarios);
     // }, []);
-    
+    const [createComment, setCreateComment] = useState(false);
+    const [comment, setComment] = useState({  // Inicializo estas variables de estado con valores vacíos 
+        comment: "",
+        user_id: user_id,
+        opinion_id: id
+    });
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
+        // console.log("jala");
+        try {
+
+            const obj = await RegisterCom(comment);
+
+            setCreateComment(obj);
+
+            if(obj){
+                console.log("my object0:", obj);
+            }
+            // console.log("my object0:", user.id_rol);
+
+        } catch (err) {
+            console.log('error');
+        }
+    }
+    const handleOnChangeInput = (event) => {
+        const { name, value } = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
+        setComment({
+            ...comment, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
+            [name]: value
+        }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
+    }
     const [TopPlayers] = useState(
         [
             {
@@ -132,7 +162,7 @@ const Post = () => {
 
                                         </Stack>
                                         <h4>{card.comment}</h4>
-                                        <h3>{card.user_id}</h3>
+                                        <h3>{card.user_id.username}</h3>
 
 
                                         <p>{Moment(card.created_at).format('DD-MM-YYYY hh:mm')}</p>
@@ -165,26 +195,33 @@ const Post = () => {
             </Box>
             {
                 rol_id === '63685e73ebc852362f53c40d' || rol_id === '63685c15ebc852362f53c40c' || rol_id ==='63685f0eebc852362f53c40f'?  
+                    
+                
                     <>
                         <h1>Da tu opinion</h1>
+                        
                         <div className="new-comments">
                             {
-
+                                
                                 <div className="new-comment-card">
+
                                     <Stack spacing={1}>
                                         <Rating name="size-medium" defaultValue={1} />
 
                                     </Stack>
-                                    <Components.Input type='text' placeholder='Da tu opinion' />
+                                    <Components.Form onSubmit={handleOnSubmit}>
+                                    <Components.Input type='text'name="comment" value={comment.comment} onChange={handleOnChangeInput} placeholder='Da tu opinion' />
                                     <h3>Usuario: {user.username}</h3>
                                     <p>{hoy}</p>
-                                    <Link to={"/post"}><button className="btn-newcomment" type="submit">Publicar</button></Link>
+                                    <button className="btn-newcomment" type="submit">Publicar</button>
 
+                                    </Components.Form>
                                 </div>
                             }
 
                         </div>
                     </>
+                    
                     : ""
                 }
                 </div>
