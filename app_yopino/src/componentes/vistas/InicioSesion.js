@@ -151,7 +151,7 @@ function InicioSesion() {
                     <Components.Input type='email' name="email" value={us.email} onChange={handleOnChangeInputLogin} placeholder='Email' />
                     <Components.Input type='password' name="password" value={us.password} onChange={handleOnChangeInputLogin} placeholder='Password' />
 
-                    <Components.Button type='submit'>Iniciar Sesion</Components.Button>
+                    <Components.Button href="/" type='submit'>Iniciar Sesion</Components.Button>
                 </Components.Form>
             </Components.SignInContainer>
 

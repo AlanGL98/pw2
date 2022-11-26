@@ -68,7 +68,7 @@ const Create = async (opinion) => {
         data.set('created_by', opinion.created_by);
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/opiniones", {opinion});
+        const response = await axios.post("/opiniones", opinion);
         console.log("My response: ", response); //trae objeto creado
         return response;
     }catch(err){
