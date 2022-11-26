@@ -22,6 +22,7 @@ const Navbar = () => {
 
   const cookies = Cookie();
   const user_id = cookies.get('user_id');
+  const user = cookies.get('user');
   const rol_id = cookies.get('user_rol');
 
   const abrirCerrarDropdown = () => {
@@ -56,7 +57,7 @@ const Navbar = () => {
                 </DropdownToggle>
 
                 <DropdownMenu>
-                  <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />Nombre de usuario</NavLinkPerfil></DropdownItem>
+                  <DropdownItem><NavLinkPerfil to='/perfil-usuario'><IUsuario />{user.username}</NavLinkPerfil></DropdownItem>
                   <Divider/>
                   {
                     rol_id === '63685e73ebc852362f53c40d' || rol_id === '63685c15ebc852362f53c40c'?  
