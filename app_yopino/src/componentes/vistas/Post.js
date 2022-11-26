@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import { GetOne } from '../../servicios/Opiniones';
 import Global from '../../Global';
 import { GetComentariosByOpinion,RegisterCom } from "../../servicios/Comentarios";
+import { GetByOpinion } from "../../servicios/TopPlayers";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -35,20 +36,21 @@ const Post = () => {
     const {id} = useParams();
     const opinion = GetOne(id);
     const [comentarios, setComentarios] = useState([]);
+    const [topPlayers] = GetByOpinion(id);
+
+    // useEffect(() => {
+    //     console.log(topPlayers);
+    // }, [topPlayers]);
 
     useEffect(() => {
         GetComentariosByOpinion(id, setComentarios);
     }, []);
 
-    useEffect(() => {
-        console.log(comentarios);
-    }, [comentarios]);
-
     // useEffect(() => {
     //     GetUsuariosByComentario(setUsuarios);
     // }, []);
     const [createComment, setCreateComment] = useState(false);
-    console.log(createComment);
+    // console.log(createComment);
     const [comment, setComment] = useState({  // Inicializo estas variables de estado con valores vacíos 
         comment: "",
         user_id: user_id,
@@ -79,34 +81,34 @@ const Post = () => {
             [name]: value
         }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
     }
-    const [TopPlayers] = useState(
-        [
-            {
-                user: 'Player 1',
-                img: require ('../../img/perfilDefault.png'),
-            },
-            {
-                user: 'Player 1',
-                img: require ('../../img/perfilDefault.png'),
+    // const [TopPlayers] = useState(
+    //     [
+    //         {
+    //             user: 'Player 1',
+    //             img: require ('../../img/perfilDefault.png'),
+    //         },
+    //         {
+    //             user: 'Player 1',
+    //             img: require ('../../img/perfilDefault.png'),
 
-            },
-            {
-                user: 'Player 1',
-                img: require ('../../img/perfilDefault.png'),
+    //         },
+    //         {
+    //             user: 'Player 1',
+    //             img: require ('../../img/perfilDefault.png'),
 
-            },
-            {
-                user: 'Player 1',
-                img: require ('../../img/perfilDefault.png')
-            },
-            {
-                user: 'Player 1',
-                img: require ('../../img/perfilDefault.png')
-            },
+    //         },
+    //         {
+    //             user: 'Player 1',
+    //             img: require ('../../img/perfilDefault.png')
+    //         },
+    //         {
+    //             user: 'Player 1',
+    //             img: require ('../../img/perfilDefault.png')
+    //         },
            
 
-        ]
-    );
+    //     ]
+    // );
 
     return (
         <div>
@@ -163,10 +165,10 @@ const Post = () => {
                     <h2>Top Players</h2>
                     <div className="TPcards">
                             {
-                                TopPlayers.map((card, i) => (
+                                topPlayers.map((card, i) => (
                                     <div key={i} className="TPcard">
-                                        <CardMedia className="TPIMG" component="img"  sx={{ width: 100 }}  image={card.img}/>
-                                        <h2>{card.user}</h2>
+                                        <CardMedia className="TPIMG" component="img"  sx={{ width: 100 }}  image={Global.url + 'opiniones/get-image/' + opinion.image}/>
+                                        <h2>{card.name}</h2>
                                     </div>
 
                                 ))
