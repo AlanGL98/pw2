@@ -17,18 +17,18 @@ const GetAll = (user_id) => {
     return [favoritos];
 }
 
-const GetOne =  (id) => {
+const GetOne = (id) => {
     const [categoria, setCategoria] = useState({});
 
     useEffect(() => {
-        if(id!=undefined){
-        axios.get(`/favoritos/${id}`)
-        .then((res) => {
-            setCategoria(res.data.data);
-        });
+        if (id !== undefined) {
+            axios.get(`/favoritos/${id}`)
+                .then((res) => {
+                    setCategoria(res.data.data);
+                });
         }
     }, []);
-    console.log('obtuve;',categoria);
+    console.log('obtuve;', categoria);
     return categoria;
 }
 

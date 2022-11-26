@@ -1,18 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import {Header, Titulo, ContenedorHeader, ContenedorBotones} from '../../../elementos/RankingElements';
+import {Header, Titulo, ContenedorHeader} from '../../../elementos/RankingElements';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
-import TestFunc from "../../TestFunc";
 
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import { InputLabel } from "@mui/material";
-
-import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import Checkbox from '@mui/material/Checkbox';
@@ -32,7 +22,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
   export default function Favoritos () {
-    const [ordenar, setOrdenar] = React.useState('');
+    // const [ordenar, setOrdenar] = React.useState('');
     
     const cookies = Cookie();
     const user_id = cookies.get('user_id');
@@ -40,9 +30,9 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     
     const [favoritos] = GetAll(user_id);
     
-    const handleChange = (event) => {
-        setOrdenar(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setOrdenar(event.target.value);
+    // };
 
         return (
             <>
