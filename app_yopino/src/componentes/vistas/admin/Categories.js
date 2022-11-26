@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { IDelete, IEdit } from '../../../elementos/iconos/Iconos';
 import {ISave } from '../../../elementos/iconos/Iconos';
+import { NavBtnLink } from '../../../elementos/NavbarElements';
+import { Header } from '../../../elementos/RankingElements';
 
 function createData(name, img, orden, acciones) {
   return {name, img, orden, acciones};
@@ -24,8 +26,11 @@ const rows = [
 export default function BasicTable() {
   return (
     <>
+    <Header>
+      <h1>Administrar categorías</h1>
+      </Header>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ height: 200 }} aria-label="simple table">
             <TableHead>
             <TableRow>
                 <TableCell align="left">Nombre</TableCell>
@@ -43,15 +48,16 @@ export default function BasicTable() {
                 <TableCell align="left"component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="center">{row.img}</TableCell>
                 <TableCell align="center">{row.orden}</TableCell>
-                <TableCell align="center"><IEdit/></TableCell>
-                <TableCell align="center"><IDelete/></TableCell>
+                <TableCell align="center"><NavBtnLink to='/edit-categoria'><IEdit/></NavBtnLink></TableCell>
+                <TableCell align="center"><NavBtnLink><IDelete/></NavBtnLink></TableCell>
                 </TableRow>
             ))}
             </TableBody>
         </Table>
         </TableContainer>
-
-        <button type="submit"><ISave/>Guardar</button>
+        <br></br>
+        <NavBtnLink to='/new-categoria' align="center">Crear nueva categoria</NavBtnLink>
+        <br></br>
         
     </>
   );
