@@ -10,6 +10,7 @@ var mp_upload = multipart({ uploadDir: './upload/top_players' });
 
 // Rutas utiles
 router.get('/top-players',TopPlayersService.getAll);
+router.get('/top-players/opinion/:id',TopPlayersService.getByOpinion);
 router.get('/top-players/:id', TopPlayersService.get);
 router.post('/top-players', TopPlayersService.create);
 router.put('/top-players/:id', TopPlayersService.update);

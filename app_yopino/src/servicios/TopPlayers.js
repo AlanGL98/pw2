@@ -15,6 +15,22 @@ const GetAll = () => {
 
     return [players];
 }
+
+const GetByOpinion = (id) => {
+    const [players, setPlayers] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(`/top-players/opinion/${id}`)
+        .then((res) => {
+            setPlayers(res.data.data);
+        });
+
+    }, []);
+
+    return [players];
+}
+
 const GetOne =  (id) => {
     const [player, setPlayer] = useState({});
 
@@ -127,4 +143,4 @@ const GetByCategory= async (id) => {
     }
 }
 
-export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage,GetByCategory};
+export {GetAll, GetOne, Delete, Create, Update,GetImage,AddImage,GetByCategory, GetByOpinion};
