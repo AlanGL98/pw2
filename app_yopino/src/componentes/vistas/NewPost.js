@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {ISave } from '../../elementos/iconos/Iconos';
@@ -33,14 +33,44 @@ const NewPost = () => {
   const user_id = cookies.get('user_id');
   
   const [categories] = GetAll();
-  const [categorias, setCategorias] = React.useState('');
 
-  console.log('obtuve:',categories);
-  const handleChange = (event) => {
-    setCategorias(event.target.value);
-  };
+  const [title, setTitle] = useState('');
+  const [sinopsis, setSinopsis] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+
+  const handleChange = (e) => { //Funcion para la escritura dentro de los inputs.
+    //console.log(e.target.name);
+    switch (e.target.name) {
+      case 'title':
+        setTitle(e.target.value);
+        break;
+
+      case 'sinopsis':
+        setSinopsis(e.target.value);
+        break;
+
+      case 'categoria':
+        setCategoria(e.target.value);
+        console.log(categoria);
+        break;
+
+      case 'descripcion':
+        setDescripcion(e.target.value);
+        break;
+
+      default:
+        break;
+    }
+  }
+  // const [categorias, setCategorias] = React.useState('');
+
+  // console.log('obtuve:',categories);
+  // const handleChange = (event) => {
+  //   setCategorias(event.target.value);
+  // };
   const [createPost, setCreatePost] = useState(false);
-  console.log(createPost);
+  // console.log(createPost);
   const [post, setPost] = useState({  // Inicializo estas variables de estado con valores vacíos 
       title: "",
       sinopsis: "",
@@ -53,28 +83,41 @@ const NewPost = () => {
     
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    // console.log("jala");
-    try {
-      const obj = await Create(post);
 
-      setCreatePost(obj);
-
-      if (obj) {
-        console.log("my object0:", obj);
-      }
-      // console.log("my object0:", user.id_rol);
-
-    } catch (err) {
-      console.log('error');
+    const nuevoPost = {
+      title: title,
+      sinopsis: sinopsis,
+      contenido: descripcion,
+      created_by: user_id,
+      category_id: categoria,
     }
+
+    await Create(nuevoPost);
+
+    navigate('/');
+    // console.log("jala");
+    // try {
+    //   const obj = await Create(post);
+
+    //   setCreatePost(obj);
+
+    //   if (obj) {
+    //     console.log("my object0:", obj);
+    //   }
+    //   // console.log("my object0:", user.id_rol);
+
+    // } catch (err) {
+    //   console.log('error');
+    // }
   }
-  const handleOnChangeInput = (event) => {
-      const { name, value } = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
-      setPost({
-          ...post, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
-          [name]: value
-      }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
-  }
+  // const handleOnChangeInput = (event) => {
+  //     const { name, value } = event.target; // Utilizo Destructuring, obtengo el name del input y el valor 
+  //     setPost({
+  //         ...post, // Esto es Destructuring, pone todos los atributos que estén contenidos en User, así sobreescribe la información con base en el name de mi input. 
+  //         [name]: value
+  //     }) // No tengo idea de por qué funciona si no hace referencia a los otros valores como email, password y photo
+  // }
+
   return (
     <>
       <Formik
@@ -88,17 +131,17 @@ const NewPost = () => {
             validate={(valores) => {
               let errores={};
               //titulo
-              if(!valores.title){
+              if(!title){
                 errores.title = 'Porfavor ingresa un título'
-              }else if(!/^[a-zA-ZÀ-ÿ0-9\s]{1,40}$/.test(valores.title)){
+              }else if(!/^[a-zA-ZÀ-ÿ0-9\s]{1,40}$/.test(title)){
                   errores.title = 'El título solo puede contener letras, numeros y espacios'
               }
               //sinopsis
-              if(!valores.sinopsis){
+              if(!sinopsis){
                 errores.sinopsis = 'Porfavor ingresa una sinopsis'
               }
                //descripcion
-               if(!valores.descripcion){
+               if(!descripcion){
                 errores.descripcion = 'Porfavor ingresa una descripción'
                }
                //foto
@@ -116,7 +159,7 @@ const NewPost = () => {
                 }}
         >
           {({errors}) => (
-            <Form className="formulario">
+            <Form className="formulario" onSubmit={handleOnSubmit}>
               <h1>Crear nuevo post</h1>
                 <div>
                   <label htmlFor="foto" >Cargar imagen</label>
@@ -137,6 +180,8 @@ const NewPost = () => {
                           id="title" 
                           name="title" 
                           placeholder="Título" 
+                          value={title}
+                          onChange={handleChange}
                        />
                       <ErrorMessage name="title" component={() => (
                                 <div className="error">{errors.title}</div>
@@ -148,25 +193,37 @@ const NewPost = () => {
                           id="sinopsis" 
                           name="sinopsis" 
                           placeholder="Sinopsis"
+                          value={sinopsis}
+                          onChange={handleChange}
                         />
                       <ErrorMessage name="sinopsis" component={() => (
                                 <div className="error">{errors.sinopsis}</div>
                             )}/>
                     </div>
                     <div>
-                      <Field name="categoria" as="select">
-                          <option value="Deportes">Deportes</option>
-                          <option value="Accion">Accion</option>
-                          <option value="Terror">Terror</option>                            
-                          <option value="Baile">Baile</option>
-                          <option value="Simulacion">Simulacion</option>
+                      <Field 
+                        name="categoria" 
+                        as="select"
+                        value={categoria} 
+                        onChange={handleChange}>
+                        {
+                          categories.map((item) => 
+                            (<option key={item._id} value={item._id}>{item.name}</option>)
+                          )
+                        }
                         </Field>
                         <ErrorMessage name="categoria" component={() => (
                                 <div className="error">{errors.categoria}</div>
                             )}/>
                     </div>
                     <div>
-                      <Field name="descripcion" as="textarea" placeholder="Descripcion larga" lg/>
+                      <Field 
+                        name="descripcion" 
+                        as="textarea" 
+                        placeholder="Descripcion larga"
+                        value={descripcion}
+                        onChange={handleChange}
+                        lg/>
                       <ErrorMessage name="descripcion" component={() => (
                                 <div className="error">{errors.descripcion}</div>
                             )}/>
