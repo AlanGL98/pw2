@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 
 import * as Components from '../../../elementos/logsign';
-// import { Link } from 'react-router-dom';
 
 import '../../../css/comentarios.css';
 

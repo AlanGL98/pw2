@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import theme from "../../../../theme";
-import * as Components from '../../../../elementos/editProfile';
-import { Helmet } from "react-helmet";
-import {Link} from 'react-router-dom';
 import {ISave } from '../../../../elementos/iconos/Iconos';
-import editProfile from '../../../../css/editProfile.css'
+//import editProfile from '../../../../css/editProfile.css'
 import Cookie from 'cookie-universal';
-import { format } from 'date-fns'
 import { Update } from "../../../../servicios/Usuarios";
 
 const EditarPerfil = () => {
@@ -264,40 +259,7 @@ const EditarPerfil = () => {
                         {formularioEnviado &&  <p className="exito">Formulario enviado con exito!</p>}
                     </Form>
                 )}
-{/* 
-{( {values, errors,touched, handleSubmit, handleChange, handleBlur} ) => (
-                    <Form className="formulario" onSubmit={handleSubmit}>
-                    <h1>Editar perfil</h1>
-                        <div>
-                            <label htmlFor="nombre">Nombre</label>
-                            <input 
-                            type="text" 
-                            id="nombre" 
-                            name="nombre" 
-                            placeholder="John Doe" 
-                            value={values.nombre}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            />
-                            {touched.nombre && errors.nombre && <div className="error">{errors.nombre}</div>}
-                        </div>
-                        <div>
-                            <label htmlFor="correo">Correo</label>
-                            <input 
-                            type="email" 
-                            id="correo" 
-                            name="correo" 
-                            placeholder="correo@correo.com" 
-                            value={values.correo}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            />
-                            {touched.correo && errors.correo && <div className="error">{errors.correo}</div>}
-                        </div>
-                        <button type="submit">Guardar</button>
-                        {formularioEnviado &&  <p className="exito">Formulario enviado con exito!</p>}
-                    </Form>
-                )} */}
+
             </Formik>
         </>
 

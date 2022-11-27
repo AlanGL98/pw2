@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { IDelete, IEdit } from '../../../elementos/iconos/Iconos';
-import {ISave } from '../../../elementos/iconos/Iconos';
 import { NavBtnLink } from '../../../elementos/NavbarElements';
 import { Header } from '../../../elementos/RankingElements';
 

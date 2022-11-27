@@ -1,6 +1,5 @@
 import React ,{useState}from 'react';
 import * as Components from '../../elementos/logsign';
-// import { Link } from 'react-router-dom';
 import {Register,Login} from '../../servicios/Usuarios';
 
 import Radio from '@mui/material/Radio';
@@ -9,22 +8,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useNavigate } from 'react-router';
 import Cookie from 'cookie-universal';
-// import {Helmet} from 'react-helmet';
-// import HeaderDiv from '../HeaderDiv';
-// const InicioSesion = () => {
-//     return (  
-//         <>
-//             <Helmet>
-//                 <title>Inicio de sesion</title>
-//             </Helmet>
-            
-//             <HeaderDiv titulo="Iniciar sesion"/>
-
-//         </>
-
-        
-//     );
-// }
 
 function InicioSesion() {
     let navigate = useNavigate();

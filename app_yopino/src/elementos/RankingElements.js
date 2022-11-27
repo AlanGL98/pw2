@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import theme from "../theme";
-
 
 const Header = styled.div`
     width: 100%;
@@ -50,9 +48,5 @@ const ContenedorBotones = styled.div`
     align-items: center;
 `;
 
-const Dropdown = styled.div`
-
-margin: 10px;
-`;
 
 export {Header, Titulo, ContenedorHeader, ContenedorBotones};
