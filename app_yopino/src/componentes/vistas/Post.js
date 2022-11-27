@@ -116,18 +116,16 @@ const Post = () => {
 
                 <div className="container">
                     <section className="postInfo">
-
-
+                        <img src={Global.url + 'opiniones/get-image/' + opinion.image} alt="..."/>
                         <div className="gameinfo">
                             <h1>{opinion.title}</h1>
-                            <p>{opinion.name_cat}</p>
-                            <h6>{opinion.sinopsis}</h6>
+                            <h2>{opinion.name_cat}</h2>
+                            <h3>{opinion.sinopsis}</h3>
                             <Stack className="center" spacing={1} >
                                 <Rating name="half-rating-read" defaultValue={4.5} precision={0.5} size="large" readOnly />
 
                             </Stack>
                         </div>
-                        <img src={Global.url + 'opiniones/get-image/' + opinion.image} alt="..."/>
                     </section>
 
                     <section className="postInfo">

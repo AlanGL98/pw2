@@ -48,10 +48,10 @@ const Create = async (seccion) => {
     try{
         let data = new FormData();
         data.set('name', seccion.name);
-        data.set('order', seccion.order);
+        data.set('order', 1);
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/secciones", {seccion});
+        const response = await axios.post("/secciones", seccion);
         console.log("My response: ", response); //trae objeto creado
         return response;
     }catch(err){
