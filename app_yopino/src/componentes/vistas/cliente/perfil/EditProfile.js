@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {ISave } from '../../../../elementos/iconos/Iconos';
-//import editProfile from '../../../../css/editProfile.css'
+import editProfile from '../../../../css/editProfile.css';
 import Cookie from 'cookie-universal';
 import { Update } from "../../../../servicios/Usuarios";
 
