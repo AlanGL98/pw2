@@ -15,6 +15,7 @@ var controller = {
         // Buscar el usuario
         Model
         .find({user_id:userId})
+        .where({active:true})
         .populate('opinion_id')
         .sort('-_id').exec((err, model) =>{
 

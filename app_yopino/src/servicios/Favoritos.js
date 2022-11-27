@@ -18,29 +18,30 @@ const GetAll = (user_id) => {
 }
 
 const GetOne = (id) => {
-    const [categoria, setCategoria] = useState({});
+    const [favorito, setFavorito] = useState({});
 
     useEffect(() => {
         if (id !== undefined) {
             axios.get(`/favoritos/${id}`)
                 .then((res) => {
-                    setCategoria(res.data.data);
+                    setFavorito(res.data.data);
                 });
         }
     }, []);
-    console.log('obtuve;', categoria);
-    return categoria;
+    console.log('obtuve;', favorito);
+    return favorito;
 }
 
-const Create = async (seccion) => {
+const Create = async (fav) => {
 
     try{
         let data = new FormData();
-        data.set('name', seccion.name);
-        data.set('order', seccion.order);
+        data.set('user_id', fav.user_id);
+        data.set('opinion_id', fav.opinion_id);
+        data.set('active', fav.active);
 
         //Respuesta de un await con la ruta del api
-        const response = await axios.post("/favoritos", seccion);
+        const response = await axios.post("/favoritos", fav);
         console.log("My response: ", response); //trae objeto creado
         return response;
     }catch(err){
